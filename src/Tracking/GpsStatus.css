@@ -1,0 +1,31 @@
+.gpsStatus {
+    display: block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 0 3px silver;
+    position: relative;
+}
+
+.gpsStatus::after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 5px;
+    height: 10px;
+    top: 8px;
+    right: 8px;
+    border-radius: 50%;
+    background-color: white;
+    transform: rotateZ(-30deg);
+    opacity: 0.8;
+}
+
+.gpsStatus--inactive {
+    background-color: silver;
+}
+
+.gpsStatus--active {
+    background-color: green;
+}
