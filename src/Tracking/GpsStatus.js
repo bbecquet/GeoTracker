@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import './GpsStatus.css';
 
 class GpsStatus extends Component {
   static propTypes = {
@@ -7,7 +8,7 @@ class GpsStatus extends Component {
 
   render() {
     if (!this.props.position) {
-        return <div>Not working</div>;
+        return <div className="gpsStatus gpsStatus--inactive" />;
     }
 
     const {
@@ -15,8 +16,8 @@ class GpsStatus extends Component {
         latitude,
     } = this.props.position.coords;
 
-    return <div>
-        {latitude} / {longitude}
+    return <div className="gpsStatus gpsStatus--active">
+        {`${latitude}/${longitude}`}
     </div>;
   }
 }
