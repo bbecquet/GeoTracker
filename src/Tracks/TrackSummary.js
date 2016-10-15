@@ -1,24 +1,17 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import moment from 'moment';
 
-class Track extends Component {
-  static propTypes = {
-    track: PropTypes.object.isRequired,
-  }
-
-  render() {
-    const {
-      name,
-      createdAt,
-    } = this.props.track;
-
-    return (
-      <div className="track">
-        <div>{moment(createdAt).format('LLL')}</div>
-        {name}
-      </div>
-    );
-  }
+const TrackSummary = ({track}) => {
+  return (
+    <div className="trackSummary">
+      <div>{moment(track.createdAt).format('LLL')}</div>
+      {track.name}
+    </div>
+  );
 }
 
-export default Track;
+TrackSummary.propTypes = {
+  track: PropTypes.object.isRequired,
+};
+
+export default TrackSummary;
