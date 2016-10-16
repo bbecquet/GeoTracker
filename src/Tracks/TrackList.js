@@ -3,23 +3,55 @@ import TrackSummary from './TrackSummary.js';
 import { Link } from 'react-router';
 
 class TrackList extends Component {
+  constructor() {
+    super();
+    this.state = { tracks: null };
+  }
+
   static propTypes = {
-    trackStore: PropTypes.array.isRequired,
-    newTrack: PropTypes.func,
+    trackStore: PropTypes.object.isRequired,
+  }
+
+  componentWillMount() {
+    this.refreshTrackList();
+  }
+
+  refreshTrackList() {
+    this.props.trackStore.getTrackList(tracks => {
+      this.setState({ tracks });
+    });
+  }
+
+  addTrack() {
+    this.props.trackStore.addTrack(
+      track => {
+        this.refreshTrackList();
+    	},
+      () => {
+    		console.error('Error creating new track');
+      }
+    );
   }
 
   render() {
+    const tracks = this.state.tracks;
+
     return (
       <div>
+        <h2>Your tracks</h2>
         <div>
-          <h2>Your tracks</h2>
-          {this.props.trackStore.map((track, index) =>
-            <Link to={`/tracks/${index}`} key={index}>
-                <TrackSummary track={track} />
-            </Link>
-          )}
+          {!tracks
+            ? 'Loading tracks…'
+            : tracks.length === 0
+              ? 'No track yet'
+              : tracks.map(track =>
+                <Link to={`/tracks/${track.id}`} key={track.id}>
+                  <TrackSummary track={track} />
+                </Link>
+              )
+          }
         </div>
-        <button onClick={this.props.newTrack}>New track</button>
+        <button onClick={() => {this.addTrack()}}>New track</button>
       </div>
     );
   }

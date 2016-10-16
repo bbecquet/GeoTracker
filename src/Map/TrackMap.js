@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import L from 'leaflet';
 import './TrackMap.css';
-// TODO: find how to put let that in node_modules
+// TODO: find how to import that from node_modules
 import './images/layers.png';
 import './leaflet.css';
 
