@@ -2,11 +2,15 @@ import React, { Component, PropTypes } from 'react';
 import TrackSummary from './TrackSummary.js';
 import TrackStats from './TrackStats.js';
 import { Link, withRouter } from 'react-router';
+import TrackMap from '../Map/TrackMap.js';
 
 class SingleTrack extends Component {
   constructor() {
     super();
-    this.state = { track: null };
+    this.state = {
+      track: null,
+      positions: [],
+    };
   }
 
   static propTypes = {
@@ -15,7 +19,9 @@ class SingleTrack extends Component {
 
   componentWillMount() {
     this.props.trackStore.getTrack(parseInt(this.props.params.trackId, 10), track => {
-      this.setState({ track });
+      this.props.trackStore.getTrackPositions(track.id, positions => {
+        this.setState({ track, positions });
+      });
     });
   }
 
@@ -36,6 +42,9 @@ class SingleTrack extends Component {
     return (<div>
         <TrackSummary track={track} />
         <TrackStats track={track} />
+        <div className="mapContainer">
+          <TrackMap positions={this.state.positions} />
+        </div>
         <Link to={`/tracks/${track.id}/tracking`}>Resume</Link>
         <button onClick={() => { this.deleteTrack() }}>Delete</button>
         <Link to={`/tracks/${track.id}/map`}>See on map</Link>

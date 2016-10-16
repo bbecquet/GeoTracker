@@ -1,12 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import GpsStatus from './GpsStatus.js';
 import Tracker from './tracker.js';
+import TrackMap from '../Map/TrackMap.js';
 import { withRouter } from 'react-router';
 
 class TrackingView extends Component {
   constructor() {
     super();
-    this.state = { position: null };
+    this.state = {
+      lastPosition: null,
+      positions: [],
+    };
   }
 
   static propTypes = {
@@ -14,17 +18,18 @@ class TrackingView extends Component {
   }
 
   componentWillMount() {
+    // TODO: implement a method on store to get both in one round
     this.props.trackStore.getTrack(parseInt(this.props.params.trackId, 10), track => {
-      this.setState({ track });
+      this.props.trackStore.getTrackPositions(track.id, positions => {
+        this.setState({ track, positions });
+      });
     });
   }
 
   componentDidMount() {
     console.log('Lauching GPS…');
     this.tracker = new Tracker(true);
-    this.tracker.start(
-        position => this.onNewPosition(position),
-    );
+    this.tracker.start(position => this.onNewPosition(position));
   }
 
   componentWillUnmount() {
@@ -34,16 +39,27 @@ class TrackingView extends Component {
     }
   }
 
-  onNewPosition(onNewPosition) {
-     this.setState({ position: onNewPosition });
+  onNewPosition(newPosition) {
+    if(this.state.track && this.state.positions) {
+      this.props.trackStore.addPosition(this.state.track.id, newPosition, () => {
+        // TODO:PERFS: less costly operation, maybe just push
+        this.setState({
+          positions: this.state.positions.concat(newPosition),
+        });
+      });
+    }
+    this.setState({ lastPosition: newPosition });
   }
 
   render() {
     const track = this.state.track;
 
     return (<div>
-        <GpsStatus {...this.state} />
+        <GpsStatus position={this.state.lastPosition} />
         {/* @TODO: Map */}
+        <div className="mapContainer">
+          <TrackMap positions={this.state.positions} />
+        </div>
         <button onClick={() => { this.props.router.push(`/tracks/${track.id}`) }}>Stop</button>
     </div>);
   }

@@ -7,7 +7,15 @@ import './leaflet.css';
 
 class TrackMap extends Component {
   static propTypes = {
-    track: PropTypes.object.isRequired,
+    positions: PropTypes.array.isRequired,
+  }
+
+  static defaultProps = {
+    positions: [],
+  }
+
+  positionsToLatLng() {
+    return this.props.positions.map(p => [p.coords.latitude, p.coords.longitude]);
   }
 
   componentDidMount() {
@@ -21,10 +29,21 @@ class TrackMap extends Component {
             }),
         ],
     });
+    const coords = this.positionsToLatLng();
+    this.polyline = L.polyline(coords).addTo(this.map);
+    if(coords.length) {
+      this.map.fitBounds(L.latLngBounds(coords));
+    }
   }
 
-  // TODO: convert props changes to Leaflet instructions
-  // shouldComponentUpdate() {}
+  componentWillReceiveProps(nextProps) {
+    const newCoords = this.positionsToLatLng();
+    // TODO:PERFS: When only the last point is new, just use Polyline.addLatLng
+    if(newCoords.length) {
+      this.polyline.setLatLngs(newCoords);
+      this.map.setView(newCoords[newCoords.length - 1]);
+    }
+  }
 
   componentWillUnmount() {
     this.map.remove();

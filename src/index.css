@@ -7,3 +7,7 @@ body {
 .trackSummary {
   padding: 0.5em;
 }
+
+.mapContainer {
+  height: 300px;
+}
