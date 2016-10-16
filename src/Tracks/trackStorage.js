@@ -42,7 +42,7 @@ const trackStorage = function() {
     };
   };
 
-  var publicMethods = {
+  const publicMethods = {
     createTrack(success, error) {
       const newTrack = {
         name: '<No name>',
@@ -66,12 +66,12 @@ const trackStorage = function() {
 
     addPosition(trackId, position, success, error) {
       openDB(function() {
-        var transaction = db.transaction(['positions'], 'readwrite');
+        const transaction = db.transaction(['positions'], 'readwrite');
         transaction.oncomplete = function(event) {
           success(position.id);
         };
 
-        var trackStore = transaction.objectStore('positions');
+        const trackStore = transaction.objectStore('positions');
         position.trackId = trackId;
         // generate a numerical Id based on timestamp and trackId for range selection
         position.id = Number(trackId) * (1e16) + position.timestamp;
@@ -99,11 +99,11 @@ const trackStorage = function() {
 
     getTrackList(success, error) {
       openDB(function() {
-        var objectStore = db.transaction(['tracks'], 'readonly').objectStore('tracks');
-        var request = objectStore.openCursor();
-        var recordedTracks = [];
+        const objectStore = db.transaction(['tracks'], 'readonly').objectStore('tracks');
+        const request = objectStore.openCursor();
+        const recordedTracks = [];
         request.onsuccess = function(event) {
-          var cursor = event.target.result;
+          const cursor = event.target.result;
           // Too bad getAll() isn't standard...
           if (cursor) {
             recordedTracks.push(cursor.value);
@@ -127,12 +127,12 @@ const trackStorage = function() {
 
     getTrackPositions(trackId, success, error) {
       openDB(function() {
-        var positions = [];
-        var positionStore = db.transaction(['positions'], 'readonly').objectStore('positions');
-        var positionIdx = positionStore.index('positionIdx');
-        var request = positionIdx.openCursor(IDBKeyRange.only(Number(trackId)));
+        const positions = [];
+        const positionStore = db.transaction(['positions'], 'readonly').objectStore('positions');
+        const positionIdx = positionStore.index('positionIdx');
+        const request = positionIdx.openCursor(IDBKeyRange.only(Number(trackId)));
         request.onsuccess = function(event) {
-          var cursor = event.target.result;
+          const cursor = event.target.result;
           if (cursor) {
             positions.push(cursor.value);
             cursor.continue();
