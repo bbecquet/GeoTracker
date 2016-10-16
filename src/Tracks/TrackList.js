@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import TrackSummary from './TrackSummary.js';
-import { Link } from 'react-router';
+import { Link, withRouter } from 'react-router';
 
 class TrackList extends Component {
   constructor() {
@@ -16,16 +16,19 @@ class TrackList extends Component {
     this.refreshTrackList();
   }
 
-  refreshTrackList() {
+  refreshTrackList(done) {
     this.props.trackStore.getTrackList(tracks => {
       this.setState({ tracks });
+      if(done) { done(); }
     });
   }
 
   addTrack() {
     this.props.trackStore.createTrack(
-      track => {
-        this.refreshTrackList();
+      newTrack => {
+        this.refreshTrackList(() => {
+          this.props.router.push(`/tracks/${newTrack.id}/tracking`)
+        });
     	},
       () => {
     		console.error('Error creating new track');
@@ -58,4 +61,4 @@ class TrackList extends Component {
   }
 }
 
-export default TrackList;
+export default withRouter(TrackList);

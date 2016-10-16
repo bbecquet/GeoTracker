@@ -10,10 +10,9 @@ class TrackingView extends Component {
 
   componentDidMount() {
     console.log('Lauching GPS…');
-    this.tracker = new Tracker();
+    this.tracker = new Tracker(true);
     this.tracker.start(
         position => this.onNewPosition(position),
-
     );
   }
 
