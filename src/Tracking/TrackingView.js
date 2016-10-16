@@ -56,7 +56,6 @@ class TrackingView extends Component {
 
     return (<div>
         <GpsStatus position={this.state.lastPosition} />
-        {/* @TODO: Map */}
         <div className="mapContainer">
           <TrackMap positions={this.state.positions} />
         </div>
