@@ -15,7 +15,6 @@ class SingleTrack extends Component {
   }
 
   componentWillMount() {
-    console.log(this.props);
     this.props.trackStore.getTrackList(tracks => {
       console.log(tracks, this.props.params.trackId);
       // TODO: Find why lodash doesn't work here
@@ -27,9 +26,6 @@ class SingleTrack extends Component {
 
   deleteTrack() {
     // if(!confirm('Are you sure you want to delete this track?')) { return; }
-    console.log(parseInt(this.props.params.trackId, 10));
-
-    // TODO: Find why the track doesn't get deleted
     this.props.trackStore.deleteTrack(parseInt(this.props.params.trackId, 10), () => {
       this.props.router.push('/tracks');
     });

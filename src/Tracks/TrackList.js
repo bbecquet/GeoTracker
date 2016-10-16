@@ -23,7 +23,7 @@ class TrackList extends Component {
   }
 
   addTrack() {
-    this.props.trackStore.addTrack(
+    this.props.trackStore.createTrack(
       track => {
         this.refreshTrackList();
     	},
@@ -33,23 +33,24 @@ class TrackList extends Component {
     );
   }
 
-  render() {
-    const tracks = this.state.tracks;
+  renderList(tracks) {
+    if(!tracks) { return 'Loading tracks'; }
 
+    if(tracks.length === 0) { return 'No track yet'; }
+
+    return tracks.reverse().map(track =>
+      <Link to={`/tracks/${track.id}`} key={track.id}>
+        <TrackSummary track={track} />
+      </Link>
+    )
+  }
+
+  render() {
     return (
       <div>
         <h2>Your tracks</h2>
         <div>
-          {!tracks
-            ? 'Loading tracks…'
-            : tracks.length === 0
-              ? 'No track yet'
-              : tracks.map(track =>
-                <Link to={`/tracks/${track.id}`} key={track.id}>
-                  <TrackSummary track={track} />
-                </Link>
-              )
-          }
+          {this.renderList(this.state.tracks)}
         </div>
         <button onClick={() => {this.addTrack()}}>New track</button>
       </div>

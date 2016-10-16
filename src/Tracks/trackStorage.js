@@ -43,25 +43,23 @@ const trackStorage = function() {
   };
 
   var publicMethods = {
-    addTrack(success, error) {
+    createTrack(success, error) {
       const newTrack = {
-        name: 'Foobar',
+        name: '<No name>',
         createdAt: Date.now(),
-        positions: [],
-        markers: []
       };
 
       openDB(function() {
-        let trackId;
         const transaction = db.transaction(['tracks'], 'readwrite');
         transaction.oncomplete = function(event) {
-          success(trackId);
+          success(newTrack);
         };
 
         const trackStore = transaction.objectStore('tracks');
         const request = trackStore.add(newTrack);
         request.onsuccess = function(event) {
-          trackId = event.target.result;
+          const newTrackId = event.target.result;
+          newTrack.id = newTrackId;
         };
       });
     },
