@@ -115,6 +115,16 @@ const trackStorage = function() {
       });
     },
 
+    getTrack(trackId, success, error) {
+      openDB(function() {
+        const trackStore = db.transaction(['tracks'], 'readonly').objectStore('tracks');
+        const request = trackStore.get(trackId);
+        request.onsuccess = () => {
+          success(request.result);
+        };
+      });
+    },
+
     getTrackPositions(trackId, success, error) {
       openDB(function() {
         var positions = [];

@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import TrackSummary from './TrackSummary.js';
 import TrackStats from './TrackStats.js';
 import { Link, withRouter } from 'react-router';
-import _ from 'lodash';
 
 class SingleTrack extends Component {
   constructor() {
@@ -15,11 +14,7 @@ class SingleTrack extends Component {
   }
 
   componentWillMount() {
-    this.props.trackStore.getTrackList(tracks => {
-      console.log(tracks, this.props.params.trackId);
-      // TODO: Find why lodash doesn't work here
-      // const track = _.find(tracks, { id: this.props.params.trackId });
-      const track = tracks.find(t => { return t.id === parseInt(this.props.params.trackId, 10); });
+    this.props.trackStore.getTrack(parseInt(this.props.params.trackId, 10), track => {
       this.setState({ track });
     });
   }

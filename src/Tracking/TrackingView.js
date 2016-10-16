@@ -1,11 +1,22 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import GpsStatus from './GpsStatus.js';
 import Tracker from './tracker.js';
+import { withRouter } from 'react-router';
 
 class TrackingView extends Component {
   constructor() {
     super();
     this.state = { position: null };
+  }
+
+  static propTypes = {
+    trackStore: PropTypes.object.isRequired,
+  }
+
+  componentWillMount() {
+    this.props.trackStore.getTrack(parseInt(this.props.params.trackId, 10), track => {
+      this.setState({ track });
+    });
   }
 
   componentDidMount() {
@@ -27,16 +38,15 @@ class TrackingView extends Component {
      this.setState({ position: onNewPosition });
   }
 
-  onError() {
-
-  }
-
   render() {
-    return <div>
+    const track = this.state.track;
+
+    return (<div>
         <GpsStatus {...this.state} />
         {/* @TODO: Map */}
-    </div>;
+        <button onClick={() => { this.props.router.push(`/tracks/${track.id}`) }}>Stop</button>
+    </div>);
   }
 }
 
-export default TrackingView;
+export default withRouter(TrackingView);
