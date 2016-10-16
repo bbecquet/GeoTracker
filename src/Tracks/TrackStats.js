@@ -4,12 +4,15 @@ import React, { Component, PropTypes } from 'react';
 class Track extends Component {
   static propTypes = {
     track: PropTypes.object.isRequired,
+    positions: PropTypes.array.isRequired,
   }
 
   render() {
+    const { positions } = this.props;
+
     return (
       <div>
-          TODO: graph, nbPoints, static map
+        {`${positions.length} points`}
       </div>
     );
   }

@@ -41,13 +41,12 @@ class SingleTrack extends Component {
 
     return (<div>
         <TrackSummary track={track} />
-        <TrackStats track={track} />
+        <TrackStats {...this.state} />
         <div className="mapContainer">
           <TrackMap positions={this.state.positions} />
         </div>
         <Link to={`/tracks/${track.id}/tracking`}>Resume</Link>
         <button onClick={() => { this.deleteTrack() }}>Delete</button>
-        <Link to={`/tracks/${track.id}/map`}>See on map</Link>
     </div>);
   }
 }
