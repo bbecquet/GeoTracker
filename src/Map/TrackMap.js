@@ -22,15 +22,21 @@ class TrackMap extends Component {
     this.map = L.map(this.mapElement, {
         // TODO: put map options in global settings?
         center: [48.85, 2.35],
-        zoom: 10,
+        zoom: 18,
         layers: [
             L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             }),
         ],
+        zoomControl: false,
+        scaleControl: true,
     });
+    L.control.scale().addTo(this.map);
+
     const coords = this.positionsToLatLng();
-    this.polyline = L.polyline(coords).addTo(this.map);
+    this.polyline = L.polyline(coords, {
+      // TODO: style
+    }).addTo(this.map);
     if(coords.length) {
       this.map.fitBounds(L.latLngBounds(coords));
     }
@@ -50,6 +56,8 @@ class TrackMap extends Component {
   }
 
   render() {
+    // As it doesn't depend on any props or state,
+    // it won't get re-rendered
     return <div className="map" ref={m => this.mapElement = m} />;
   }
 }
