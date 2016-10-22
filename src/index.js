@@ -11,19 +11,19 @@ import trackStorage from './Tracks/trackStorage.js';
 const trackStore = new trackStorage();
 
 const createElement = function (Component, props) {
-  return <Component trackStore={trackStore} {...props} />
+    return <Component trackStore={trackStore} {...props} />
 };
 
 ReactDOM.render(
-  <Router history={browserHistory} createElement={createElement}>
-    <Route path="/" component={App}>
-      <IndexRedirect to="/tracks" />
-      <Route path="tracks" component={TrackList} />
-      <Route path="tracks/:trackId" component={SingleTrack}></Route>
-      <Route path="tracks/:trackId/tracking" component={TrackingView}></Route>
-    </Route>
-  </Router>,
-  // <Route path="settings" component={About}/>
-  // <Route path="*" component={NoMatch}/>, redirect to home
-  document.getElementById('root')
+    <Router history={browserHistory} createElement={createElement}>
+        <Route path="/" component={App}>
+            <IndexRedirect to="/tracks" />
+            <Route path="tracks" component={TrackList} />
+            <Route path="tracks/:trackId" component={SingleTrack}></Route>
+            <Route path="tracks/:trackId/tracking" component={TrackingView}></Route>
+        </Route>
+    </Router>,
+    // <Route path="settings" component={About}/>
+    // <Route path="*" component={NoMatch}/>, redirect to home
+    document.getElementById('root')
 );

@@ -6,60 +6,60 @@ import './images/layers.png';
 import './leaflet.css';
 
 class TrackMap extends Component {
-  static propTypes = {
-    positions: PropTypes.array.isRequired,
-  }
-
-  static defaultProps = {
-    positions: [],
-  }
-
-  positionsToLatLng() {
-    return this.props.positions.map(p => [p.coords.latitude, p.coords.longitude]);
-  }
-
-  componentDidMount() {
-    this.map = L.map(this.mapElement, {
-        // TODO: put map options in global settings?
-        center: [48.85, 2.35],
-        zoom: 18,
-        layers: [
-            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            }),
-        ],
-        zoomControl: false,
-        scaleControl: true,
-    });
-    L.control.scale().addTo(this.map);
-
-    const coords = this.positionsToLatLng();
-    this.polyline = L.polyline(coords, {
-      // TODO: style
-    }).addTo(this.map);
-    if(coords.length) {
-      this.map.fitBounds(L.latLngBounds(coords));
+    static propTypes = {
+        positions: PropTypes.array.isRequired,
     }
-  }
 
-  componentWillReceiveProps(nextProps) {
-    const newCoords = this.positionsToLatLng();
-    // TODO:PERFS: When only the last point is new, just use Polyline.addLatLng
-    if(newCoords.length) {
-      this.polyline.setLatLngs(newCoords);
-      this.map.setView(newCoords[newCoords.length - 1]);
+    static defaultProps = {
+        positions: [],
     }
-  }
 
-  componentWillUnmount() {
-    this.map.remove();
-  }
+    positionsToLatLng() {
+        return this.props.positions.map(p => [p.coords.latitude, p.coords.longitude]);
+    }
 
-  render() {
-    // As it doesn't depend on any props or state,
-    // it won't get re-rendered
-    return <div className="map" ref={m => this.mapElement = m} />;
-  }
+    componentDidMount() {
+        this.map = L.map(this.mapElement, {
+            // TODO: put map options in global settings?
+            center: [48.85, 2.35],
+            zoom: 18,
+            layers: [
+                L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                }),
+            ],
+            zoomControl: false,
+            scaleControl: true,
+        });
+        L.control.scale().addTo(this.map);
+
+        const coords = this.positionsToLatLng();
+        this.polyline = L.polyline(coords, {
+            // TODO: style
+        }).addTo(this.map);
+        if(coords.length) {
+            this.map.fitBounds(L.latLngBounds(coords));
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const newCoords = this.positionsToLatLng();
+        // TODO:PERFS: When only the last point is new, just use Polyline.addLatLng
+        if(newCoords.length) {
+            this.polyline.setLatLngs(newCoords);
+            this.map.setView(newCoords[newCoords.length - 1]);
+        }
+    }
+
+    componentWillUnmount() {
+        this.map.remove();
+    }
+
+    render() {
+        // As it doesn't depend on any props or state,
+        // it won't get re-rendered
+        return <div className="map" ref={m => this.mapElement = m} />;
+    }
 }
 
 export default TrackMap;
