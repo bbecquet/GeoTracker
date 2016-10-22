@@ -7,6 +7,7 @@ import TrackList from './Tracks/TrackList.js';
 import SingleTrack from './Tracks/SingleTrack.js';
 import TrackingView from './Tracking/TrackingView.js';
 import trackStorage from './Tracks/trackStorage.js';
+import SettingsView from './Settings/SettingsView.js';
 
 const trackStore = new trackStorage();
 
@@ -21,9 +22,9 @@ ReactDOM.render(
             <Route path="tracks" component={TrackList} />
             <Route path="tracks/:trackId" component={SingleTrack}></Route>
             <Route path="tracks/:trackId/tracking" component={TrackingView}></Route>
+            <Route path="settings" component={SettingsView}/>
         </Route>
     </Router>,
-    // <Route path="settings" component={About}/>
     // <Route path="*" component={NoMatch}/>, redirect to home
     document.getElementById('root')
 );

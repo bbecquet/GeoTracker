@@ -55,7 +55,10 @@ class TrackList extends Component {
     render() {
         return (
             <div>
-                <header>Your tracks</header>
+                <header>
+                    Your tracks
+                    <button onClick={() => { this.props.router.push('/settings') }}>⚙</button>
+                </header>
                 <main>
                     {this.renderList(this.state.tracks)}
                     <div>

@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import GpsStatus from './GpsStatus.js';
-import Tracker from './tracker.js';
-import TrackMap from '../Map/TrackMap.js';
+import GpsStatus from './GpsStatus';
+import Tracker from './tracker';
+import TrackMap from '../Map/TrackMap';
 import { withRouter } from 'react-router';
+import { getSetting } from '../Settings/settings';
 
 class TrackingView extends Component {
     constructor() {
@@ -28,7 +29,7 @@ class TrackingView extends Component {
 
     componentDidMount() {
         console.log('Lauching GPS…');
-        this.tracker = new Tracker(true);
+        this.tracker = new Tracker(getSetting('gps.simulatePositions'));
         this.tracker.start(position => this.onNewPosition(position));
     }
 
