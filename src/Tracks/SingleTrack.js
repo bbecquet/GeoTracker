@@ -40,13 +40,18 @@ class SingleTrack extends Component {
     }
 
     return (<div>
+        <header>Track</header>
+        <main>
         <TrackSummary track={track} />
         <TrackStats {...this.state} />
         <div className="mapContainer">
           <TrackMap positions={this.state.positions} />
         </div>
-        <Link to={`/tracks/${track.id}/tracking`}>Resume</Link>
-        <button onClick={() => { this.deleteTrack() }}>Delete</button>
+        <div>
+            <Link to={`/tracks/${track.id}/tracking`}>Resume</Link>
+            <button onClick={() => { this.deleteTrack() }}>Delete</button>
+        </div>
+        </main>
     </div>);
   }
 }

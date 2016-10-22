@@ -51,11 +51,13 @@ class TrackList extends Component {
   render() {
     return (
       <div>
-        <h2>Your tracks</h2>
-        <div>
+        <header>Your tracks</header>
+        <main>
           {this.renderList(this.state.tracks)}
-        </div>
-        <button onClick={() => {this.addTrack()}}>New track</button>
+          <div>
+              <button onClick={() => {this.addTrack()}}>New track</button>
+          </div>
+        </main>
       </div>
     );
   }

@@ -5,9 +5,19 @@ body {
 }
 
 .trackSummary {
-  padding: 0.5em;
 }
 
 .mapContainer {
   height: 300px;
+}
+
+header {
+    background-color: black;
+    padding: 0.5rem;
+    color: white;
+    font-size: 2em;
+}
+
+main {
+    padding: 0.5em;
 }
