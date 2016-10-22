@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
+import { Link, withRouter } from 'react-router';
 import TrackSummary from './TrackSummary.js';
 import TrackStats from './TrackStats.js';
-import { Link, withRouter } from 'react-router';
 import TrackMap from '../Map/TrackMap.js';
+import { exportTrackAsGpx } from './trackUtils.js';
 
 class SingleTrack extends Component {
     constructor() {
@@ -36,6 +37,10 @@ class SingleTrack extends Component {
         });
     }
 
+    exportTrack() {
+        exportTrackAsGpx(this.state.track, this.state.positions)
+    }
+
     render() {
         const track = this.state.track;
 
@@ -56,6 +61,7 @@ class SingleTrack extends Component {
                 </div>
                 <div>
                     <Link to={`/tracks/${track.id}/tracking`}>Resume</Link>
+                    <button onClick={() => { this.exportTrack(); }}>Export</button>
                     <button onClick={() => { this.deleteTrack(); }}>Delete</button>
                 </div>
             </main>
