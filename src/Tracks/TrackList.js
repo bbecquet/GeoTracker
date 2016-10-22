@@ -41,11 +41,15 @@ class TrackList extends Component {
 
         if(tracks.length === 0) { return 'No track yet'; }
 
-        return tracks.reverse().map(track =>
-            <Link to={`/tracks/${track.id}`} key={track.id}>
-                <TrackSummary track={track} />
-            </Link>
-        )
+        return <ul className="trackList">
+            {tracks.reverse().map(track =>
+                <li>
+                    <Link to={`/tracks/${track.id}`} key={track.id}>
+                        <TrackSummary track={track} />
+                    </Link>
+                </li>
+            )}
+        </ul>;
     }
 
     render() {
