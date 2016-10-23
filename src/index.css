@@ -31,6 +31,21 @@ header {
     padding: 0.5rem;
     color: white;
     font-size: 2em;
+    box-shadow: 0 0 5px #888;
+}
+
+header button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    vertical-align: middle;
+}
+
+button.mainAction {
+    box-shadow: 0 0 5px #888;
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
 }
 
 main {
@@ -42,4 +57,15 @@ button {
     background-color: #EEE;
     border-radius: 3px;
     border: 1px solid #CCC;
+}
+
+fieldset {
+    border: none;
+}
+
+legend {
+    background-color: #EEE;
+    display: block;
+    width: 100%;
+    padding: 0.1em 0;
 }

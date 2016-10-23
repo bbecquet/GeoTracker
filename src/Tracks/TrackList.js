@@ -62,7 +62,12 @@ class TrackList extends Component {
                 <main>
                     {this.renderList(this.state.tracks)}
                     <div>
-                        <button onClick={() => {this.addTrack()}}>New track</button>
+                        <button
+                            className="mainAction"
+                            onClick={() => {this.addTrack()}}
+                        >
+                            New track
+                        </button>
                     </div>
                 </main>
             </div>
