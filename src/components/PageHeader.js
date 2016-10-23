@@ -15,7 +15,7 @@ class PageHeader extends Component {
                 <button
                     onClick={() => { this.props.router.push(this.props.backPath) }}
                 >
-                    {'<'}
+                    ❮
                 </button>
             }
             </div>

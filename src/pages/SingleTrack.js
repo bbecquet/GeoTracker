@@ -49,7 +49,13 @@ class SingleTrack extends Component {
             <PageHeader
                 title="Track"
                 backPath="/tracks"
-                rightChild={ <button onClick={() => { this.exportTrack(); }}>Export</button> }
+                rightChild={
+                    <div>
+                        <button onClick={() => { this.deleteTrack(); }}>🗑</button>
+                        |
+                        <button onClick={() => { this.exportTrack(); }}>Export</button>
+                    </div>
+                }
             />
             <main>
                 <TrackSummary track={track} />
@@ -59,7 +65,6 @@ class SingleTrack extends Component {
                 </div>
                 <div>
                     <Link to={`/tracks/${track.id}/tracking`}>Resume</Link>
-                    <button onClick={() => { this.deleteTrack(); }}>Delete</button>
                 </div>
             </main>
         </div>);
