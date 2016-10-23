@@ -27,14 +27,18 @@ ul, li {
     height: 300px;
 }
 
+.padding {
+    padding: 0.5em;
+}
+
 main {
-    padding: calc(48px + 0.5em) 0.5em 0.5em;
+    padding-top: 48px;
 }
 
 .pageHeader {
     background-color: black;
     padding: 0.5rem 0;
-    color: white;
+    color: #EEE;
     box-shadow: 0 0 5px #888;
     display: flex;
     align-items: center;
@@ -52,7 +56,7 @@ main {
 .pageHeader button {
     background-color: transparent;
     border: none;
-    color: white;
+    color: #EEE;
     vertical-align: middle;
 }
 

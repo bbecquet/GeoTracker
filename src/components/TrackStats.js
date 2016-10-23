@@ -11,7 +11,7 @@ class Track extends Component {
         const { positions } = this.props;
 
         return (
-            <div>
+            <div className="trackStats padding">
                 <p>{`${positions.length} points`}</p>
                 <p>Distance {`${getLength(positions)}m`}</p>
             </div>

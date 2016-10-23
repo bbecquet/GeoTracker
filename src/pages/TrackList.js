@@ -66,18 +66,16 @@ class TrackList extends Component {
                     rightChild={ <button onClick={() => { this.props.router.push('/settings') }}>⚙</button> }
                 />
                 <main>
-                    <div className="trackList">
+                    <div className="trackList padding">
                         <p>{this.getTrackCount(this.state.tracks)}</p>
                         {this.state.tracks && this.renderList(this.state.tracks)}
                     </div>
-                    <div>
-                        <button
-                            className="mainAction"
-                            onClick={() => {this.addTrack()}}
-                        >
-                            New track
-                        </button>
-                    </div>
+                    <button
+                        className="mainAction"
+                        onClick={() => {this.addTrack()}}
+                    >
+                        New track
+                    </button>
                 </main>
             </div>
         );

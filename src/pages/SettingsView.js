@@ -19,7 +19,7 @@ class SettingsView extends Component {
                 backPath="/tracks"
             />
             <main>
-                <fieldset>
+                <fieldset className="padding">
                     <legend>GPS</legend>
                     <label>
                         <input
