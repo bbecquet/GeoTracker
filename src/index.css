@@ -70,6 +70,15 @@ main {
 
 }
 
+input[type=checkbox],
+input[type=radio] {
+    margin-right: 0.25em;
+}
+
+label {
+    margin-right: 1em;
+}
+
 button.mainAction {
     box-shadow: 0 0 5px #888;
     position: fixed;
@@ -91,9 +100,12 @@ fieldset {
 
 legend {
     background-color: #EEE;
+    color: #888;
     display: block;
     width: 100%;
     padding: 0.25em;
-    margin-bottom: 0.25em;
+}
 
+.helpMsg {
+    font-style: italic;
 }
