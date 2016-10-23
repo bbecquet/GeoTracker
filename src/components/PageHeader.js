@@ -9,7 +9,8 @@ class PageHeader extends Component {
     }
 
     render() {
-        return <header>
+        return <header className="pageHeader">
+            <div className="pageHeader-left">
             {this.props.backPath &&
                 <button
                     onClick={() => { this.props.router.push(this.props.backPath) }}
@@ -17,8 +18,11 @@ class PageHeader extends Component {
                     {'<'}
                 </button>
             }
-            {this.props.title}
-            {this.props.rightChild}
+            </div>
+            <h1>{this.props.title}</h1>
+            <div className="pageHeader-right">
+                {this.props.rightChild}
+            </div>
         </header>
     }
 }

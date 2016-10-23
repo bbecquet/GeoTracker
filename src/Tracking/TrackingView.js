@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import GpsStatus from './GpsStatus';
 import Tracker from './tracker';
 import TrackMap from '../Map/TrackMap';
+import PageHeader from '../components/PageHeader';
 import { withRouter } from 'react-router';
 import { getSetting } from '../Settings/settings';
 
@@ -56,11 +57,16 @@ class TrackingView extends Component {
         const track = this.state.track;
 
         return (<div>
-            <GpsStatus position={this.state.lastPosition} />
-            <div className="mapContainer">
-                <TrackMap positions={this.state.positions} />
-            </div>
-            <button onClick={() => { this.props.router.push(`/tracks/${track.id}`) }}>Stop</button>
+            <PageHeader
+                title="Tracking…"
+                rightChild={ <GpsStatus position={this.state.lastPosition} /> }
+            />
+            <main>
+                <div className="mapContainer">
+                    <TrackMap positions={this.state.positions} />
+                </div>
+                <button onClick={() => { this.props.router.push(`/tracks/${track.id}`) }}>Stop</button>
+            </main>
         </div>);
     }
 }

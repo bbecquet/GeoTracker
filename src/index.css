@@ -26,19 +26,36 @@ ul, li {
     height: 300px;
 }
 
-header {
+.pageHeader {
     background-color: black;
     padding: 0.5rem;
     color: white;
-    font-size: 2em;
     box-shadow: 0 0 5px #888;
+    display: flex;
+    align-items: center;
 }
 
-header button {
+.pageHeader h1 {
+    font-size: 1.8em;
+    font-weight: normal;
+    flex-grow: 1;
+}
+
+.pageHeader button {
     background-color: transparent;
     border: none;
     color: white;
     vertical-align: middle;
+}
+
+.pageHeader .pageHeader-left {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 32px;
+}
+
+.pageHeader .pageHeader-right {
+
 }
 
 button.mainAction {

@@ -17,7 +17,7 @@ class GpsStatus extends Component {
         } = this.props.position.coords;
 
         return <div className="gpsStatus gpsStatus--active">
-            {`${latitude}/${longitude}`}
+            {/* `${latitude}/${longitude}` */}
         </div>;
     }
 }
