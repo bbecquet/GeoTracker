@@ -4,6 +4,7 @@ import TrackSummary from './TrackSummary.js';
 import TrackStats from './TrackStats.js';
 import TrackMap from '../Map/TrackMap.js';
 import { exportTrackAsGpx } from './trackUtils.js';
+import PageHeader from '../components/PageHeader.js';
 
 class SingleTrack extends Component {
     constructor() {
@@ -26,14 +27,10 @@ class SingleTrack extends Component {
         });
     }
 
-    backToTrackList() {
-        this.props.router.push('/tracks');
-    }
-
     deleteTrack() {
         // if(!confirm('Are you sure you want to delete this track?')) { return; }
         this.props.trackStore.deleteTrack(parseInt(this.props.params.trackId, 10), () => {
-            this.backToTrackList();
+            this.props.router.push('/tracks');
         });
     }
 
@@ -49,10 +46,10 @@ class SingleTrack extends Component {
         }
 
         return (<div>
-            <header>
-                <button onClick={() => { this.backToTrackList(); }}>{'<'}</button>
-                Track
-            </header>
+            <PageHeader
+                title="Track"
+                backPath="/tracks"
+            />
             <main>
                 <TrackSummary track={track} />
                 <TrackStats {...this.state} />

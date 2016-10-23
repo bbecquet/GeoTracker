@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import TrackSummary from './TrackSummary.js';
 import { Link, withRouter } from 'react-router';
+import PageHeader from '../components/PageHeader.js';
 
 class TrackList extends Component {
     constructor() {
@@ -55,10 +56,10 @@ class TrackList extends Component {
     render() {
         return (
             <div>
-                <header>
-                    Your tracks
-                    <button onClick={() => { this.props.router.push('/settings') }}>⚙</button>
-                </header>
+                <PageHeader
+                    title="Your tracks"
+                    rightChild={ <button onClick={() => { this.props.router.push('/settings') }}>⚙</button> }
+                />
                 <main>
                     {this.renderList(this.state.tracks)}
                     <div>

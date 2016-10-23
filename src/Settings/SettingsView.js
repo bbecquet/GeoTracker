@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import { withRouter } from 'react-router';
 import { getSetting, setSetting } from './settings';
+import PageHeader from '../components/PageHeader.js';
 
 class SettingsView extends Component {
     static propTypes = {
@@ -14,10 +14,10 @@ class SettingsView extends Component {
 
     render() {
         return <div>
-            <header>
-                <button onClick={() => { this.props.router.push('/tracks'); }}>{'<'}</button>
-                Settings
-            </header>
+            <PageHeader
+                title="Settings"
+                backPath="/tracks"
+            />
             <main>
                 <fieldset>
                     <legend>GPS</legend>
@@ -35,4 +35,4 @@ class SettingsView extends Component {
     }
 }
 
-export default withRouter(SettingsView);
+export default SettingsView;
