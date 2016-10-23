@@ -12,6 +12,11 @@ class SettingsView extends Component {
         this.forceUpdate();
     }
 
+    handleChangeUnit(e) {
+        setSetting('lengthUnit', e.target.value);
+        this.forceUpdate();
+    }
+
     render() {
         return <div>
             <PageHeader
@@ -19,7 +24,30 @@ class SettingsView extends Component {
                 backPath="/tracks"
             />
             <main>
-                <fieldset className="padding">
+                <fieldset>
+                    <legend>Length unit</legend>
+                    <label>
+                        <input
+                            name="lengthUnit"
+                            value="m"
+                            type="radio"
+                            checked={getSetting('lengthUnit') === 'm' || getSetting('lengthUnit') === ''}
+                            onChange={e => { this.handleChangeUnit(e); }}
+                        />
+                        Meters
+                    </label>
+                    <label>
+                        <input
+                            name="lengthUnit"
+                            value="ft"
+                            type="radio"
+                            checked={getSetting('lengthUnit') === 'ft'}
+                            onChange={e => { this.handleChangeUnit(e); }}
+                        />
+                        Feet
+                    </label>
+                </fieldset>
+                <fieldset>
                     <legend>GPS</legend>
                     <label>
                         <input

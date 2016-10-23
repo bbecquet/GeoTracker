@@ -86,11 +86,14 @@ button {
 
 fieldset {
     border: none;
+    margin-bottom: 1em;
 }
 
 legend {
     background-color: #EEE;
     display: block;
     width: 100%;
-    padding: 0.1em 0;
+    padding: 0.25em;
+    margin-bottom: 0.25em;
+
 }
