@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-// import moment from 'moment';
+import { getLength } from '../models/trackUtils';
 
 class Track extends Component {
     static propTypes = {
@@ -12,7 +12,8 @@ class Track extends Component {
 
         return (
             <div>
-                {`${positions.length} points`}
+                <p>{`${positions.length} points`}</p>
+                <p>Distance {`${getLength(positions)}m`}</p>
             </div>
         );
     }
