@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { Link, withRouter } from 'react-router';
-import TrackSummary from './TrackSummary.js';
-import TrackStats from './TrackStats.js';
-import TrackMap from '../Map/TrackMap.js';
-import { exportTrackAsGpx } from './trackUtils.js';
-import PageHeader from '../components/PageHeader.js';
+import TrackSummary from '../components/TrackSummary';
+import TrackStats from '../components/TrackStats';
+import TrackMap from '../components/TrackMap';
+import { exportTrackAsGpx } from '../models/trackUtils';
+import PageHeader from '../components/PageHeader';
 
 class SingleTrack extends Component {
     constructor() {

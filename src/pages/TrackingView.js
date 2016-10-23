@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
-import GpsStatus from './GpsStatus';
-import Tracker from './tracker';
-import TrackMap from '../Map/TrackMap';
-import PageHeader from '../components/PageHeader';
 import { withRouter } from 'react-router';
-import { getSetting } from '../Settings/settings';
+import { getSetting } from '../models/settings';
+import Tracker from '../models/tracker';
+import PageHeader from '../components/PageHeader';
+import TrackMap from '../components/TrackMap';
+import GpsStatus from '../components/GpsStatus';
 
 class TrackingView extends Component {
     constructor() {

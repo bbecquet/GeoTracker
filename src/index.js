@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
-import TrackList from './Tracks/TrackList.js';
-import SingleTrack from './Tracks/SingleTrack.js';
-import TrackingView from './Tracking/TrackingView.js';
-import trackStorage from './Tracks/trackStorage.js';
-import SettingsView from './Settings/SettingsView.js';
+import TrackList from './pages/TrackList.js';
+import SingleTrack from './pages/SingleTrack.js';
+import TrackingView from './pages/TrackingView.js';
+import SettingsView from './pages/SettingsView.js';
+import trackStorage from './models/trackStorage.js';
 
 const trackStore = new trackStorage();
 

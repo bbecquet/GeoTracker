@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import { getSetting, setSetting } from './settings';
-import PageHeader from '../components/PageHeader.js';
+import { getSetting, setSetting } from '../models/settings';
+import PageHeader from '../components/PageHeader';
 
 class SettingsView extends Component {
     static propTypes = {

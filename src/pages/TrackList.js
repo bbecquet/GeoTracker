@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import TrackSummary from './TrackSummary.js';
 import { Link, withRouter } from 'react-router';
+import TrackSummary from '../components/TrackSummary.js';
 import PageHeader from '../components/PageHeader.js';
 
 class TrackList extends Component {
