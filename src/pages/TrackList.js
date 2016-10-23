@@ -44,8 +44,8 @@ class TrackList extends Component {
 
         return <ul className="trackList">
             {tracks.reverse().map(track =>
-                <li>
-                    <Link to={`/tracks/${track.id}`} key={track.id}>
+                <li key={track.id}>
+                    <Link to={`/tracks/${track.id}`}>
                         <TrackSummary track={track} />
                     </Link>
                 </li>
