@@ -37,12 +37,17 @@ class TrackList extends Component {
         );
     }
 
+    getTrackCount(tracks) {
+        if(!tracks) { return 'Loading tracks…'; }
+        switch(tracks.length) {
+            case 0: return 'No track yet';
+            case 1: return '1 track';
+            default: return `${tracks.length} tracks`;
+        }
+    }
+
     renderList(tracks) {
-        if(!tracks) { return 'Loading tracks'; }
-
-        if(tracks.length === 0) { return 'No track yet'; }
-
-        return <ul className="trackList">
+        return <ul>
             {tracks.reverse().map(track =>
                 <li key={track.id}>
                     <Link to={`/tracks/${track.id}`}>
@@ -61,7 +66,10 @@ class TrackList extends Component {
                     rightChild={ <button onClick={() => { this.props.router.push('/settings') }}>⚙</button> }
                 />
                 <main>
-                    {this.renderList(this.state.tracks)}
+                    <div className="trackList">
+                        <p>{this.getTrackCount(this.state.tracks)}</p>
+                        {this.state.tracks && this.renderList(this.state.tracks)}
+                    </div>
                     <div>
                         <button
                             className="mainAction"
