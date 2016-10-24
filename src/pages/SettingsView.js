@@ -25,27 +25,27 @@ class SettingsView extends Component {
             />
             <main>
                 <fieldset>
-                    <legend>Length unit</legend>
+                    <legend>Length system</legend>
                     <div className="padding">
                         <label>
                             <input
                                 name="lengthUnit"
-                                value="m"
+                                value="metric"
                                 type="radio"
-                                checked={getSetting('lengthUnit') === 'm' || getSetting('lengthUnit') === ''}
+                                checked={getSetting('lengthUnit') === 'metric'}
                                 onChange={e => { this.handleChangeUnit(e); }}
                             />
-                            Meters
+                            Metric
                         </label>
                         <label>
                             <input
                                 name="lengthUnit"
-                                value="ft"
+                                value="imperial"
                                 type="radio"
-                                checked={getSetting('lengthUnit') === 'ft'}
+                                checked={getSetting('lengthUnit') === 'imperial'}
                                 onChange={e => { this.handleChangeUnit(e); }}
                             />
-                            Feet
+                            Imperial
                         </label>
                     </div>
                 </fieldset>

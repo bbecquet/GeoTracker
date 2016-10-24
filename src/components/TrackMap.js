@@ -4,6 +4,7 @@ import './TrackMap.css';
 // TODO: find how to import that from node_modules
 import './images/layers.png';
 import './leaflet.css';
+import { getSetting } from '../models/settings';
 
 class TrackMap extends Component {
     static propTypes = {
@@ -29,9 +30,12 @@ class TrackMap extends Component {
                 }),
             ],
             zoomControl: false,
-            scaleControl: true,
         });
-        L.control.scale().addTo(this.map);
+        const useImperialScale = getSetting('lengthUnit') === 'imperial';
+        L.control.scale({
+            imperial: useImperialScale,
+            metric: !useImperialScale,
+        }).addTo(this.map);
 
         const coords = this.positionsToLatLng();
         this.polyline = L.polyline(coords, {
