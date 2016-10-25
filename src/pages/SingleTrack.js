@@ -5,6 +5,9 @@ import TrackStats from '../components/TrackStats';
 import TrackMap from '../components/TrackMap';
 import { exportTrackAsGpx } from '../models/trackUtils';
 import PageHeader from '../components/PageHeader';
+// @TODO: inline to style…
+import deleteIcon from '../imgs/delete.svg';
+import exportIcon from '../imgs/file-export.svg';
 
 class SingleTrack extends Component {
     constructor() {
@@ -51,9 +54,13 @@ class SingleTrack extends Component {
                 backPath="/tracks"
                 rightChild={
                     <div>
-                        <button onClick={() => { this.deleteTrack(); }}>🗑</button>
+                        <button onClick={() => { this.deleteTrack(); }}>
+                            <img src={deleteIcon} alt="" />
+                        </button>
                         |
-                        <button onClick={() => { this.exportTrack(); }}>Export</button>
+                        <button onClick={() => { this.exportTrack(); }}>
+                            <img src={exportIcon} alt="" />
+                        </button>
                     </div>
                 }
             />

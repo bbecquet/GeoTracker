@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link, withRouter } from 'react-router';
 import TrackSummary from '../components/TrackSummary.js';
 import PageHeader from '../components/PageHeader.js';
+import settingsIcon from '../imgs/settings.svg';
 
 class TrackList extends Component {
     constructor() {
@@ -63,7 +64,10 @@ class TrackList extends Component {
             <div>
                 <PageHeader
                     title="Your tracks"
-                    rightChild={ <button onClick={() => { this.props.router.push('/settings') }}>⚙</button> }
+                    rightChild={
+                        <button onClick={() => { this.props.router.push('/settings') }}>
+                            <img src={settingsIcon} alt="" />
+                        </button> }
                 />
                 <main>
                     <div className="trackList padding">
