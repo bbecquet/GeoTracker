@@ -3,7 +3,7 @@ import moment from 'moment';
 
 const TrackSummary = ({track}) => {
     return (
-        <div className="trackSummary padding">
+        <div className="trackSummary">
             <div>{moment(track.createdAt).format('LLL')}</div>
             {track.name}
         </div>

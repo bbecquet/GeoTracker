@@ -70,9 +70,11 @@ class TrackList extends Component {
                         </button> }
                 />
                 <main>
-                    <div className="trackList padding">
-                        <p>{this.getTrackCount(this.state.tracks)}</p>
-                        {this.state.tracks && this.renderList(this.state.tracks)}
+                    <div className="padding">
+                        <div className="trackList">
+                            <p>{this.getTrackCount(this.state.tracks)}</p>
+                            {this.state.tracks && this.renderList(this.state.tracks)}
+                        </div>
                     </div>
                     <button
                         className="mainAction"

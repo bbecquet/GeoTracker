@@ -65,7 +65,9 @@ class TrackingView extends Component {
                 <div className="mapContainer">
                     <TrackMap positions={this.state.positions} />
                 </div>
-                <button onClick={() => { this.props.router.push(`/tracks/${track.id}`) }}>Stop</button>
+                <div className="padding">
+                    <button onClick={() => { this.props.router.push(`/tracks/${track.id}`) }}>Stop</button>
+                </div>
             </main>
         </div>);
     }

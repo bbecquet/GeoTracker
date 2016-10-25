@@ -65,12 +65,14 @@ class SingleTrack extends Component {
                 }
             />
             <main>
-                <TrackSummary track={track} />
-                <TrackStats {...this.state} />
+                <div className="padding">
+                    <TrackSummary track={track} />
+                    <TrackStats {...this.state} />
+                </div>
                 <div className="mapContainer">
                     <TrackMap positions={this.state.positions} />
                 </div>
-                <div>
+                <div className="padding">
                     <Link to={`/tracks/${track.id}/tracking`}>Resume</Link>
                 </div>
             </main>
