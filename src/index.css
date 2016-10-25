@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans');
+
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +9,7 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: sans-serif;
+    font-family: "Fira Sans", Helvetica, sans-serif;
 }
 
 ul, li {
@@ -32,14 +34,14 @@ ul, li {
 }
 
 main {
-    padding-top: 48px;
+    padding-top: 54px;
 }
 
 .pageHeader {
-    background-color: black;
+    background-color: #44b066;
     padding: 0.5rem 0;
-    color: #EEE;
-    box-shadow: 0 0 5px #888;
+    color: white;
+    box-shadow: 0 0 5px #368b51;
     display: flex;
     align-items: center;
     width: 100%;
@@ -51,6 +53,7 @@ main {
     font-size: 1.8em;
     font-weight: normal;
     flex-grow: 1;
+    text-shadow: 0 0 2px #368b51;
 }
 
 .pageHeader button {
@@ -95,7 +98,7 @@ button {
 
 fieldset {
     border: none;
-    margin-bottom: 1em;
+    margin: 0.5em 0 1em;
 }
 
 legend {
