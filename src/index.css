@@ -34,7 +34,7 @@ ul, li {
 }
 
 main {
-    padding-top: 54px;
+    padding-top: 48px;
 }
 
 .pageHeader {
@@ -47,6 +47,7 @@ main {
     width: 100%;
     height: 48px;
     position: fixed;
+    z-index: 1000;
 }
 
 .pageHeader h1 {
