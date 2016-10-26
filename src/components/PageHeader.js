@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { withRouter} from 'react-router';
+import { Link } from 'react-router';
 
 class PageHeader extends Component {
     static propTypes = {
@@ -11,13 +11,7 @@ class PageHeader extends Component {
     render() {
         return <header className="pageHeader">
             <div className="pageHeader-left">
-            {this.props.backPath &&
-                <button
-                    onClick={() => { this.props.router.push(this.props.backPath) }}
-                >
-                    ❮
-                </button>
-            }
+                {this.props.backPath && <Link to={this.props.backPath}>❮</Link>}
             </div>
             <h1>{this.props.title}</h1>
             <div className="pageHeader-right">
@@ -27,4 +21,4 @@ class PageHeader extends Component {
     }
 }
 
-export default withRouter(PageHeader);
+export default PageHeader;

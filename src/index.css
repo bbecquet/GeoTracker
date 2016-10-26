@@ -17,6 +17,17 @@ ul, li {
     padding: 0;
 }
 
+.trackList li {
+    position: relative;
+}
+.trackList li:after {
+    content: '❯';
+    height: 1em;
+    position: absolute;
+    right: 0.5em;
+    top: 50%;
+    margin-top: -1em;
+}
 .trackList li:not(:last-child) {
     border-bottom: 1px solid #EEE;
 }
@@ -60,17 +71,23 @@ main {
 .pageHeader button {
     background-color: transparent;
     border: none;
-    color: #EEE;
+    color: white;
     vertical-align: middle;
 }
 
-.pageHeader .pageHeader-left {
+.pageHeader-left {
     flex-grow: 0;
     flex-shrink: 0;
     flex-basis: 32px;
 }
 
-.pageHeader .pageHeader-right {
+.pageHeader-left a {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.pageHeader-right {
 
 }
 
@@ -115,4 +132,9 @@ legend {
     font-size: 0.8em;
     color: #888;
     margin: 0.5em 0;
+}
+
+a {
+    text-decoration: none;
+    color: currentColor;
 }
