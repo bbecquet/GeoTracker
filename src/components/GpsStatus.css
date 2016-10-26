@@ -1,11 +1,12 @@
 .gpsStatus {
     display: block;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    border: 2px solid white;
-    box-shadow: 0 0 3px silver;
+    border: 2px solid silver;
+    box-shadow: 0 0 3px black;
     position: relative;
+    margin-right: 4px;
 }
 
 .gpsStatus::after {
@@ -28,4 +29,11 @@
 
 .gpsStatus--active {
     background-color: green;
+    animation: activeGpsLed 2s infinite;
+}
+
+@keyframes activeGpsLed {
+  0%    { background-color: green }
+  50%   { background-color: lightGreen; }
+  100%  { background-color: green }
 }
