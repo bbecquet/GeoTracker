@@ -103,8 +103,8 @@ fieldset {
 }
 
 legend {
-    background-color: #EEE;
     color: #888;
+    border-bottom: 1px solid #EEE;
     display: block;
     width: 100%;
     padding: 0.25em;
@@ -112,4 +112,7 @@ legend {
 
 .helpMsg {
     font-style: italic;
+    font-size: 0.8em;
+    color: #888;
+    margin: 0.5em 0;
 }

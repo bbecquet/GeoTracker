@@ -17,6 +17,15 @@ class SettingsView extends Component {
         this.forceUpdate();
     }
 
+    handleResetDatabase() {
+        if (!confirm('This will delete all your tracks. Are you sure?')) { return; }
+        this.props.trackStore.clearDatabase(() => {
+            alert('Database cleared');
+        }, event => {
+            alert('Error');
+        });
+    }
+
     render() {
         return <div>
             <PageHeader
@@ -25,8 +34,9 @@ class SettingsView extends Component {
             />
             <main>
                 <fieldset>
-                    <legend>Length system</legend>
+                    <legend>Display</legend>
                     <div className="padding">
+                        Length units:&nbsp;
                         <label>
                             <input
                                 name="lengthUnit"
@@ -47,10 +57,20 @@ class SettingsView extends Component {
                             />
                             Imperial
                         </label>
+                        <p className="helpMsg">For distances and map scale.</p>
                     </div>
                 </fieldset>
                 <fieldset>
-                    <legend>GPS</legend>
+                    <legend>Data</legend>
+                    <div className="padding">
+                        <label>
+                            <button onClick={() => { this.handleResetDatabase(); }}>Reset database</button>
+                        </label>
+                        <p className="helpMsg">Will remove all tracks.</p>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Debugging</legend>
                     <div className="padding">
                         <label>
                             <input
