@@ -44,10 +44,6 @@ class SingleTrack extends Component {
     render() {
         const track = this.state.track;
 
-        if (!track) {
-            return (<div>Loading...</div>);
-        }
-
         return (<div>
             <PageHeader
                 title="Track"
@@ -64,7 +60,7 @@ class SingleTrack extends Component {
                     </div>
                 }
             />
-            <main>
+            {track ? <main>
                 <div className="padding">
                     <TrackSummary track={track} />
                     <TrackStats {...this.state} />
@@ -75,7 +71,9 @@ class SingleTrack extends Component {
                 <div className="padding">
                     <Link to={`/tracks/${track.id}/tracking`}>Resume</Link>
                 </div>
-            </main>
+            </main> : <main>
+                <div className="padding">Loading…</div>
+            </main>}
         </div>);
     }
 }
