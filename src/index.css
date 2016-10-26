@@ -45,7 +45,11 @@ ul, li {
 }
 
 main {
-    padding-top: 48px;
+    top: 48px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    overflow: auto;
 }
 
 .pageHeader {
