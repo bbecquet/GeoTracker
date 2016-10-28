@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { withRouter } from 'react-router';
-import { getSetting } from '../models/settings';
+import { getSetting, getMapStyle } from '../models/settings';
 import Tracker from '../models/tracker';
 import PageHeader from '../components/PageHeader';
 import TrackMap from '../components/TrackMap';
@@ -63,7 +63,10 @@ class TrackingView extends Component {
             />
             <main>
                 <div className="mapContainer">
-                    <TrackMap positions={this.state.positions} />
+                    <TrackMap
+                        positions={this.state.positions}
+                        backgroundTileDef={getMapStyle()}
+                    />
                 </div>
                 <div className="padding">
                     <button onClick={() => { this.props.router.push(`/tracks/${track.id}`) }}>Stop</button>

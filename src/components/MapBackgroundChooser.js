@@ -1,10 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import L from 'leaflet';
-// TODO: find how to import that from node_modules
-import './images/layers.png';
-import './leaflet.css';
-import { getSetting } from '../models/settings';
 import _ from 'lodash';
+import TrackMap from './TrackMap';
 
 class MapBackgroundChooser extends Component {
     static propTypes = {
@@ -13,47 +9,27 @@ class MapBackgroundChooser extends Component {
         changeMapTiles: PropTypes.func.isRequired,
     }
 
-    componentDidMount() {
-        this.map = L.map(this.mapElement, {
-            center: [48.85, 2.35],
-            zoom: 12,
-            scrollWheelZoom: false,
-        });
-        this.setLayer(this.props.activeMapTiles);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setLayer(nextProps.activeMapTiles);
-    }
-
-    componentWillUnmount() {
-        this.map.remove();
-    }
-
-    setLayer(mapTileKey) {
-        if (this.bgLayer) {
-            this.map.removeLayer(this.bgLayer);
-        }
-        const activeMapTileDef = this.props.mapTiles[mapTileKey];
-        this.bgLayer = L.tileLayer(activeMapTileDef.url, activeMapTileDef.options);
-        this.map.addLayer(this.bgLayer);
-    }
-
     handleChangeStyle(e) {
         this.props.changeMapTiles(e.target.value);
     }
 
     render() {
+        const activeMapTileDef = this.props.mapTiles[this.props.activeMapTiles];
+
         return <div>
             <select onChange={e => { this.handleChangeStyle(e) }}>
                 {_.keys(this.props.mapTiles).map(mapTilesKey =>
-                    <option key={mapTilesKey} value={mapTilesKey}>
+                    <option
+                        key={mapTilesKey}
+                        value={mapTilesKey}
+                        selected={mapTilesKey === this.props.activeMapTiles}
+                    >
                         {this.props.mapTiles[mapTilesKey].name}
                     </option>
                 )}
             </select>
             <div style={{ height: '200px', margin: '0.5em 0' }}>
-                <div className="map" ref={m => this.mapElement = m} />
+                <TrackMap backgroundTileDef={activeMapTileDef} ></TrackMap>
             </div>
         </div>;
     }

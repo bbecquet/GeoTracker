@@ -4,6 +4,7 @@ import TrackSummary from '../components/TrackSummary';
 import TrackStats from '../components/TrackStats';
 import TrackMap from '../components/TrackMap';
 import { exportTrackAsGpx } from '../models/trackUtils';
+import { getMapStyle } from '../models/settings';
 import PageHeader from '../components/PageHeader';
 // @TODO: inline to style…
 import deleteIcon from '../imgs/delete.svg';
@@ -66,7 +67,10 @@ class SingleTrack extends Component {
                     <TrackStats {...this.state} />
                 </div>
                 <div className="mapContainer">
-                    <TrackMap positions={this.state.positions} />
+                    <TrackMap
+                        positions={this.state.positions}
+                        backgroundTileDef={getMapStyle()}
+                    />
                 </div>
                 <div className="padding">
                     <Link to={`/tracks/${track.id}/tracking`}>Resume</Link>

@@ -30,3 +30,7 @@ export const mapTileDefs = {
         }
     }
 }
+
+export function getMapStyle() {
+    return mapTileDefs[getSetting('mapTiles')];
+}

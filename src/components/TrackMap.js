@@ -8,7 +8,8 @@ import { getSetting } from '../models/settings';
 
 class TrackMap extends Component {
     static propTypes = {
-        positions: PropTypes.array.isRequired,
+        backgroundTileDef: PropTypes.object.isRequired,
+        positions: PropTypes.array,
     }
 
     static defaultProps = {
@@ -19,18 +20,22 @@ class TrackMap extends Component {
         return this.props.positions.map(p => [p.coords.latitude, p.coords.longitude]);
     }
 
+    setLayer(backgroundTileDef) {
+        if (this.bgLayer) {
+            this.map.removeLayer(this.bgLayer);
+        }
+        this.bgLayer = L.tileLayer(backgroundTileDef.url, backgroundTileDef.options);
+        this.map.addLayer(this.bgLayer);
+    }
+
     componentDidMount() {
         this.map = L.map(this.mapElement, {
             // TODO: put map options in global settings?
             center: [48.85, 2.35],
             zoom: 18,
-            layers: [
-                L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                }),
-            ],
             zoomControl: false,
         });
+        this.setLayer(this.props.backgroundTileDef);
         const useImperialScale = getSetting('lengthUnit') === 'imperial';
         L.control.scale({
             imperial: useImperialScale,
@@ -49,9 +54,12 @@ class TrackMap extends Component {
     componentWillReceiveProps(nextProps) {
         const newCoords = this.positionsToLatLng();
         // TODO:PERFS: When only the last point is new, just use Polyline.addLatLng
-        if(newCoords.length) {
+        if (newCoords.length) {
             this.polyline.setLatLngs(newCoords);
             this.map.setView(newCoords[newCoords.length - 1]);
+        }
+        if (nextProps.backgroundTileDef !== this.props.backgroundTileDef) {
+            this.setLayer(nextProps.backgroundTileDef);
         }
     }
 
