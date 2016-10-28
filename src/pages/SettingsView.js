@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { getSetting, setSetting } from '../models/settings';
+import { getSetting, setSetting, mapTileDefs } from '../models/settings';
 import PageHeader from '../components/PageHeader';
+import MapBackgroundChooser from '../components/MapBackgroundChooser';
 
 class SettingsView extends Component {
     static propTypes = {
@@ -9,6 +10,7 @@ class SettingsView extends Component {
 
     handleChangeGps(e) {
         setSetting('gps.simulatePositions', e.target.checked);
+        // @TODO: make setSetting change the state upwards so it rerenders automatically
         this.forceUpdate();
     }
 
@@ -26,6 +28,11 @@ class SettingsView extends Component {
         });
     }
 
+    changeMapTiles(newTilesKey) {
+        setSetting('mapTiles', newTilesKey);
+        this.forceUpdate();
+    }
+
     render() {
         return <div>
             <PageHeader
@@ -36,28 +43,38 @@ class SettingsView extends Component {
                 <fieldset>
                     <legend>Display</legend>
                     <div className="padding">
-                        Length units:&nbsp;
-                        <label>
-                            <input
-                                name="lengthUnit"
-                                value="metric"
-                                type="radio"
-                                checked={getSetting('lengthUnit') === 'metric'}
-                                onChange={e => { this.handleChangeUnit(e); }}
+                        <div className="setting">
+                            Length units:&nbsp;
+                            <label>
+                                <input
+                                    name="lengthUnit"
+                                    value="metric"
+                                    type="radio"
+                                    checked={getSetting('lengthUnit') === 'metric'}
+                                    onChange={e => { this.handleChangeUnit(e); }}
+                                />
+                                Metric
+                            </label>
+                            <label>
+                                <input
+                                    name="lengthUnit"
+                                    value="imperial"
+                                    type="radio"
+                                    checked={getSetting('lengthUnit') === 'imperial'}
+                                    onChange={e => { this.handleChangeUnit(e); }}
+                                />
+                                Imperial
+                            </label>
+                            <p className="helpMsg">For distances and map scale.</p>
+                        </div>
+                        <div className="setting">
+                            Map background style
+                            <MapBackgroundChooser
+                                activeMapTiles={getSetting('mapTiles')}
+                                mapTiles={mapTileDefs}
+                                changeMapTiles={newStyleKey => this.changeMapTiles(newStyleKey)}
                             />
-                            Metric
-                        </label>
-                        <label>
-                            <input
-                                name="lengthUnit"
-                                value="imperial"
-                                type="radio"
-                                checked={getSetting('lengthUnit') === 'imperial'}
-                                onChange={e => { this.handleChangeUnit(e); }}
-                            />
-                            Imperial
-                        </label>
-                        <p className="helpMsg">For distances and map scale.</p>
+                        </div>
                     </div>
                 </fieldset>
                 <fieldset>
