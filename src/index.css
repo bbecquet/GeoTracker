@@ -82,13 +82,17 @@ main {
 .pageHeader-left {
     flex-grow: 0;
     flex-shrink: 0;
-    flex-basis: 32px;
+    flex-basis: 48px;
+    text-align: center;
+}
+
+.pageHeader-left img {
+    width: 32px;
 }
 
 .pageHeader-left a {
     display: block;
     width: 100%;
-    text-align: center;
 }
 
 .pageHeader-right {
