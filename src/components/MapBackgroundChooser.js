@@ -17,12 +17,14 @@ class MapBackgroundChooser extends Component {
         const activeMapTileDef = this.props.mapTiles[this.props.activeMapTiles];
 
         return <div>
-            <select onChange={e => { this.handleChangeStyle(e) }}>
+            <select
+                onChange={e => { this.handleChangeStyle(e) }}
+                value={this.props.activeMapTiles}
+            >
                 {_.keys(this.props.mapTiles).map(mapTilesKey =>
                     <option
                         key={mapTilesKey}
                         value={mapTilesKey}
-                        selected={mapTilesKey === this.props.activeMapTiles}
                     >
                         {this.props.mapTiles[mapTilesKey].name}
                     </option>
