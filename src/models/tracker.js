@@ -62,19 +62,20 @@ const Tracker = function(fake) {
                         enableHighAccuracy: true,
                         timeout: 60000,
                         maximumAge: 0
-                    });
-                }
-            },
+                    }
+                );
+            }
+        },
 
-            stop: function() {
-                console.log('Stop tracking position.');
-                if (fake) {
-                    fakeStop();
-                } else {
-                    navigator.geolocation.clearWatch(trackingHandler);
-                }
+        stop: function() {
+            console.log('Stop tracking position.');
+            if (fake) {
+                fakeStop();
+            } else {
+                navigator.geolocation.clearWatch(trackingHandler);
             }
         }
-    };
+    }
+};
 
-    export default Tracker;
+export default Tracker;
