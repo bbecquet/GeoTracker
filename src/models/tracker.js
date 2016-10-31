@@ -39,6 +39,13 @@ const Tracker = function(fake) {
         window.clearInterval(fakeHandler);
     }
 
+    function cloneNativePosition(position) {
+        return {
+            timestamp: position.timestamp,
+            coords: { ...position.coords }
+        };
+    }
+
     return {
         start: function(onUpdate, onError) {
             console.log('Start tracking position...');
@@ -46,8 +53,10 @@ const Tracker = function(fake) {
                 fakeStart(onUpdate);
             } else {
                 trackingHandler = navigator.geolocation.watchPosition(
-                    // clone the position object, because the native one is immutable
-                    onUpdate,
+                    position => {
+                        // clone the position object, because the native one cannot be added to IndexedDB
+                        onUpdate(cloneNativePosition(position));
+                    },
                     onError,
                     {
                         enableHighAccuracy: true,
