@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Link, withRouter } from 'react-router';
+import { withRouter } from 'react-router';
 import TrackSummary from '../components/TrackSummary';
 import TrackStats from '../components/TrackStats';
 import TrackMap from '../components/TrackMap';
@@ -71,9 +71,6 @@ class SingleTrack extends Component {
                         positions={this.state.positions}
                         backgroundTileDef={getMapStyle()}
                     />
-                </div>
-                <div className="padding">
-                    <Link to={`/tracks/${track.id}/tracking`}>Resume</Link>
                 </div>
             </main> : <main>
                 <div className="padding">Loading…</div>
