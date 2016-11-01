@@ -42,7 +42,15 @@ const Tracker = function(fake) {
     function cloneNativePosition(position) {
         return {
             timestamp: position.timestamp,
-            coords: { ...position.coords }
+            coords: {
+                 latitude: position.coords.latitude,
+                 longitude: position.coords.longitude,
+                 accuracy: position.coords.accuracy,
+                 altitude: position.coords.altitude,
+                 altitudeAccuracy: position.coords.altitudeAccuracy,
+                 speed: position.coords.speed,
+                 heading: position.coords.heading,
+            }
         };
     }
 
