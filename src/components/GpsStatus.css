@@ -1,35 +1,42 @@
 .gpsStatus {
+    display: flex;
+    align-items: center;
+    align-content: space-between;
+}
+
+.gpsStatus-accuracy {
+    flex: 1;
+}
+
+.gpsStatus-indicator {
     display: block;
-    width: 36px;
-    height: 36px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
     border: 2px solid silver;
     box-shadow: 0 0 3px black;
     position: relative;
     margin-right: 4px;
+    background-color: silver;
 }
 
-.gpsStatus::after {
+.gpsStatus-indicator::after {
     content: "";
     display: block;
     position: absolute;
-    width: 5px;
-    height: 10px;
-    top: 8px;
-    right: 8px;
+    width: 4px;
+    height: 8px;
+    top: 3px;
+    right: 3px;
     border-radius: 50%;
     background-color: white;
     transform: rotateZ(-30deg);
     opacity: 0.8;
 }
 
-.gpsStatus--inactive {
-    background-color: silver;
-}
-
-.gpsStatus--active {
+.gpsStatus--active .gpsStatus-indicator {
     background-color: green;
-    animation: activeGpsLed 2s infinite;
+    /* animation: activeGpsLed 2s infinite; */
 }
 
 @keyframes activeGpsLed {

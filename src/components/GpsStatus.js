@@ -1,5 +1,8 @@
 import React, { Component, PropTypes } from 'react';
+import Length from './Length';
+import { getSetting } from '../models/settings';
 import './GpsStatus.css';
+import classnames from 'classnames';
 
 class GpsStatus extends Component {
     static propTypes = {
@@ -7,11 +10,18 @@ class GpsStatus extends Component {
     }
 
     render() {
-        if (!this.props.position) {
-            return <div className="gpsStatus gpsStatus--inactive" />;
-        }
+        const coords = this.props.position && this.props.position.coords;
 
-        return <div className="gpsStatus gpsStatus--active" />;
+        return <div className={classnames('gpsStatus padding', {
+            'gpsStatus--active': this.props.position
+        })}>
+            <div className="gpsStatus-accuracy">
+                Accuracy: {coords
+                    ? <Length meters={coords.accuracy} imperialSystem={getSetting('lengthUnit') === 'imperial'} />
+                    : '-'}
+            </div>
+            <div className="gpsStatus-indicator" />
+        </div>;
     }
 }
 
