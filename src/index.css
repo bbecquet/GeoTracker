@@ -54,7 +54,6 @@ main {
 
 .pageHeader {
     background-color: #44b066;
-    padding: 0.5rem 0;
     color: white;
     box-shadow: 0 0 5px #368b51;
     display: flex;
@@ -77,6 +76,11 @@ main {
     border: none;
     color: white;
     vertical-align: middle;
+    height: 100%;
+}
+
+.pageHeader img {
+    vertical-align: middle;
 }
 
 .pageHeader-left {
@@ -84,6 +88,8 @@ main {
     flex-shrink: 0;
     flex-basis: 48px;
     text-align: center;
+    height: 100%;
+    line-height: 48px;
 }
 
 .pageHeader-left img {
@@ -96,7 +102,11 @@ main {
 }
 
 .pageHeader-right {
+    height: 100%;
+}
 
+.pageHeader-right div {
+    height: 100%;
 }
 
 input[type=checkbox],

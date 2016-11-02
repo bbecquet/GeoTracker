@@ -59,17 +59,19 @@ class TrackingView extends Component {
         return (<div>
             <PageHeader
                 title="Tracking…"
-                rightChild={ <GpsStatus position={this.state.lastPosition} /> }
+                rightChild={
+                    <button onClick={() => { this.props.router.push(`/tracks/${track.id}`) }}>
+                        ⏹ Stop
+                    </button>
+                }
             />
             <main>
+                <GpsStatus position={this.state.lastPosition} />
                 <div className="mapContainer">
                     <TrackMap
                         positions={this.state.positions}
                         backgroundTileDef={getMapStyle()}
                     />
-                </div>
-                <div className="padding">
-                    <button onClick={() => { this.props.router.push(`/tracks/${track.id}`) }}>Stop</button>
                 </div>
             </main>
         </div>);

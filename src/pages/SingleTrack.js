@@ -56,7 +56,7 @@ class SingleTrack extends Component {
                         </button>
                         |
                         <button onClick={() => { this.exportTrack(); }}>
-                            <img src={exportIcon} alt="" />
+                            <img src={exportIcon} alt="" />&nbsp;Export
                         </button>
                     </div>
                 }
