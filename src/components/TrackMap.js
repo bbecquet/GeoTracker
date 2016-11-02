@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import L from 'leaflet';
+import _ from 'lodash';
 import './TrackMap.css';
 import '../../node_modules/leaflet/dist/images/layers.png';
 import '../../node_modules/leaflet/dist/leaflet.css';
@@ -15,8 +16,12 @@ class TrackMap extends Component {
         positions: [],
     }
 
-    positionsToLatLng() {
-        return this.props.positions.map(p => [p.coords.latitude, p.coords.longitude]);
+    positionToLatLng(p) {
+        return [p.coords.latitude, p.coords.longitude];
+    }
+
+    positionsToLatLng(positions) {
+        return positions.map(this.positionToLatLng);
     }
 
     setLayer(backgroundTileDef) {
@@ -41,7 +46,7 @@ class TrackMap extends Component {
             metric: !useImperialScale,
         }).addTo(this.map);
 
-        const coords = this.positionsToLatLng();
+        const coords = this.positionsToLatLng(this.props.positions);
         this.polyline = L.polyline(coords, {
             // TODO: style
         }).addTo(this.map);
@@ -50,12 +55,26 @@ class TrackMap extends Component {
         }
     }
 
+    addNewPosition(position) {
+        const newCoord = this.positionToLatLng(position);
+        this.polyline.addLatLng(newCoord);
+        this.map.setView(newCoord);
+    }
+
+    isSameWithNewPoint(newPositions) {
+        // TODO: real test
+        return newPositions.length === this.props.positions.length + 1;
+    }
+
     componentWillReceiveProps(nextProps) {
-        const newCoords = this.positionsToLatLng();
-        // TODO:PERFS: When only the last point is new, just use Polyline.addLatLng
-        if (newCoords.length) {
-            this.polyline.setLatLngs(newCoords);
-            this.map.setView(newCoords[newCoords.length - 1]);
+        if (nextProps.positions && nextProps.positions.length) {
+            if (this.isSameWithNewPoint(nextProps.positions)) {
+                this.addNewPosition(_.last(nextProps.positions));
+            } else {
+                const newCoords = this.positionsToLatLng(nextProps.positions);
+                this.polyline.setLatLngs(newCoords);
+                this.map.setView(_.last(newCoords));
+            }
         }
         if (nextProps.backgroundTileDef !== this.props.backgroundTileDef) {
             this.setLayer(nextProps.backgroundTileDef);
