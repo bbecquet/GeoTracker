@@ -17,12 +17,12 @@ class Track extends Component {
 
         return (
             <div className="trackStats">
-                <p>{`${positions.length} points`}</p>
-                <p>Distance: <Length
+                <div>{`${positions.length} points`}</div>
+                <div><Length
                     meters={getLength(positions)}
                     imperialSystem={getSetting('lengthUnit') === 'imperial'}
-                /></p>
-                <p>Duration: {moment.duration(duration).humanize()}</p>
+                /></div>
+                <div>{moment.duration(duration).humanize()}</div>
             </div>
         );
     }

@@ -160,3 +160,12 @@ a {
     text-decoration: none;
     color: currentColor;
 }
+
+.trackStats {
+    display: flex;
+    align-content: space-between;
+}
+
+.trackStats > div {
+    flex: 1;
+}
