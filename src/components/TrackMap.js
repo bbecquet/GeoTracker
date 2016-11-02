@@ -1,9 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import L from 'leaflet';
 import './TrackMap.css';
-// TODO: find how to import that from node_modules
-import './images/layers.png';
-import './leaflet.css';
+import '../../node_modules/leaflet/dist/images/layers.png';
+import '../../node_modules/leaflet/dist/leaflet.css';
 import { getSetting } from '../models/settings';
 
 class TrackMap extends Component {
