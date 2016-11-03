@@ -80,7 +80,7 @@ class TrackList extends Component {
                         className="mainAction"
                         onClick={() => {this.addTrack()}}
                     >
-                        New track
+                        +
                     </button>
                 </main>
             </div>

@@ -119,10 +119,20 @@ label {
 }
 
 button.mainAction {
-    box-shadow: 0 0 5px #888;
+    box-shadow: 2px 2px 3px #EEE;
     position: fixed;
     right: 24px;
     bottom: 24px;
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 50%;
+    font-size: 30px;
+    line-height: 30px;
+    background-color: #44b066;
+    color: white;
+    font-weight: bold;
+    text-align: center;
 }
 
 button {
