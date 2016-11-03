@@ -32,19 +32,28 @@ class TrackMap extends Component {
         this.map.addLayer(this.bgLayer);
     }
 
-    componentDidMount() {
+    initMap() {
+        const useImperialScale = getSetting('lengthUnit') === 'imperial';
+
         this.map = L.map(this.mapElement, {
             // TODO: put map options in global settings?
             center: [48.85, 2.35],
             zoom: 18,
+            attributionControl: false,  // TODO: move it to an 'about' screen
             zoomControl: false,
-        });
+            boxZoom: false,
+        })
+            .addControl(L.control.zoom({ position: 'bottomright' }))
+            .addControl(L.control.scale({
+                imperial: useImperialScale,
+                metric: !useImperialScale,
+            }));
+
         this.setLayer(this.props.backgroundTileDef);
-        const useImperialScale = getSetting('lengthUnit') === 'imperial';
-        L.control.scale({
-            imperial: useImperialScale,
-            metric: !useImperialScale,
-        }).addTo(this.map);
+    }
+
+    componentDidMount() {
+        this.initMap();
 
         const coords = this.positionsToLatLng(this.props.positions);
         this.polyline = L.polyline(coords, {
