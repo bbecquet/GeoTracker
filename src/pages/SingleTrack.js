@@ -68,7 +68,7 @@ class SingleTrack extends Component {
                 </div>
                 <div className="mapContainer">
                     <TrackMap
-                        positions={this.state.positions}
+                        initialPositions={this.state.positions}
                         backgroundTileDef={getMapStyle()}
                     />
                 </div>

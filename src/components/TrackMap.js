@@ -11,19 +11,16 @@ import { getSetting } from '../models/settings';
 class TrackMap extends Component {
     static propTypes = {
         backgroundTileDef: PropTypes.object.isRequired,
-        positions: PropTypes.array,
+        initialPositions: PropTypes.array,
+        newPosition: PropTypes.object,
     }
 
     static defaultProps = {
-        positions: [],
+        initialPositions: [],
     }
 
     positionToLatLng(p) {
         return [p.coords.latitude, p.coords.longitude];
-    }
-
-    positionsToLatLng(positions) {
-        return positions.map(this.positionToLatLng);
     }
 
     setLayer(backgroundTileDef) {
@@ -54,6 +51,16 @@ class TrackMap extends Component {
         this.setLayer(this.props.backgroundTileDef);
     }
 
+    addNewPosition(newPosition) {
+        const newCoord = this.positionToLatLng(newPosition);
+        this.polyline.addLatLng(newCoord);
+        this.map.setView(newCoord);
+        this.positionMarker
+            .setLatLng(newCoord)
+            .setRotationAngle(newPosition.coords.heading)
+            .addTo(this.map);
+    }
+
     componentDidMount() {
         this.initMap();
 
@@ -67,7 +74,7 @@ class TrackMap extends Component {
             rotationOrigin: 'center center',
         });
 
-        const coords = this.positionsToLatLng(this.props.positions);
+        const coords = this.props.initialPositions.map(this.positionToLatLng);
         this.polyline = L.polyline(coords, {
             // TODO: style
         }).addTo(this.map);
@@ -76,25 +83,10 @@ class TrackMap extends Component {
         }
     }
 
-    isSameWithNewPoint(newPositions) {
-        // TODO: real test
-        return newPositions.length === this.props.positions.length + 1;
-    }
-
     componentWillReceiveProps(nextProps) {
-        if (nextProps.positions && nextProps.positions.length) {
-            const lastPosition = _.last(nextProps.positions);
-            const lastCoord = this.positionToLatLng(lastPosition);
-            if (this.isSameWithNewPoint(nextProps.positions)) {
-                this.polyline.addLatLng(lastCoord);
-            } else {
-                this.polyline.setLatLngs(this.positionsToLatLng(nextProps.positions));
-            }
-            this.map.setView(lastCoord);
-            this.positionMarker
-                .setLatLng(lastCoord)
-                .setRotationAngle(lastPosition.coords.heading)
-                .addTo(this.map);
+        if (nextProps.newPosition &&
+            (!this.props.newPosition || nextProps.newPosition.timestamp !== this.props.newPosition.timestamp)) {
+            this.addNewPosition(nextProps.newPosition);
         }
 
         if (nextProps.backgroundTileDef !== this.props.backgroundTileDef) {

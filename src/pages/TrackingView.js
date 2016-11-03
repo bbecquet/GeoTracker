@@ -69,7 +69,7 @@ class TrackingView extends Component {
                 <GpsStatus position={this.state.lastPosition} />
                 <div className="mapContainer">
                     <TrackMap
-                        positions={this.state.positions}
+                        newPosition={this.state.lastPosition}
                         backgroundTileDef={getMapStyle()}
                     />
                 </div>
