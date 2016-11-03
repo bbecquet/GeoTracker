@@ -22,7 +22,7 @@ const Tracker = function(fake) {
                 accuracy: 10,
                 altitude: Math.random() * 100 + 400,
                 altitudeAccuracy: null,
-                // heading: geoTracker.Utils.bearing(previousLL[0], previousLL[1], newLat, newLng),
+                heading: Math.random() * 360,
                 speed: Math.random() * 10 + 5
             }
         };
