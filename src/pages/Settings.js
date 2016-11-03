@@ -3,7 +3,7 @@ import { getSetting, setSetting, mapTileDefs } from '../models/settings';
 import PageHeader from '../components/PageHeader';
 import MapBackgroundChooser from '../components/MapBackgroundChooser';
 
-class SettingsView extends Component {
+class Settings extends Component {
     static propTypes = {
         trackStore: PropTypes.object.isRequired,
     }
@@ -104,4 +104,4 @@ class SettingsView extends Component {
     }
 }
 
-export default SettingsView;
+export default Settings;

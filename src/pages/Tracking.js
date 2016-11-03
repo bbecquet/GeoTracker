@@ -6,7 +6,7 @@ import PageHeader from '../components/PageHeader';
 import TrackMap from '../components/TrackMap';
 import GpsStatus from '../components/GpsStatus';
 
-class TrackingView extends Component {
+class Tracking extends Component {
     constructor() {
         super();
         this.state = {
@@ -78,4 +78,4 @@ class TrackingView extends Component {
     }
 }
 
-export default withRouter(TrackingView);
+export default withRouter(Tracking);
