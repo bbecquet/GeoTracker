@@ -7,6 +7,7 @@ import TrackList from './pages/TrackList.js';
 import SingleTrack from './pages/SingleTrack.js';
 import Tracking from './pages/Tracking.js';
 import Settings from './pages/Settings.js';
+import About from './pages/About.js';
 import trackStorage from './models/trackStorage.js';
 
 const trackStore = new trackStorage();
@@ -23,6 +24,7 @@ ReactDOM.render(
             <Route path="tracks/:trackId" component={SingleTrack}></Route>
             <Route path="tracks/:trackId/tracking" component={Tracking}></Route>
             <Route path="settings" component={Settings}/>
+            <Route path="about" component={About}/>
             <Redirect path="*" to="/"/>
         </Route>
     </Router>,

@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router';
 import TrackSummary from '../components/TrackSummary.js';
 import PageHeader from '../components/PageHeader.js';
 import settingsIcon from '../imgs/settings.svg';
+import aboutIcon from '../imgs/information.svg';
 
 class TrackList extends Component {
     constructor() {
@@ -65,9 +66,16 @@ class TrackList extends Component {
                 <PageHeader
                     title="Your tracks"
                     rightChild={
-                        <button onClick={() => { this.props.router.push('/settings') }}>
-                            <img src={settingsIcon} alt="" />
-                        </button> }
+                        <div>
+                            <button onClick={() => { this.props.router.push('/about') }}>
+                                <img src={aboutIcon} alt="" />
+                            </button>
+                            |
+                            <button onClick={() => { this.props.router.push('/settings') }}>
+                                <img src={settingsIcon} alt="" />
+                            </button>
+                        </div>
+                    }
                 />
                 <main>
                     <div className="padding">

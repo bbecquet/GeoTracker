@@ -171,6 +171,15 @@ a {
     color: currentColor;
 }
 
+a.link {
+    text-decoration: underline;
+    color: #368b51;
+}
+
+p {
+    margin: 0.5em 0;
+}
+
 .trackStats {
     display: flex;
     align-content: space-between;
