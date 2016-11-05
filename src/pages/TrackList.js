@@ -42,9 +42,15 @@ class TrackList extends Component {
     getTrackCount(tracks) {
         if(!tracks) { return 'Loading tracks…'; }
         switch(tracks.length) {
-            case 0: return 'No track yet';
-            case 1: return '1 track';
-            default: return `${tracks.length} tracks`;
+            case 0:
+                return <div>
+                    <p>No track yet.</p>
+                    <p>Turn on your GPS and press "+" to start a new track.</p>
+                </div>;
+            case 1:
+                return <p>1 track</p>;
+            default:
+                return <p>{`${tracks.length} tracks`}</p>;
         }
     }
 
@@ -80,7 +86,7 @@ class TrackList extends Component {
                 <main>
                     <div className="padding">
                         <div className="trackList">
-                            <p>{this.getTrackCount(this.state.tracks)}</p>
+                            {this.getTrackCount(this.state.tracks)}
                             {this.state.tracks && this.renderList(this.state.tracks)}
                         </div>
                     </div>
