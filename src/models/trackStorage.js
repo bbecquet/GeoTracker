@@ -45,7 +45,7 @@ const trackStorage = function() {
     const publicMethods = {
         createTrack(success, error) {
             const newTrack = {
-                name: '<No name>',
+                name: null,
                 createdAt: Date.now(),
             };
 
@@ -61,6 +61,18 @@ const trackStorage = function() {
                     const newTrackId = event.target.result;
                     newTrack.id = newTrackId;
                 };
+            });
+        },
+
+        updateTrack(updatedTrack, success, error) {
+            openDB(function() {
+                const transaction = db.transaction(['tracks'], 'readwrite');
+                transaction.oncomplete = function(event) {
+                    success(updatedTrack);
+                };
+
+                const trackStore = transaction.objectStore('tracks');
+                trackStore.put(updatedTrack);
             });
         },
 

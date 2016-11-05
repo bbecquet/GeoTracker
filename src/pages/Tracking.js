@@ -5,6 +5,7 @@ import Tracker from '../models/tracker';
 import PageHeader from '../components/PageHeader';
 import TrackMap from '../components/TrackMap';
 import GpsStatus from '../components/GpsStatus';
+import { getLocationName } from '../models/locator';
 
 class Tracking extends Component {
     constructor() {
@@ -42,6 +43,20 @@ class Tracking extends Component {
     }
 
     onNewPosition(newPosition) {
+        if(this.state.track && !this.state.track.name && !this.triedToLocate) {
+            this.triedToLocate = true;
+            getLocationName(newPosition, locationName => {
+                const updatedTrack = {
+                    ...this.state.track,
+                    name: locationName,
+                };
+
+                this.props.trackStore.updateTrack(updatedTrack, () => {
+                    this.setState({ track: updatedTrack });
+                });
+            });
+        }
+
         if(this.state.track && this.state.positions) {
             this.props.trackStore.addPosition(this.state.track.id, newPosition, () => {
                 // TODO:PERFS: less costly operation, maybe just push
@@ -50,6 +65,7 @@ class Tracking extends Component {
                 });
             });
         }
+
         this.setState({ lastPosition: newPosition });
     }
 

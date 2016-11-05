@@ -5,7 +5,7 @@ const TrackSummary = ({track}) => {
     return (
         <div className="trackSummary">
             <div>{moment(track.createdAt).format('LLL')}</div>
-            {track.name}
+            <i style={{ color: '#888' }}>{track.name || 'No name'}</i>
         </div>
     );
 }
