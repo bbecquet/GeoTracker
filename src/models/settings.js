@@ -1,6 +1,7 @@
 const defaults = {
     lengthUnit: 'metric',
     mapTiles: 'osm',
+    maxAccuracy: 30,
 }
 
 export function setSetting(key, value) {

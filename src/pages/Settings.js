@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { getSetting, setSetting, mapTileDefs } from '../models/settings';
 import PageHeader from '../components/PageHeader';
 import MapBackgroundChooser from '../components/MapBackgroundChooser';
+import Length from '../components/Length';
 
 class Settings extends Component {
     static propTypes = {
@@ -34,6 +35,9 @@ class Settings extends Component {
     }
 
     render() {
+        const maxAccuracy = getSetting('maxAccuracy');
+        const imperialSystem = getSetting('lengthUnit') === 'imperial';
+
         return <div>
             <PageHeader
                 title="Settings"
@@ -50,7 +54,7 @@ class Settings extends Component {
                                     name="lengthUnit"
                                     value="metric"
                                     type="radio"
-                                    checked={getSetting('lengthUnit') === 'metric'}
+                                    checked={!imperialSystem}
                                     onChange={e => { this.handleChangeUnit(e); }}
                                 />
                                 Metric
@@ -60,7 +64,7 @@ class Settings extends Component {
                                     name="lengthUnit"
                                     value="imperial"
                                     type="radio"
-                                    checked={getSetting('lengthUnit') === 'imperial'}
+                                    checked={imperialSystem}
                                     onChange={e => { this.handleChangeUnit(e); }}
                                 />
                                 Imperial
@@ -78,17 +82,17 @@ class Settings extends Component {
                     </div>
                 </fieldset>
                 <fieldset>
-                    <legend>Data</legend>
+                    <legend>GPS</legend>
                     <div className="padding">
-                        <label>
-                            <button onClick={() => { this.handleResetDatabase(); }}>Reset database</button>
-                        </label>
-                        <p className="helpMsg">Will remove all tracks.</p>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <legend>Debugging</legend>
-                    <div className="padding">
+                        <div className="setting">
+                            <p>Maximum accuracy</p>
+                            <input type="range" min={10} max={1000} value={maxAccuracy} step={10} />&nbsp;
+                            <Length
+                                meters={maxAccuracy}
+                                imperialSystem={imperialSystem}
+                            />
+                            <p className="helpMsg">Positions with accuracy beyond this value will be ignored.</p>
+                        </div>
                         <label>
                             <input
                                 type="checkbox"
@@ -97,6 +101,15 @@ class Settings extends Component {
                             />
                             Use fake GPS positions
                         </label>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Data</legend>
+                    <div className="padding">
+                        <label>
+                            <button onClick={() => { this.handleResetDatabase(); }}>Reset database</button>
+                        </label>
+                        <p className="helpMsg">Will remove all tracks.</p>
                     </div>
                 </fieldset>
             </main>

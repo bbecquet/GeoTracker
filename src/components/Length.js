@@ -14,14 +14,14 @@ class Length extends Component {
         const feet = this.metersToFeet(meters);
         const miles = Math.floor(feet / 5280);
         const feetRemain = feet % 5280;
-        return `${miles > 0 ? miles + ' mi ' : ''}${Math.round(feetRemain)} ft`;
+        return `${miles > 0 ? miles + '\u00a0mi\u00a0' : ''}${Math.round(feetRemain)}\u00a0ft`;
     }
 
     formatMetric(meters) {
         if (meters > 1000) {
-            return `${Math.floor(meters / 1000)}.${Math.round(meters % 1000 / 100)} km`;
+            return `${Math.floor(meters / 1000)}.${Math.round(meters % 1000 / 100)}\u00a0km`;
         }
-        return `${Math.round(meters)} m`;
+        return `${Math.round(meters)}\u00a0m`;
     }
 
     render() {
