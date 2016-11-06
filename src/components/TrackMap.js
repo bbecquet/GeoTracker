@@ -13,6 +13,7 @@ class TrackMap extends Component {
         backgroundTileDef: PropTypes.object.isRequired,
         initialPositions: PropTypes.array,
         newPosition: PropTypes.object,
+        validAccuracy: PropTypes.bool,
     }
 
     static defaultProps = {
@@ -84,7 +85,7 @@ class TrackMap extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.newPosition &&
+        if (nextProps.newPosition && nextProps.validAccuracy &&
             (!this.props.newPosition || nextProps.newPosition.timestamp !== this.props.newPosition.timestamp)) {
             this.addNewPosition(nextProps.newPosition);
         }

@@ -8,6 +8,10 @@
     flex: 1;
 }
 
+.gpsStatus--invalidAccuracy .gpsStatus-accuracy {
+    color: red;
+}
+
 .gpsStatus-indicator {
     display: block;
     width: 24px;

@@ -21,6 +21,8 @@ class Tracking extends Component {
     }
 
     componentWillMount() {
+        this.maxAccuracy = parseInt(getSetting('maxAccuracy'), 10);
+
         // TODO: implement a method on store to get both in one round
         this.props.trackStore.getTrack(parseInt(this.props.params.trackId, 10), track => {
             this.props.trackStore.getTrackPositions(track.id, positions => {
@@ -43,7 +45,9 @@ class Tracking extends Component {
     }
 
     onNewPosition(newPosition) {
-        if(this.state.track && !this.state.track.name && !this.triedToLocate) {
+        const validAccuracy = newPosition.coords.accuracy <= this.maxAccuracy;
+
+        if(validAccuracy && this.state.track && !this.state.track.name && !this.triedToLocate) {
             this.triedToLocate = true;
             getLocationName(newPosition, locationName => {
                 const updatedTrack = {
@@ -57,7 +61,7 @@ class Tracking extends Component {
             });
         }
 
-        if(this.state.track && this.state.positions) {
+        if(validAccuracy && this.state.track && this.state.positions) {
             this.props.trackStore.addPosition(this.state.track.id, newPosition, () => {
                 // TODO:PERFS: less costly operation, maybe just push
                 this.setState({
@@ -66,7 +70,10 @@ class Tracking extends Component {
             });
         }
 
-        this.setState({ lastPosition: newPosition });
+        this.setState({
+            lastPosition: newPosition,
+            validAccuracy
+        });
     }
 
     render() {
@@ -82,10 +89,14 @@ class Tracking extends Component {
                 }
             />
             <main>
-                <GpsStatus position={this.state.lastPosition} />
+                <GpsStatus
+                    position={this.state.lastPosition}
+                    validAccuracy={this.state.validAccuracy}
+                />
                 <div className="mapContainer">
                     <TrackMap
                         newPosition={this.state.lastPosition}
+                        validAccuracy={this.state.validAccuracy}
                         backgroundTileDef={getMapStyle()}
                     />
                 </div>

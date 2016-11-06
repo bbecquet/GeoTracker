@@ -19,7 +19,7 @@ const Tracker = function(fake) {
             coords: {
                 latitude: newLat,
                 longitude: newLng,
-                accuracy: 10,
+                accuracy: Math.random() * 50,
                 altitude: Math.random() * 100 + 400,
                 altitudeAccuracy: null,
                 heading: Math.random() * 360,
