@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import _ from 'lodash';
 import TrackMap from './TrackMap';
 
 class MapBackgroundChooser extends Component {
@@ -21,7 +20,7 @@ class MapBackgroundChooser extends Component {
                 onChange={e => { this.handleChangeStyle(e) }}
                 value={this.props.activeMapTiles}
             >
-                {_.keys(this.props.mapTiles).map(mapTilesKey =>
+                {Object.keys(this.props.mapTiles).map(mapTilesKey =>
                     <option
                         key={mapTilesKey}
                         value={mapTilesKey}
