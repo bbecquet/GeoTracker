@@ -20,6 +20,11 @@ class Settings extends Component {
         this.forceUpdate();
     }
 
+    handleChangeAccuracy(e) {
+        setSetting('maxAccuracy', parseInt(e.target.value, 10));
+        this.forceUpdate();
+    }
+
     handleResetDatabase() {
         if (!confirm('This will delete all your tracks. Are you sure?')) { return; }
         this.props.trackStore.clearDatabase(() => {
@@ -35,7 +40,7 @@ class Settings extends Component {
     }
 
     render() {
-        const maxAccuracy = getSetting('maxAccuracy');
+        const maxAccuracy = parseInt(getSetting('maxAccuracy'), 10);
         const imperialSystem = getSetting('lengthUnit') === 'imperial';
 
         return <div>
@@ -85,13 +90,17 @@ class Settings extends Component {
                     <legend>GPS</legend>
                     <div className="padding">
                         <div className="setting">
-                            <p>Maximum accuracy</p>
-                            <input type="range" min={10} max={1000} value={maxAccuracy} step={10} />&nbsp;
+                            <p>Accuracy limit</p>
+                            <input type="range"
+                                min={10} max={500} step={10}
+                                value={maxAccuracy}
+                                onChange={e => { this.handleChangeAccuracy(e); }}
+                            />&nbsp;
                             <Length
                                 meters={maxAccuracy}
                                 imperialSystem={imperialSystem}
                             />
-                            <p className="helpMsg">Positions with accuracy beyond this value will be ignored.</p>
+                            <p className="helpMsg">Positions with accuracy beyond this value won't be recorded.</p>
                         </div>
                         <label>
                             <input
