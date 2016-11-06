@@ -38,7 +38,7 @@ class TrackMap extends Component {
             // TODO: put map options in global settings?
             center: [48.85, 2.35],
             zoom: 18,
-            attributionControl: false,  // TODO: move it to an 'about' screen
+            attributionControl: false,
             zoomControl: false,
             boxZoom: false,
         })

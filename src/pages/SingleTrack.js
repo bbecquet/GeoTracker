@@ -6,7 +6,6 @@ import TrackMap from '../components/TrackMap';
 import { exportTrackAsGpx } from '../models/trackUtils';
 import { getMapStyle } from '../models/settings';
 import PageHeader from '../components/PageHeader';
-// @TODO: inline to style…
 import deleteIcon from '../imgs/delete.svg';
 import exportIcon from '../imgs/file-export.svg';
 
