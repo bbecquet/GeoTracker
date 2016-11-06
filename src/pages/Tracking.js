@@ -12,7 +12,6 @@ class Tracking extends Component {
         super();
         this.state = {
             lastPosition: null,
-            positions: [],
         };
     }
 
@@ -23,11 +22,8 @@ class Tracking extends Component {
     componentWillMount() {
         this.maxAccuracy = parseInt(getSetting('maxAccuracy'), 10);
 
-        // TODO: implement a method on store to get both in one round
         this.props.trackStore.getTrack(parseInt(this.props.params.trackId, 10), track => {
-            this.props.trackStore.getTrackPositions(track.id, positions => {
-                this.setState({ track, positions });
-            });
+            this.setState({ track });
         });
     }
 
@@ -61,13 +57,8 @@ class Tracking extends Component {
             });
         }
 
-        if(validAccuracy && this.state.track && this.state.positions) {
-            this.props.trackStore.addPosition(this.state.track.id, newPosition, () => {
-                // TODO:PERFS: less costly operation, maybe just push
-                this.setState({
-                    positions: this.state.positions.concat(newPosition),
-                });
-            });
+        if(validAccuracy && this.state.track) {
+            this.props.trackStore.addPosition(this.state.track.id, newPosition, () => {});
         }
 
         this.setState({
