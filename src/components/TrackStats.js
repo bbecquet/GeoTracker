@@ -4,6 +4,7 @@ import Length from './Length';
 import { getSetting } from '../models/settings';
 import moment from 'moment';
 import _ from 'lodash';
+import './TrackStats.css';
 
 class Track extends Component {
     static propTypes = {

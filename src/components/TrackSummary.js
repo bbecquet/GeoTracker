@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
 import moment from 'moment';
+import './TrackSummary.css';
 
 const TrackSummary = ({track}) => {
     return (
         <div className="trackSummary">
             <div>{moment(track.createdAt).format('LLL')}</div>
-            <i style={{ color: '#888' }}>{track.name || 'No name'}</i>
+            <span className="trackSummary-name">{track.name || 'No name'}</span>
         </div>
     );
 }

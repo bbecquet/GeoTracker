@@ -1,0 +1,9 @@
+
+.trackSummary {
+    padding: 0.5em 0;
+}
+
+.trackSummary-name {
+    color: #888;
+    font-style: italic;
+}

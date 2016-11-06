@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import logo from '../imgs/logo.png';
+import './PageHeader.css';
 
 class PageHeader extends Component {
     static propTypes = {

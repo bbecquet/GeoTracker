@@ -4,6 +4,7 @@ import TrackSummary from '../components/TrackSummary.js';
 import PageHeader from '../components/PageHeader.js';
 import settingsIcon from '../imgs/settings.svg';
 import aboutIcon from '../imgs/information.svg';
+import './TrackList.css';
 
 class TrackList extends Component {
     constructor() {

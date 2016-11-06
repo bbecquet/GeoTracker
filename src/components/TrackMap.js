@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import L from 'leaflet';
 import 'leaflet-rotatedmarker';
-import _ from 'lodash';
 import './TrackMap.css';
 import '../../node_modules/leaflet/dist/images/layers.png';
 import '../../node_modules/leaflet/dist/leaflet.css';
