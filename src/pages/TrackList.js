@@ -5,6 +5,7 @@ import PageHeader from '../components/PageHeader.js';
 import settingsIcon from '../imgs/settings.svg';
 import aboutIcon from '../imgs/information.svg';
 import './TrackList.css';
+import _ from 'lodash';
 
 class TrackList extends Component {
     constructor() {
@@ -21,7 +22,9 @@ class TrackList extends Component {
     }
 
     refreshTrackList(done) {
-        this.props.trackStore.getTrackList(tracks => {
+        this.props.trackStore.getTrackList()
+        .then(tracks => {
+            tracks.sort((t1, t2) => t2.createdAt - t1.createdAt);
             this.setState({ tracks });
             if(done) { done(); }
         });
@@ -57,7 +60,7 @@ class TrackList extends Component {
 
     renderList(tracks) {
         return <ul>
-            {tracks.reverse().map(track =>
+            {tracks.map(track =>
                 <li key={track.id}>
                     <Link to={`/tracks/${track.id}`}>
                         <TrackSummary track={track} />

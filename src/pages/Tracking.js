@@ -22,9 +22,8 @@ class Tracking extends Component {
     componentWillMount() {
         this.maxAccuracy = parseInt(getSetting('maxAccuracy'), 10);
 
-        this.props.trackStore.getTrack(parseInt(this.props.params.trackId, 10), track => {
-            this.setState({ track });
-        });
+        this.props.trackStore.getTrack(parseInt(this.props.params.trackId, 10))
+        .then(track => { this.setState({ track }); });
     }
 
     componentDidMount() {

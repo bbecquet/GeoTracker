@@ -1,4 +1,4 @@
-// TODO: refactor with promises
+import idb from 'idb';
 
 /**
 Implements an indexedDB-based repository for persistent storage
@@ -7,6 +7,11 @@ Provides methods to list/add/delete tracks and positions.
 */
 const trackStorage = function() {
     let db = null;
+
+    const dbPromise = idb.open('geotracker', 1, upgradeDB => {
+        // TODO: create/upgradedb
+        // upgradeDB.createObjectStore('geotracker');
+    });
 
     function openDB(success) {
         if(db != null) {
@@ -109,31 +114,21 @@ const trackStorage = function() {
             });
         },
 
-        getTrackList(success, error) {
-            openDB(function() {
-                const objectStore = db.transaction(['tracks'], 'readonly').objectStore('tracks');
-                const request = objectStore.openCursor();
-                const recordedTracks = [];
-                request.onsuccess = function(event) {
-                    const cursor = event.target.result;
-                    // Too bad getAll() isn't standard...
-                    if (cursor) {
-                        recordedTracks.push(cursor.value);
-                        cursor.continue();
-                    } else {
-                        success(recordedTracks);
-                    }
-                };
+        getTrackList() {
+            return dbPromise.then(db => {
+                return db
+                    .transaction('tracks', 'readonly')
+                    .objectStore('tracks')
+                    .getAll();
             });
         },
 
-        getTrack(trackId, success, error) {
-            openDB(function() {
-                const trackStore = db.transaction(['tracks'], 'readonly').objectStore('tracks');
-                const request = trackStore.get(trackId);
-                request.onsuccess = () => {
-                    success(request.result);
-                };
+        getTrack(trackId) {
+            return dbPromise.then(db => {
+                return db
+                    .transaction('tracks', 'readonly')
+                    .objectStore('tracks')
+                    .get(trackId);
             });
         },
 

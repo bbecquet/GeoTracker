@@ -9,6 +9,7 @@
     "classnames": "^2.2.5",
     "file-saver": "^1.3.3",
     "gps-to-gpx": "^1.0.5",
+    "idb": "^1.2.1",
     "leaflet": "^1.0.1",
     "leaflet-rotatedmarker": "^0.1.1",
     "lodash": "^4.16.4",
