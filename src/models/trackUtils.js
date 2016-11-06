@@ -9,7 +9,9 @@ export function exportTrackAsGpx(track, positions) {
             longitude: p.coords.longitude,
         };
     });
-    const gpx = createGpx(wayPoints);
+    const gpx = createGpx(wayPoints, {
+        activityName: track.name,
+    });
     const blob = new Blob([gpx], {type: 'application/xml;charset=utf-8'});
     saveAs(blob, 'test.gpx');
 }
