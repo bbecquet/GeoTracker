@@ -45,7 +45,7 @@ class TrackList extends Component {
             case 0:
                 return <div>
                     <p>No track yet.</p>
-                    <p>Turn on your GPS and press "+" to start a new track.</p>
+                    <p>Make sure your GPS is enabled and press "+" to start a new track.</p>
                 </div>;
             case 1:
                 return <p>1 track</p>;
