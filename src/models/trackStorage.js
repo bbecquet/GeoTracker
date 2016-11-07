@@ -148,13 +148,6 @@ const trackStorage = function() {
             });
         },
 
-        close() {
-            if(db != null) {
-                db.close();
-                db = null;
-            }
-        },
-
         clearDatabase(success, error) {
             const request = indexedDB.deleteDatabase('geotracker');
             request.onSuccess = success;
