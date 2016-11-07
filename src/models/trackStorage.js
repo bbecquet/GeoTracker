@@ -84,18 +84,18 @@ const trackStorage = function() {
             });
         },
 
-        addPosition(trackId, position, success, error) {
-            openDB(function() {
-                const transaction = db.transaction(['positions'], 'readwrite');
-                transaction.oncomplete = function(event) {
-                    success(position.id);
-                };
-
-                const trackStore = transaction.objectStore('positions');
-                position.trackId = trackId;
+        addPosition(trackId, position) {
+            const newPosition = {
+                ...position,
+                trackId,
                 // generate a numerical Id based on timestamp and trackId for range selection
-                position.id = Number(trackId) * (1e16) + position.timestamp;
-                trackStore.add(position);
+                id: Number(trackId) * (1e16) + position.timestamp,
+            };
+
+            return openDBPromise.then(db => {
+                return db.transaction('positions', 'readwrite')
+                    .objectStore('positions')
+                    .add(newPosition);
             });
         },
 

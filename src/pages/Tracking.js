@@ -57,7 +57,7 @@ class Tracking extends Component {
         }
 
         if(validAccuracy && this.state.track) {
-            this.props.trackStore.addPosition(this.state.track.id, newPosition, () => {});
+            this.props.trackStore.addPosition(this.state.track.id, newPosition);
         }
 
         this.setState({
