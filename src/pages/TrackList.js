@@ -31,16 +31,12 @@ class TrackList extends Component {
     }
 
     addTrack() {
-        this.props.trackStore.createTrack(
-            newTrack => {
-                this.refreshTrackList(() => {
-                    this.props.router.push(`/tracks/${newTrack.id}/tracking`)
-                });
-            },
-            () => {
-                console.error('Error creating new track');
-            }
-        );
+        this.props.trackStore.createTrack()
+        .then(newTrack => {
+            this.refreshTrackList(() => {
+                this.props.router.push(`/tracks/${newTrack.id}/tracking`)
+            });
+        });
     }
 
     getTrackCount(tracks) {

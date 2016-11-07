@@ -8,10 +8,17 @@ Provides methods to list/add/delete tracks and positions.
 const trackStorage = function() {
     let db = null;
 
-    const dbPromise = idb.open('geotracker', 1, upgradeDB => {
-        // TODO: create/upgradedb
-        // upgradeDB.createObjectStore('geotracker');
-    });
+    const openDBPromise = idb.open('geotracker', 1, createDB);
+
+    function createDB(upgradeDB) {
+        console.log('Creating track store...');
+        upgradeDB.createObjectStore('tracks', { keyPath: 'id', autoIncrement: true });
+        console.log('Creating position store...');
+        const positionStore = upgradeDB.createObjectStore('positions', { keyPath: 'id' });
+        console.log('Creating position index...');
+        positionStore.createIndex('positionIdx', 'trackId', { unique: false });
+        console.log('Database ready.');
+    }
 
     function openDB(success) {
         if(db != null) {
@@ -48,24 +55,20 @@ const trackStorage = function() {
     };
 
     const publicMethods = {
-        createTrack(success, error) {
+        createTrack() {
             const newTrack = {
                 name: null,
                 createdAt: Date.now(),
             };
 
-            openDB(function() {
-                const transaction = db.transaction(['tracks'], 'readwrite');
-                transaction.oncomplete = function(event) {
-                    success(newTrack);
-                };
-
-                const trackStore = transaction.objectStore('tracks');
-                const request = trackStore.add(newTrack);
-                request.onsuccess = function(event) {
-                    const newTrackId = event.target.result;
-                    newTrack.id = newTrackId;
-                };
+            return openDBPromise.then(db => {
+                return db.transaction('tracks', 'readwrite')
+                    .objectStore('tracks')
+                    .add(newTrack)
+                    .then(newTrackId => {
+                        newTrack.id = newTrackId;
+                        return newTrack;
+                    });
             });
         },
 
@@ -115,7 +118,7 @@ const trackStorage = function() {
         },
 
         getTrackList() {
-            return dbPromise.then(db => {
+            return openDBPromise.then(db => {
                 return db
                     .transaction('tracks', 'readonly')
                     .objectStore('tracks')
@@ -124,7 +127,7 @@ const trackStorage = function() {
         },
 
         getTrack(trackId) {
-            return dbPromise.then(db => {
+            return openDBPromise.then(db => {
                 return db
                     .transaction('tracks', 'readonly')
                     .objectStore('tracks')
