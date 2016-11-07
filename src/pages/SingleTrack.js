@@ -34,9 +34,8 @@ class SingleTrack extends Component {
 
     deleteTrack() {
         // if(!confirm('Are you sure you want to delete this track?')) { return; }
-        this.props.trackStore.deleteTrack(parseInt(this.props.params.trackId, 10), () => {
-            this.props.router.push('/tracks');
-        });
+        this.props.trackStore.deleteTrack(parseInt(this.props.params.trackId, 10))
+        .then(() => { this.props.router.push('/tracks'); });
     }
 
     exportTrack() {
