@@ -25,7 +25,8 @@ class SingleTrack extends Component {
     componentWillMount() {
         this.props.trackStore.getTrack(parseInt(this.props.params.trackId, 10))
         .then(track => {
-            this.props.trackStore.getTrackPositions(track.id, positions => {
+            this.props.trackStore.getTrackPositions(track.id)
+            .then(positions => {
                 this.setState({ track, positions });
             });
         });

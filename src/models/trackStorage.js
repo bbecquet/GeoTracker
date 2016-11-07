@@ -135,26 +135,16 @@ const trackStorage = function() {
             });
         },
 
-        getTrackPositions(trackId, success, error) {
-            openDB(function() {
-                const positions = [];
-                const positionStore = db.transaction(['positions'], 'readonly').objectStore('positions');
-                const positionIdx = positionStore.index('positionIdx');
-                const request = positionIdx.openCursor(IDBKeyRange.only(Number(trackId)));
-                request.onsuccess = function(event) {
-                    const cursor = event.target.result;
-                    if (cursor) {
-                        positions.push(cursor.value);
-                        cursor.continue();
-                    } else {
-                        // sort by time stamp (useless?)
-                        positions.sort(function(a, b) { return (a.timestamp - b.timestamp); });
-                        success(positions);
-                    }
-                };
-                request.onerror = function() {
-                    console.error(request.errorCode);
-                }
+        getTrackPositions(trackId) {
+            return openDBPromise.then(db => {
+                return db
+                    .transaction('positions', 'readonly')
+                    .objectStore('positions')
+                    .index('positionIdx')
+                    .getAll(IDBKeyRange.only(Number(trackId)))
+                    .then(positions => {
+                        return positions.sort((a, b) => a.timestamp - b.timestamp);
+                    });
             });
         },
 
