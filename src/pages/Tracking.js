@@ -50,7 +50,8 @@ class Tracking extends Component {
                     name: locationName,
                 };
 
-                this.props.trackStore.updateTrack(updatedTrack, () => {
+                this.props.trackStore.updateTrack(updatedTrack)
+                .then(() => {
                     this.setState({ track: updatedTrack });
                 });
             });

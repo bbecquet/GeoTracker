@@ -72,15 +72,11 @@ const trackStorage = function() {
             });
         },
 
-        updateTrack(updatedTrack, success, error) {
-            openDB(function() {
-                const transaction = db.transaction(['tracks'], 'readwrite');
-                transaction.oncomplete = function(event) {
-                    success(updatedTrack);
-                };
-
-                const trackStore = transaction.objectStore('tracks');
-                trackStore.put(updatedTrack);
+        updateTrack(updatedTrack) {
+            return openDBPromise.then(db => {
+                return db.transaction('tracks', 'readwrite')
+                    .objectStore('tracks')
+                    .put(updatedTrack);
             });
         },
 
