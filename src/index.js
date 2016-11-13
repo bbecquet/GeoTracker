@@ -9,24 +9,34 @@ import Tracking from './pages/Tracking.js';
 import Settings from './pages/Settings.js';
 import About from './pages/About.js';
 import trackStorage from './models/trackStorage.js';
+import { createStore, combineReducers } from 'redux';
+import { Provider, connect } from 'react-redux';
+import { reducer as settingsReducer, mapSettingsToProps } from './models/settings';
+
+const store = createStore(combineReducers({
+    settings: settingsReducer,
+}));
 
 const trackStore = new trackStorage();
 
 const createElement = function (Component, props) {
-    return <Component trackStore={trackStore} {...props} />
+    const ReduxComponent = connect(mapSettingsToProps)(Component);
+    return <ReduxComponent trackStore={trackStore} {...props} />
 };
 
 ReactDOM.render(
-    <Router history={browserHistory} createElement={createElement}>
-        <Route path="/" component={App}>
-            <IndexRedirect to="/tracks" />
-            <Route path="tracks" component={TrackList} />
-            <Route path="tracks/:trackId" component={SingleTrack}></Route>
-            <Route path="tracks/:trackId/tracking" component={Tracking}></Route>
-            <Route path="settings" component={Settings}/>
-            <Route path="about" component={About}/>
-            <Redirect path="*" to="/"/>
-        </Route>
-    </Router>,
+    <Provider store={store}>
+        <Router history={browserHistory} createElement={createElement}>
+            <Route path="/" component={App}>
+                <IndexRedirect to="/tracks" />
+                <Route path="tracks" component={TrackList} />
+                <Route path="tracks/:trackId" component={SingleTrack}></Route>
+                <Route path="tracks/:trackId/tracking" component={Tracking}></Route>
+                <Route path="settings" component={Settings}/>
+                <Route path="about" component={About}/>
+                <Redirect path="*" to="/"/>
+            </Route>
+        </Router>
+    </Provider>,
     document.getElementById('root')
 );

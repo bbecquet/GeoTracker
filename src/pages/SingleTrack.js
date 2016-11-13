@@ -4,7 +4,7 @@ import TrackSummary from '../components/TrackSummary';
 import TrackStats from '../components/TrackStats';
 import TrackMap from '../components/TrackMap';
 import { exportTrackAsGpx } from '../models/trackUtils';
-import { getMapStyle, getSetting } from '../models/settings';
+import { mapTileDefs } from '../models/settings';
 import PageHeader from '../components/PageHeader';
 import deleteIcon from '../imgs/delete.svg';
 import exportIcon from '../imgs/file-export.svg';
@@ -20,6 +20,7 @@ class SingleTrack extends Component {
 
     static propTypes = {
         trackStore: PropTypes.object.isRequired,
+        settings: PropTypes.object.isRequired,
     }
 
     componentWillMount() {
@@ -43,8 +44,9 @@ class SingleTrack extends Component {
     }
 
     render() {
+        const settings = this.props.settings;
         const track = this.state.track;
-        const useImperialSystem = getSetting('lengthUnit') === 'imperial';
+        const useImperialSystem = settings.lengthUnit === 'imperial';
 
         return (<div>
             <PageHeader
@@ -70,7 +72,7 @@ class SingleTrack extends Component {
                 <div className="mapContainer">
                     <TrackMap
                         initialPositions={this.state.positions}
-                        backgroundTileDef={getMapStyle()}
+                        backgroundTileDef={mapTileDefs[settings.mapTiles]}
                         imperialSystem={useImperialSystem}
                     />
                 </div>

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { withRouter } from 'react-router';
-import { getSetting, getMapStyle } from '../models/settings';
+import { mapTileDefs } from '../models/settings';
 import Tracker from '../models/tracker';
 import PageHeader from '../components/PageHeader';
 import TrackMap from '../components/TrackMap';
@@ -17,10 +17,11 @@ class Tracking extends Component {
 
     static propTypes = {
         trackStore: PropTypes.object.isRequired,
+        settings: PropTypes.object.isRequired,
     }
 
     componentWillMount() {
-        this.maxAccuracy = parseInt(getSetting('maxAccuracy'), 10);
+        this.maxAccuracy = parseInt(this.props.settings.maxAccuracy, 10);
 
         this.props.trackStore.getTrack(parseInt(this.props.params.trackId, 10))
         .then(track => { this.setState({ track }); });
@@ -28,7 +29,7 @@ class Tracking extends Component {
 
     componentDidMount() {
         console.log('Lauching GPS…');
-        this.tracker = new Tracker(getSetting('gps.simulatePositions'));
+        this.tracker = new Tracker(this.props.settings['gps.simulatePositions']);
         this.tracker.start(position => this.onNewPosition(position));
     }
 
@@ -68,8 +69,9 @@ class Tracking extends Component {
     }
 
     render() {
+        const settings = this.props.settings;
         const track = this.state.track;
-        const useImperialSystem = getSetting('lengthUnit') === 'imperial';
+        const useImperialSystem = settings.lengthUnit === 'imperial';
 
         return (<div>
             <PageHeader
@@ -90,7 +92,7 @@ class Tracking extends Component {
                     <TrackMap
                         newPosition={this.state.lastPosition}
                         validAccuracy={this.state.validAccuracy}
-                        backgroundTileDef={getMapStyle()}
+                        backgroundTileDef={mapTileDefs[settings.mapTiles]}
                         imperialSystem={useImperialSystem}
                     />
                 </div>

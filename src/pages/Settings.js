@@ -1,28 +1,27 @@
 import React, { Component, PropTypes } from 'react';
-import { getSetting, setSetting, mapTileDefs } from '../models/settings';
+import { mapTileDefs } from '../models/settings';
 import PageHeader from '../components/PageHeader';
 import MapBackgroundChooser from '../components/MapBackgroundChooser';
 import Length from '../components/Length';
+import { connect } from 'react-redux';
 
 class Settings extends Component {
     static propTypes = {
         trackStore: PropTypes.object.isRequired,
+        settings: PropTypes.object.isRequired,
+        changeSetting: PropTypes.func.isRequired,
     }
 
     handleChangeGps(e) {
-        setSetting('gps.simulatePositions', e.target.checked);
-        // @TODO: make setSetting change the state upwards so it rerenders automatically
-        this.forceUpdate();
+        this.props.changeSetting('gps.simulatePositions', e.target.checked);
     }
 
     handleChangeUnit(e) {
-        setSetting('lengthUnit', e.target.value);
-        this.forceUpdate();
+        this.props.changeSetting('lengthUnit', e.target.value);
     }
 
     handleChangeAccuracy(e) {
-        setSetting('maxAccuracy', parseInt(e.target.value, 10));
-        this.forceUpdate();
+        this.props.changeSetting('maxAccuracy', parseInt(e.target.value, 10));
     }
 
     handleResetDatabase() {
@@ -35,13 +34,13 @@ class Settings extends Component {
     }
 
     changeMapTiles(newTilesKey) {
-        setSetting('mapTiles', newTilesKey);
-        this.forceUpdate();
+        this.props.changeSetting('mapTiles', newTilesKey);
     }
 
     render() {
-        const maxAccuracy = parseInt(getSetting('maxAccuracy'), 10);
-        const imperialSystem = getSetting('lengthUnit') === 'imperial';
+        const settings = this.props.settings;
+        const maxAccuracy = parseInt(settings.maxAccuracy, 10);
+        const imperialSystem = settings.lengthUnit === 'imperial';
 
         return <div>
             <PageHeader
@@ -79,7 +78,7 @@ class Settings extends Component {
                         <div className="setting">
                             Map background style
                             <MapBackgroundChooser
-                                activeMapTiles={getSetting('mapTiles')}
+                                activeMapTiles={settings.mapTiles}
                                 mapTiles={mapTileDefs}
                                 changeMapTiles={newStyleKey => this.changeMapTiles(newStyleKey)}
                             />
@@ -105,7 +104,7 @@ class Settings extends Component {
                         <label>
                             <input
                                 type="checkbox"
-                                checked={getSetting('gps.simulatePositions')}
+                                checked={settings['gps.simulatePositions']}
                                 onChange={e => { this.handleChangeGps(e); }}
                             />
                             Use fake GPS positions
@@ -126,4 +125,14 @@ class Settings extends Component {
     }
 }
 
-export default Settings;
+function mapDispatchToProps(dispatch) {
+    return {
+        changeSetting: (key, value) => dispatch({
+            type: 'SETTING_CHANGE',
+            key,
+            value,
+        }),
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Settings);
