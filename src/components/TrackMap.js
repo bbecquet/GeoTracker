@@ -5,7 +5,6 @@ import './TrackMap.css';
 import '../../node_modules/leaflet/dist/images/layers.png';
 import '../../node_modules/leaflet/dist/leaflet.css';
 import arrowIcon from '../imgs/arrow.svg';
-import { getSetting } from '../models/settings';
 
 class TrackMap extends Component {
     static propTypes = {
@@ -13,6 +12,7 @@ class TrackMap extends Component {
         initialPositions: PropTypes.array,
         newPosition: PropTypes.object,
         validAccuracy: PropTypes.bool,
+        imperialSystem: PropTypes.bool,
     }
 
     static defaultProps = {
@@ -32,7 +32,7 @@ class TrackMap extends Component {
     }
 
     initMap() {
-        const useImperialScale = getSetting('lengthUnit') === 'imperial';
+        const useImperialScale = this.props.imperialSystem;
 
         this.map = L.map(this.mapElement, {
             // TODO: put map options in global settings?

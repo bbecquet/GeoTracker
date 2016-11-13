@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import Length from './Length';
-import { getSetting } from '../models/settings';
 import './GpsStatus.css';
 import classnames from 'classnames';
 
@@ -8,6 +7,7 @@ class GpsStatus extends Component {
     static propTypes = {
         position: PropTypes.object,
         validAccuracy: PropTypes.bool,
+        imperialSystem: PropTypes.bool
     }
 
     render() {
@@ -19,7 +19,7 @@ class GpsStatus extends Component {
         })}>
             <div className="gpsStatus-accuracy">
                 Accuracy: {coords
-                    ? <Length meters={coords.accuracy} imperialSystem={getSetting('lengthUnit') === 'imperial'} />
+                    ? <Length meters={coords.accuracy} imperialSystem={this.props.imperialSystem} />
                     : '-'}
             </div>
             <div className="gpsStatus-indicator" />

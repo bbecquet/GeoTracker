@@ -69,6 +69,7 @@ class Tracking extends Component {
 
     render() {
         const track = this.state.track;
+        const useImperialSystem = getSetting('lengthUnit') === 'imperial';
 
         return (<div>
             <PageHeader
@@ -83,12 +84,14 @@ class Tracking extends Component {
                 <GpsStatus
                     position={this.state.lastPosition}
                     validAccuracy={this.state.validAccuracy}
+                    imperialSystem={useImperialSystem}
                 />
                 <div className="mapContainer">
                     <TrackMap
                         newPosition={this.state.lastPosition}
                         validAccuracy={this.state.validAccuracy}
                         backgroundTileDef={getMapStyle()}
+                        imperialSystem={useImperialSystem}
                     />
                 </div>
             </main>
