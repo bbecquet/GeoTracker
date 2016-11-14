@@ -6,6 +6,7 @@ import PageHeader from '../components/PageHeader';
 import TrackMap from '../components/TrackMap';
 import GpsStatus from '../components/GpsStatus';
 import { getLocationName } from '../models/locator';
+import stopIcon from '../imgs/stop.svg';
 
 class Tracking extends Component {
     constructor() {
@@ -78,7 +79,7 @@ class Tracking extends Component {
                 title="Tracking…"
                 rightChild={
                     <button onClick={() => { this.props.router.push(`/tracks/${track.id}`) }}>
-                        ⏹ Stop
+                        <img src={stopIcon} alt="" />&nbsp;Stop
                     </button>
                 }
             />

@@ -76,7 +76,6 @@ class TrackList extends Component {
                             <button onClick={() => { this.props.router.push('/about') }}>
                                 <img src={aboutIcon} alt="" />
                             </button>
-                            |
                             <button onClick={() => { this.props.router.push('/settings') }}>
                                 <img src={settingsIcon} alt="" />
                             </button>

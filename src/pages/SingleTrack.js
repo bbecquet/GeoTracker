@@ -57,7 +57,6 @@ class SingleTrack extends Component {
                         <button onClick={() => { this.deleteTrack(); }}>
                             <img src={deleteIcon} alt="" />
                         </button>
-                        |
                         <button onClick={() => { this.exportTrack(); }}>
                             <img src={exportIcon} alt="" />&nbsp;Export
                         </button>
