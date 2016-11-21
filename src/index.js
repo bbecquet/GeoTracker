@@ -13,11 +13,34 @@ import { createStore, combineReducers } from 'redux';
 import { Provider, connect } from 'react-redux';
 import { reducer as settingsReducer, mapSettingsToProps } from './models/settings';
 
+const trackStore = new trackStorage();
+
+function tracksReducer(state = { status: 'LOADING' }, action) {
+    switch (action.type) {
+        case 'TRACKS_LOAD':
+            return {
+                status: 'READY',
+                trackList: action.tracks,
+            };
+        case 'TRACKS_NEW':
+            return {
+                ...state,
+                trackList: state.trackList.concat(action.track),
+            };
+        case 'TRACKS_CLEAR':
+            return {
+                ...state,
+                trackList: [],
+            };
+        default:
+            return state;
+    }
+}
+
 const store = createStore(combineReducers({
     settings: settingsReducer,
+    tracks: tracksReducer,
 }));
-
-const trackStore = new trackStorage();
 
 const createElement = function (Component, props) {
     const ReduxComponent = connect(mapSettingsToProps)(Component);

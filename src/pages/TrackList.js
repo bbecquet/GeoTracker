@@ -6,42 +6,39 @@ import settingsIcon from '../imgs/settings.svg';
 import aboutIcon from '../imgs/information.svg';
 import './TrackList.css';
 import _ from 'lodash';
+import { connect } from 'react-redux';
 
 class TrackList extends Component {
-    constructor() {
-        super();
-        this.state = { tracks: null };
-    }
-
     static propTypes = {
         trackStore: PropTypes.object.isRequired,
+        tracks: PropTypes.object.isRequired,
+        loadTracks: PropTypes.func.isRequired,
+        addTrack: PropTypes.func.isRequired,
     }
 
     componentWillMount() {
-        this.refreshTrackList();
+        this.loadTrackList();
     }
 
-    refreshTrackList() {
+    loadTrackList() {
         return this.props.trackStore.getTrackList()
         .then(tracks => {
             tracks.sort((t1, t2) => t2.createdAt - t1.createdAt);
-            this.setState({ tracks });
+            this.props.loadTracks(tracks);
         });
     }
 
     addTrack() {
         this.props.trackStore.createTrack()
         .then(newTrack => {
-            this.refreshTrackList()
-            .then(() => {
-                this.props.router.push(`/tracks/${newTrack.id}/tracking`)
-            });
+            this.props.addTrack(newTrack);
+            this.props.router.push(`/tracks/${newTrack.id}/tracking`)
         });
     }
 
-    getTrackCount(tracks) {
-        if(!tracks) { return 'Loading tracks…'; }
-        switch(tracks.length) {
+    getTrackCount() {
+        if(!this.props.tracks.trackList) { return 'Loading tracks…'; }
+        switch(this.props.tracks.trackList.length) {
             case 0:
                 return <div>
                     <p>No track yet.</p>
@@ -50,13 +47,14 @@ class TrackList extends Component {
             case 1:
                 return <p>1 track</p>;
             default:
-                return <p>{`${tracks.length} tracks`}</p>;
+                return <p>{`${this.props.tracks.trackList.length} tracks`}</p>;
         }
     }
 
-    renderList(tracks) {
+    renderList() {
+        if(!this.props.tracks.trackList) { return null; }
         return <ul>
-            {tracks.map(track =>
+            {this.props.tracks.trackList.map(track =>
                 <li key={track.id}>
                     <Link to={`/tracks/${track.id}`}>
                         <TrackSummary track={track} />
@@ -85,8 +83,8 @@ class TrackList extends Component {
                 <main>
                     <div className="padding">
                         <div className="trackList">
-                            {this.getTrackCount(this.state.tracks)}
-                            {this.state.tracks && this.renderList(this.state.tracks)}
+                            {this.getTrackCount()}
+                            {this.renderList()}
                         </div>
                     </div>
                     <button
@@ -101,4 +99,17 @@ class TrackList extends Component {
     }
 }
 
-export default withRouter(TrackList);
+function mapDispatchToProps(dispatch) {
+    return {
+        loadTracks: tracks => dispatch({
+            type: 'TRACKS_LOAD',
+            tracks,
+        }),
+        addTrack: track => dispatch({
+            type: 'TRACKS_NEW',
+            track,
+        })
+    }
+}
+
+export default connect(null, mapDispatchToProps)(withRouter(TrackList));
