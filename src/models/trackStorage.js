@@ -107,10 +107,13 @@ const trackStorage = function() {
             });
         },
 
-        clearDatabase(success, error) {
-            const request = indexedDB.deleteDatabase('geotracker');
-            request.onSuccess = success;
-            request.onError = error;
+        clearDatabase() {
+            return openDBPromise.then(db => {
+                // TODO: the delete promise never resolves if connections aren't closed,
+                // but when closing it, any further attempt to use the db results in error
+                db.close();
+                return idb.delete('geotracker');
+            });
         },
     };
 

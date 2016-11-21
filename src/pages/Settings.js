@@ -26,11 +26,9 @@ class Settings extends Component {
 
     handleResetDatabase() {
         if (!confirm('This will delete all your tracks. Are you sure?')) { return; }
-        this.props.trackStore.clearDatabase(() => {
-            alert('Database cleared');
-        }, event => {
-            alert('Error');
-        });
+        this.props.trackStore.clearDatabase()
+            .then(() => { alert('Database cleared'); })
+            .catch(event => { alert('Error: ' + event); });
     }
 
     changeMapTiles(newTilesKey) {
