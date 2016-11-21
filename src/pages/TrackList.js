@@ -21,19 +21,19 @@ class TrackList extends Component {
         this.refreshTrackList();
     }
 
-    refreshTrackList(done) {
-        this.props.trackStore.getTrackList()
+    refreshTrackList() {
+        return this.props.trackStore.getTrackList()
         .then(tracks => {
             tracks.sort((t1, t2) => t2.createdAt - t1.createdAt);
             this.setState({ tracks });
-            if(done) { done(); }
         });
     }
 
     addTrack() {
         this.props.trackStore.createTrack()
         .then(newTrack => {
-            this.refreshTrackList(() => {
+            this.refreshTrackList()
+            .then(() => {
                 this.props.router.push(`/tracks/${newTrack.id}/tracking`)
             });
         });
