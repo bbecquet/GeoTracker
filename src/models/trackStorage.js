@@ -111,8 +111,18 @@ const trackStorage = function() {
             return openDBPromise.then(db => {
                 // TODO: the delete promise never resolves if connections aren't closed,
                 // but when closing it, any further attempt to use the db results in error
-                db.close();
-                return idb.delete('geotracker');
+                // db.close();
+                // return idb.delete('geotracker');
+                return db.transaction('positions', 'readwrite')
+                    .objectStore('positions')
+                    .clear()
+                    .then(() => {
+                        // use another transaction whereas it should be done in the same, because of microtask bug.
+                        // see: https://github.com/jakearchibald/idb/blob/master/README.md#transaction-lifetime
+                        return db.transaction('tracks', 'readwrite')
+                            .objectStore('tracks')
+                            .clear();
+                    });
             });
         },
     };
