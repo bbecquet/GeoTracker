@@ -19,6 +19,7 @@ ul, li {
 
 .mapContainer {
     height: 300px;
+    flex-grow: 1;
 }
 
 .padding {
@@ -31,6 +32,8 @@ main {
     bottom: 0;
     width: 100%;
     overflow: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 input[type=checkbox],
