@@ -13,6 +13,19 @@ import { createStore, combineReducers } from 'redux';
 import { Provider, connect } from 'react-redux';
 import { reducer as settingsReducer, mapSettingsToProps } from './models/settings';
 
+import swURL from "file?name=sw.js!babel!./sw";
+
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register(swURL)
+    .then(function(reg) {
+        // registration worked
+        console.log('Registration succeeded. Scope is ' + reg.scope);
+    }).catch(function(error) {
+        // registration failed
+        console.log('Registration failed with ' + error);
+    });
+};
+
 const trackStore = new trackStorage();
 
 function tracksReducer(state = { status: 'LOADING' }, action) {

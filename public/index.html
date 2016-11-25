@@ -28,17 +28,5 @@
       To begin the development, run `npm start`.
       To create a production bundle, use `npm run build`.
     -->
-    <script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/workers/sw.js', { scope: '/workers/' })
-        .then(function(reg) {
-            // registration worked
-            console.log('Registration succeeded. Scope is ' + reg.scope);
-        }).catch(function(error) {
-            // registration failed
-            console.log('Registration failed with ' + error);
-        });
-    };
-    </script>
   </body>
 </html>
