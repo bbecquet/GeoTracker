@@ -12,6 +12,7 @@ import trackStorage from './models/trackStorage.js';
 import { createStore, combineReducers } from 'redux';
 import { Provider, connect } from 'react-redux';
 import { reducer as settingsReducer, mapSettingsToProps } from './models/settings';
+import { reducer as tracksReducer } from './models/trackUtils';
 
 import swURL from "file?name=sw.js!babel!./sw";
 
@@ -27,28 +28,6 @@ if ('serviceWorker' in navigator) {
 };
 
 const trackStore = new trackStorage();
-
-function tracksReducer(state = { status: 'LOADING' }, action) {
-    switch (action.type) {
-        case 'TRACKS_LOAD':
-            return {
-                status: 'READY',
-                trackList: action.tracks,
-            };
-        case 'TRACKS_NEW':
-            return {
-                ...state,
-                trackList: state.trackList.concat(action.track),
-            };
-        case 'TRACKS_CLEAR':
-            return {
-                ...state,
-                trackList: [],
-            };
-        default:
-            return state;
-    }
-}
 
 const store = createStore(combineReducers({
     settings: settingsReducer,

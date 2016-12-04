@@ -102,7 +102,7 @@ class TrackList extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         loadTracks: tracks => dispatch({
-            type: 'TRACKS_LOAD',
+            type: 'TRACKS_LOAD_LIST',
             tracks,
         }),
         addTrack: track => dispatch({

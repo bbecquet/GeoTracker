@@ -23,3 +23,25 @@ export function getLength(positions) {
             return distance + ll.distanceTo(latLngs[index - 1]);
         }, 0);
 }
+
+export function reducer(state = { status: 'LOADING' }, action) {
+    switch (action.type) {
+        case 'TRACKS_LOAD_LIST':
+            return {
+                status: 'READY',
+                trackList: action.tracks,
+            };
+        case 'TRACKS_NEW':
+            return {
+                ...state,
+                trackList: state.trackList.concat(action.track),
+            };
+        case 'TRACKS_CLEAR':
+            return {
+                ...state,
+                trackList: [],
+            };
+        default:
+            return state;
+    }
+}
