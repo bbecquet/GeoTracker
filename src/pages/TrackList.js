@@ -6,10 +6,10 @@ import settingsIcon from '../imgs/settings.svg';
 import aboutIcon from '../imgs/information.svg';
 import './TrackList.css';
 import { connect } from 'react-redux';
+import { getTrackList, createTrack } from '../models/trackStorage';
 
 class TrackList extends Component {
     static propTypes = {
-        trackStore: PropTypes.object.isRequired,
         tracks: PropTypes.object.isRequired,
         loadTracks: PropTypes.func.isRequired,
         addTrack: PropTypes.func.isRequired,
@@ -20,7 +20,7 @@ class TrackList extends Component {
     }
 
     loadTrackList() {
-        return this.props.trackStore.getTrackList()
+        return getTrackList()
         .then(tracks => {
             tracks.sort((t1, t2) => t2.createdAt - t1.createdAt);
             this.props.loadTracks(tracks);
@@ -28,7 +28,7 @@ class TrackList extends Component {
     }
 
     addTrack() {
-        this.props.trackStore.createTrack()
+        createTrack()
         .then(newTrack => {
             this.props.addTrack(newTrack);
             this.props.router.push(`/tracks/${newTrack.id}/tracking`)

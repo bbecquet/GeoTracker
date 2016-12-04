@@ -7,6 +7,7 @@ import TrackMap from '../components/TrackMap';
 import GpsStatus from '../components/GpsStatus';
 import { getLocationName } from '../models/locator';
 import stopIcon from '../imgs/stop.svg';
+import { getTrack, updateTrack, addPositionToTrack } from '../models/trackStorage';
 
 class Tracking extends Component {
     constructor() {
@@ -17,14 +18,13 @@ class Tracking extends Component {
     }
 
     static propTypes = {
-        trackStore: PropTypes.object.isRequired,
         settings: PropTypes.object.isRequired,
     }
 
     componentWillMount() {
         this.maxAccuracy = parseInt(this.props.settings.maxAccuracy, 10);
 
-        this.props.trackStore.getTrack(parseInt(this.props.params.trackId, 10))
+        getTrack(parseInt(this.props.params.trackId, 10))
         .then(track => { this.setState({ track }); });
     }
 
@@ -52,7 +52,7 @@ class Tracking extends Component {
                     name: locationName,
                 };
 
-                this.props.trackStore.updateTrack(updatedTrack)
+                updateTrack(updatedTrack)
                 .then(() => {
                     this.setState({ track: updatedTrack });
                 });
@@ -60,7 +60,7 @@ class Tracking extends Component {
         }
 
         if(validAccuracy && this.state.track) {
-            this.props.trackStore.addPosition(this.state.track.id, newPosition);
+            addPositionToTrack(this.state.track.id, newPosition);
         }
 
         this.setState({

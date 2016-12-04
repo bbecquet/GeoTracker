@@ -3,11 +3,11 @@ import { mapTileDefs } from '../models/settings';
 import PageHeader from '../components/PageHeader';
 import MapBackgroundChooser from '../components/MapBackgroundChooser';
 import Length from '../components/Length';
+import { clearTrackDatabase } from '../models/trackStorage';
 import { connect } from 'react-redux';
 
 class Settings extends Component {
     static propTypes = {
-        trackStore: PropTypes.object.isRequired,
         settings: PropTypes.object.isRequired,
         changeSetting: PropTypes.func.isRequired,
     }
@@ -26,7 +26,7 @@ class Settings extends Component {
 
     handleResetDatabase() {
         if (!confirm('This will delete all your tracks. Are you sure?')) { return; }
-        this.props.trackStore.clearDatabase()
+        clearTrackDatabase()
             .then(() => { alert('Database cleared'); })
             .catch(event => { alert('Error: ' + event); });
     }

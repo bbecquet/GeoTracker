@@ -8,6 +8,7 @@ import { mapTileDefs } from '../models/settings';
 import PageHeader from '../components/PageHeader';
 import deleteIcon from '../imgs/delete.svg';
 import exportIcon from '../imgs/file-export.svg';
+import { getTrack, getTrackPositions, deleteTrack } from '../models/trackStorage';
 
 class SingleTrack extends Component {
     constructor() {
@@ -19,14 +20,13 @@ class SingleTrack extends Component {
     }
 
     static propTypes = {
-        trackStore: PropTypes.object.isRequired,
         settings: PropTypes.object.isRequired,
     }
 
     componentWillMount() {
-        this.props.trackStore.getTrack(parseInt(this.props.params.trackId, 10))
+        getTrack(parseInt(this.props.params.trackId, 10))
         .then(track => {
-            this.props.trackStore.getTrackPositions(track.id)
+            getTrackPositions(track.id)
             .then(positions => {
                 this.setState({ track, positions });
             });
@@ -35,7 +35,7 @@ class SingleTrack extends Component {
 
     deleteTrack() {
         if(!confirm('Are you sure you want to delete this track?')) { return; }
-        this.props.trackStore.deleteTrack(parseInt(this.props.params.trackId, 10))
+        deleteTrack(parseInt(this.props.params.trackId, 10))
         .then(() => { this.props.router.push('/tracks'); });
     }
 

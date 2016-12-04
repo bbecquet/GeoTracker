@@ -8,7 +8,6 @@ import SingleTrack from './pages/SingleTrack.js';
 import Tracking from './pages/Tracking.js';
 import Settings from './pages/Settings.js';
 import About from './pages/About.js';
-import trackStorage from './models/trackStorage.js';
 import { createStore, combineReducers } from 'redux';
 import { Provider, connect } from 'react-redux';
 import { reducer as settingsReducer, mapSettingsToProps } from './models/settings';
@@ -27,8 +26,6 @@ if ('serviceWorker' in navigator) {
     });
 };
 
-const trackStore = new trackStorage();
-
 const store = createStore(combineReducers({
     settings: settingsReducer,
     tracks: tracksReducer,
@@ -36,7 +33,7 @@ const store = createStore(combineReducers({
 
 const createElement = function (Component, props) {
     const ReduxComponent = connect(mapSettingsToProps)(Component);
-    return <ReduxComponent trackStore={trackStore} {...props} />
+    return <ReduxComponent {...props} />
 };
 
 ReactDOM.render(
