@@ -1,14 +1,21 @@
 {
   "name": "GeoTracker",
   "short_name": "GeoTracker",
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#fff",
   "description": "A simple track recorder application.",
   "lang": "en-US",
-  "icons": [{
-    "src": "favicon.png",
-    "sizes": "48x48",
-    "type": "image/png"
-  }]
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "icon144.png",
+      "sizes": "72x72 96x96 128x128 144x144",
+      "type": "image/png"
+    }
+  ]
 }
