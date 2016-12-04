@@ -7,6 +7,8 @@ var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 var WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 var getClientEnvironment = require('./env');
+var AssetsPlugin = require('assets-webpack-plugin');
+var ManifestPlugin = require('webpack-manifest-plugin');
 var paths = require('./paths');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
@@ -81,7 +83,7 @@ module.exports = {
       'react-native': 'react-native-web'
     }
   },
-  
+
   module: {
     // First, run the linter.
     // It's important to do this before Babel processes the JS.
@@ -99,7 +101,6 @@ module.exports = {
         include: paths.appSrc,
         loader: 'babel',
         query: {
-          
           // This is a feature of `babel-loader` for webpack (not Babel itself).
           // It enables caching results in ./node_modules/.cache/react-scripts/
           // directory for faster rebuilds. We use findCacheDir() because of:
@@ -146,7 +147,6 @@ module.exports = {
       }
     ]
   },
-  
   // We use PostCSS for autoprefixing only.
   postcss: function() {
     return [
@@ -185,7 +185,11 @@ module.exports = {
     // to restart the development server for Webpack to discover it. This plugin
     // makes the discovery automatic so you don't have to restart.
     // See https://github.com/facebookincubator/create-react-app/issues/186
-    new WatchMissingNodeModulesPlugin(paths.appNodeModules)
+    new WatchMissingNodeModulesPlugin(paths.appNodeModules),
+    new ManifestPlugin({
+      fileName: 'static/meta/assets.json',
+      writeToFileEmit: true,
+    })
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
