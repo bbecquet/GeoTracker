@@ -19,3 +19,20 @@ self.addEventListener('install', event => {
       ).then(() => self.skipWaiting())
   );
 });
+
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        if (response) { return response; }
+
+        return fetch(event.request);
+      }
+    )
+  );
+});
+
+self.addEventListener('activate', event => {
+  // Calling claim() to force a "controllerchange" event on navigator.serviceWorker
+  event.waitUntil(self.clients.claim());
+});
