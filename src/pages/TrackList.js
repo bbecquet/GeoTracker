@@ -5,7 +5,6 @@ import PageHeader from '../components/PageHeader.js';
 import settingsIcon from '../imgs/settings.svg';
 import aboutIcon from '../imgs/information.svg';
 import './TrackList.css';
-import _ from 'lodash';
 import { connect } from 'react-redux';
 
 class TrackList extends Component {
