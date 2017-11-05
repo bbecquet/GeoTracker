@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Link, withRouter } from 'react-router';
+import { Link, withRouter } from 'react-router-dom';
 import TrackSummary from '../components/TrackSummary.js';
 import PageHeader from '../components/PageHeader.js';
 import settingsIcon from '../imgs/settings.svg';
@@ -7,12 +7,14 @@ import aboutIcon from '../imgs/information.svg';
 import './TrackList.css';
 import { connect } from 'react-redux';
 import { getTrackList, createTrack } from '../models/trackStorage';
+import { mapSettingsToProps } from '../models/settings';
 
 class TrackList extends Component {
     static propTypes = {
         tracks: PropTypes.object.isRequired,
         loadTracks: PropTypes.func.isRequired,
         addTrack: PropTypes.func.isRequired,
+        history: PropTypes.object.isRequired,
     }
 
     componentWillMount() {
@@ -31,7 +33,7 @@ class TrackList extends Component {
         createTrack()
         .then(newTrack => {
             this.props.addTrack(newTrack);
-            this.props.router.push(`/tracks/${newTrack.id}/tracking`)
+            this.props.history.push(`/tracks/${newTrack.id}/tracking`)
         });
     }
 
@@ -70,12 +72,12 @@ class TrackList extends Component {
                     title="Your tracks"
                     rightChild={
                         <div>
-                            <button onClick={() => { this.props.router.push('/about') }}>
+                            <Link to="/about">
                                 <img src={aboutIcon} alt="" />
-                            </button>
-                            <button onClick={() => { this.props.router.push('/settings') }}>
+                            </Link>
+                            <Link to="/settings">
                                 <img src={settingsIcon} alt="" />
-                            </button>
+                            </Link>
                         </div>
                     }
                 />
@@ -111,4 +113,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(null, mapDispatchToProps)(withRouter(TrackList));
+export default connect(mapSettingsToProps, mapDispatchToProps)(withRouter(TrackList));

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import { withRouter } from 'react-router';
-import { mapTileDefs } from '../models/settings';
+import { Link } from 'react-router-dom';
+import { mapTileDefs, mapSettingsToProps } from '../models/settings';
 import Tracker from '../models/tracker';
 import PageHeader from '../components/PageHeader';
 import TrackMap from '../components/TrackMap';
@@ -8,14 +8,12 @@ import GpsStatus from '../components/GpsStatus';
 import { getLocationName } from '../models/locator';
 import stopIcon from '../imgs/stop.svg';
 import { getTrack, updateTrack, addPositionToTrack } from '../models/trackStorage';
+import { connect } from 'react-redux';
 
 class Tracking extends Component {
-    constructor() {
-        super();
-        this.state = {
-            lastPosition: null,
-        };
-    }
+    state = {
+        lastPosition: null,
+    };
 
     static propTypes = {
         settings: PropTypes.object.isRequired,
@@ -24,7 +22,7 @@ class Tracking extends Component {
     componentWillMount() {
         this.maxAccuracy = parseInt(this.props.settings.maxAccuracy, 10);
 
-        getTrack(parseInt(this.props.params.trackId, 10))
+        getTrack(parseInt(this.props.match.params.trackId, 10))
         .then(track => { this.setState({ track }); });
     }
 
@@ -78,9 +76,9 @@ class Tracking extends Component {
             <PageHeader
                 title="Tracking…"
                 rightChild={
-                    <button onClick={() => { this.props.router.push(`/tracks/${track.id}`) }}>
+                    <Link to={`/tracks/${track.id}`}>
                         <img src={stopIcon} alt="" />&nbsp;Stop
-                    </button>
+                    </Link>
                 }
             />
             <main>
@@ -102,4 +100,4 @@ class Tracking extends Component {
     }
 }
 
-export default withRouter(Tracking);
+export default connect(mapSettingsToProps)(Tracking);

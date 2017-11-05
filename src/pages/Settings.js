@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { mapTileDefs } from '../models/settings';
+import { mapTileDefs, mapSettingsToProps } from '../models/settings';
 import PageHeader from '../components/PageHeader';
 import MapBackgroundChooser from '../components/MapBackgroundChooser';
 import Length from '../components/Length';
@@ -133,4 +133,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(null, mapDispatchToProps)(Settings);
+export default connect(mapSettingsToProps, mapDispatchToProps)(Settings);
