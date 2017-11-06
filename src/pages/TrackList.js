@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import TrackSummary from '../components/TrackSummary.js';
-import PageHeader from '../components/PageHeader.js';
+import Page from '../components/Page.js';
 import settingsIcon from '../imgs/settings.svg';
 import aboutIcon from '../imgs/information.svg';
 import './TrackList.css';
@@ -29,7 +29,7 @@ class TrackList extends Component {
         });
     }
 
-    addTrack() {
+    addTrack = () => {
         createTrack()
         .then(newTrack => {
             this.props.addTrack(newTrack);
@@ -67,35 +67,26 @@ class TrackList extends Component {
 
     render() {
         return (
-            <div>
-                <PageHeader
-                    title="Your tracks"
-                    rightChild={
-                        <div>
-                            <Link to="/about">
-                                <img src={aboutIcon} alt="" />
-                            </Link>
-                            <Link to="/settings">
-                                <img src={settingsIcon} alt="" />
-                            </Link>
-                        </div>
-                    }
-                />
-                <main>
-                    <div className="padding">
-                        <div className="trackList">
-                            {this.getTrackCount()}
-                            {this.renderList()}
-                        </div>
+            <Page
+                title="Your tracks"
+                actions={[
+                    { icon: aboutIcon, to: '/about' },
+                    { icon: settingsIcon, to: '/settings' },
+                ]}
+            >
+                <div className="padding">
+                    <div className="trackList">
+                        {this.getTrackCount()}
+                        {this.renderList()}
                     </div>
-                    <button
-                        className="mainAction"
-                        onClick={() => {this.addTrack()}}
-                    >
-                        +
-                    </button>
-                </main>
-            </div>
+                </div>
+                <button
+                    className="mainAction"
+                    onClick={this.addTrack}
+                >
+                    +
+                </button>
+            </Page>
         );
     }
 }

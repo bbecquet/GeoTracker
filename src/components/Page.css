@@ -47,10 +47,7 @@
     width: 100%;
 }
 
-.pageHeader-right {
-    height: 100%;
-}
-
-.pageHeader-right div {
-    height: 100%;
+.pageHeader-right button,
+.pageHeader-right a {
+    padding: 0 6px;
 }

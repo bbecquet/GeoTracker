@@ -4,7 +4,7 @@ import TrackStats from '../components/TrackStats';
 import TrackMap from '../components/TrackMap';
 import { exportTrackAsGpx } from '../models/trackUtils';
 import { mapTileDefs, mapSettingsToProps } from '../models/settings';
-import PageHeader from '../components/PageHeader';
+import Page from '../components/Page';
 import deleteIcon from '../imgs/delete.svg';
 import exportIcon from '../imgs/file-export.svg';
 import { getTrack, getTrackPositions, deleteTrack } from '../models/trackStorage';
@@ -32,13 +32,13 @@ class SingleTrack extends Component {
         });
     }
 
-    deleteTrack() {
+    deleteTrack = () => {
         if(!confirm('Are you sure you want to delete this track?')) { return; }
         deleteTrack(parseInt(this.props.match.params.trackId, 10))
         .then(() => { this.props.history.push('/tracks'); });
     }
 
-    exportTrack() {
+    exportTrack = () => {
         exportTrackAsGpx(this.state.track, this.state.positions)
     }
 
@@ -47,22 +47,16 @@ class SingleTrack extends Component {
         const track = this.state.track;
         const useImperialSystem = settings.lengthUnit === 'imperial';
 
-        return (<div>
-            <PageHeader
+        return (
+            <Page
                 title="Track"
                 backPath="/tracks"
-                rightChild={
-                    <div>
-                        <button onClick={() => { this.deleteTrack(); }}>
-                            <img src={deleteIcon} alt="" />
-                        </button>
-                        <button onClick={() => { this.exportTrack(); }}>
-                            <img src={exportIcon} alt="" />&nbsp;Export
-                        </button>
-                    </div>
-                }
-            />
-            {track ? <main>
+                actions={[
+                    { icon: deleteIcon, action: this.deleteTrack },
+                    { icon: exportIcon, text: 'Export', action: this.exportTrack },
+                ]}
+            >
+            {track ? <div>
                 <div className="padding">
                     <TrackSummary track={track} />
                     <TrackStats {...this.state} imperialSystem={useImperialSystem} />
@@ -74,10 +68,8 @@ class SingleTrack extends Component {
                         imperialSystem={useImperialSystem}
                     />
                 </div>
-            </main> : <main>
-                <div className="padding">Loading…</div>
-            </main>}
-        </div>);
+            </div> : <div className="padding">Loading…</div>}
+        </Page>);
     }
 }
 
