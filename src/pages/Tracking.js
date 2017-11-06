@@ -1,8 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router-dom';
 import { mapTileDefs, mapSettingsToProps } from '../models/settings';
 import Tracker from '../models/tracker';
-import PageHeader from '../components/PageHeader';
+import Page from '../components/Page';
 import TrackMap from '../components/TrackMap';
 import GpsStatus from '../components/GpsStatus';
 import { getLocationName } from '../models/locator';
@@ -72,31 +71,24 @@ class Tracking extends Component {
         const track = this.state.track;
         const useImperialSystem = settings.lengthUnit === 'imperial';
 
-        return (<div>
-            <PageHeader
-                title="Tracking…"
-                rightChild={
-                    track && <Link to={`/tracks/${track.id}`}>
-                        <img src={stopIcon} alt="" />&nbsp;Stop
-                    </Link>
-                }
+        return (<Page
+            title="Tracking…"
+            actions={track ? [{ icon: stopIcon, text: 'Stop', to: `/tracks/${track.id}`}] : []}
+        >
+            <GpsStatus
+                position={this.state.lastPosition}
+                validAccuracy={this.state.validAccuracy}
+                imperialSystem={useImperialSystem}
             />
-            <main>
-                <GpsStatus
-                    position={this.state.lastPosition}
+            <div className="mapContainer">
+                <TrackMap
+                    newPosition={this.state.lastPosition}
                     validAccuracy={this.state.validAccuracy}
+                    backgroundTileDef={mapTileDefs[settings.mapTiles]}
                     imperialSystem={useImperialSystem}
                 />
-                <div className="mapContainer">
-                    <TrackMap
-                        newPosition={this.state.lastPosition}
-                        validAccuracy={this.state.validAccuracy}
-                        backgroundTileDef={mapTileDefs[settings.mapTiles]}
-                        imperialSystem={useImperialSystem}
-                    />
-                </div>
-            </main>
-        </div>);
+            </div>
+        </Page>);
     }
 }
 

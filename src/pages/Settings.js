@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { mapTileDefs, mapSettingsToProps } from '../models/settings';
-import PageHeader from '../components/PageHeader';
+import Page from '../components/Page';
 import MapBackgroundChooser from '../components/MapBackgroundChooser';
 import Length from '../components/Length';
 import { clearTrackDatabase } from '../models/trackStorage';
@@ -40,86 +40,83 @@ class Settings extends Component {
         const maxAccuracy = parseInt(settings.maxAccuracy, 10);
         const imperialSystem = settings.lengthUnit === 'imperial';
 
-        return <div>
-            <PageHeader
-                title="Settings"
-                backPath="/tracks"
-            />
-            <main>
-                <fieldset>
-                    <legend>Display</legend>
-                    <div className="padding">
-                        <div className="setting">
-                            Length units:&nbsp;
-                            <label>
-                                <input
-                                    name="lengthUnit"
-                                    value="metric"
-                                    type="radio"
-                                    checked={!imperialSystem}
-                                    onChange={e => { this.handleChangeUnit(e); }}
-                                />
-                                Metric
-                            </label>
-                            <label>
-                                <input
-                                    name="lengthUnit"
-                                    value="imperial"
-                                    type="radio"
-                                    checked={imperialSystem}
-                                    onChange={e => { this.handleChangeUnit(e); }}
-                                />
-                                Imperial
-                            </label>
-                            <p className="helpMsg">For distances and map scale.</p>
-                        </div>
-                        <div className="setting">
-                            Map background style
-                            <MapBackgroundChooser
-                                activeMapTiles={settings.mapTiles}
-                                mapTiles={mapTileDefs}
-                                changeMapTiles={newStyleKey => this.changeMapTiles(newStyleKey)}
-                            />
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <legend>GPS</legend>
-                    <div className="padding">
-                        <div className="setting">
-                            <p>Accuracy limit</p>
-                            <input type="range"
-                                min={10} max={500} step={10}
-                                value={maxAccuracy}
-                                onChange={e => { this.handleChangeAccuracy(e); }}
-                            />&nbsp;
-                            <Length
-                                meters={maxAccuracy}
-                                imperialSystem={imperialSystem}
-                            />
-                            <p className="helpMsg">Positions with accuracy beyond this value won't be recorded.</p>
-                        </div>
+        return <Page
+            title="Settings"
+            backPath="/tracks"
+        >
+            <fieldset>
+                <legend>Display</legend>
+                <div className="padding">
+                    <div className="setting">
+                        Length units:&nbsp;
                         <label>
                             <input
-                                type="checkbox"
-                                checked={settings['gps.simulatePositions']}
-                                onChange={e => { this.handleChangeGps(e); }}
+                                name="lengthUnit"
+                                value="metric"
+                                type="radio"
+                                checked={!imperialSystem}
+                                onChange={e => { this.handleChangeUnit(e); }}
                             />
-                            Use fake GPS positions
+                            Metric
                         </label>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <legend>Data</legend>
-                    <div className="padding">
                         <label>
-                            <button onClick={() => { this.handleResetDatabase(); }}>Reset database</button>
+                            <input
+                                name="lengthUnit"
+                                value="imperial"
+                                type="radio"
+                                checked={imperialSystem}
+                                onChange={e => { this.handleChangeUnit(e); }}
+                            />
+                            Imperial
                         </label>
-                        <p className="helpMsg">Will remove all tracks.</p>
+                        <p className="helpMsg">For distances and map scale.</p>
                     </div>
-                </fieldset>
-            </main>
-        </div>;
+                    <div className="setting">
+                        Map background style
+                        <MapBackgroundChooser
+                            activeMapTiles={settings.mapTiles}
+                            mapTiles={mapTileDefs}
+                            changeMapTiles={newStyleKey => this.changeMapTiles(newStyleKey)}
+                        />
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>GPS</legend>
+                <div className="padding">
+                    <div className="setting">
+                        <p>Accuracy limit</p>
+                        <input type="range"
+                            min={10} max={500} step={10}
+                            value={maxAccuracy}
+                            onChange={e => { this.handleChangeAccuracy(e); }}
+                        />&nbsp;
+                        <Length
+                            meters={maxAccuracy}
+                            imperialSystem={imperialSystem}
+                        />
+                        <p className="helpMsg">Positions with accuracy beyond this value won't be recorded.</p>
+                    </div>
+                    <label>
+                        <input
+                            type="checkbox"
+                            checked={settings['gps.simulatePositions']}
+                            onChange={e => { this.handleChangeGps(e); }}
+                        />
+                        Use fake GPS positions
+                    </label>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Data</legend>
+                <div className="padding">
+                    <label>
+                        <button onClick={() => { this.handleResetDatabase(); }}>Reset database</button>
+                    </label>
+                    <p className="helpMsg">Will remove all tracks.</p>
+                </div>
+            </fieldset>
+        </Page>;
     }
 }
 
