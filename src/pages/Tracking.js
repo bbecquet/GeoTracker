@@ -76,7 +76,7 @@ class Tracking extends Component {
             <PageHeader
                 title="Tracking…"
                 rightChild={
-                    <Link to={`/tracks/${track.id}`}>
+                    track && <Link to={`/tracks/${track.id}`}>
                         <img src={stopIcon} alt="" />&nbsp;Stop
                     </Link>
                 }

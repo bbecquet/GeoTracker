@@ -14,7 +14,7 @@ class TrackStats extends Component {
 
     render() {
         const { positions, imperialSystem } = this.props;
-        const duration = _.last(positions).timestamp - _.first(positions).timestamp;
+        const duration = positions.length === 0 ? 0 : _.last(positions).timestamp - _.first(positions).timestamp;
 
         return (
             <div className="trackStats">
