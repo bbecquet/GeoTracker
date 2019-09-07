@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Length from './Length';
 import './GpsStatus.css';
 import classnames from 'classnames';

@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { mapTileDefs, mapSettingsToProps } from '../models/settings';
 import Tracker from '../models/tracker';
 import Page from '../components/Page';
@@ -12,21 +13,19 @@ import { connect } from 'react-redux';
 class Tracking extends Component {
     state = {
         lastPosition: null,
+        track: null,
     };
 
     static propTypes = {
         settings: PropTypes.object.isRequired,
     }
 
-    componentWillMount() {
-        this.maxAccuracy = parseInt(this.props.settings.maxAccuracy, 10);
-
-        getTrack(parseInt(this.props.match.params.trackId, 10))
-        .then(track => { this.setState({ track }); });
-    }
-
     componentDidMount() {
         console.log('Lauching GPS…');
+        
+        getTrack(parseInt(this.props.match.params.trackId, 10))
+            .then(track => { this.setState({ track }); });
+
         this.tracker = new Tracker(this.props.settings['gps.simulatePositions']);
         this.tracker.start(position => this.onNewPosition(position));
     }
@@ -39,7 +38,7 @@ class Tracking extends Component {
     }
 
     onNewPosition(newPosition) {
-        const validAccuracy = newPosition.coords.accuracy <= this.maxAccuracy;
+        const validAccuracy = newPosition.coords.accuracy <= parseInt(this.props.settings.maxAccuracy, 10);
 
         if(validAccuracy && this.state.track && !this.state.track.name && !this.triedToLocate) {
             this.triedToLocate = true;

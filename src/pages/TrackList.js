@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import TrackSummary from '../components/TrackSummary.js';
 import Page from '../components/Page.js';
@@ -17,7 +18,7 @@ class TrackList extends Component {
         history: PropTypes.object.isRequired,
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.loadTrackList();
     }
 

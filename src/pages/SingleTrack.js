@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import TrackSummary from '../components/TrackSummary';
 import TrackStats from '../components/TrackStats';
 import TrackMap from '../components/TrackMap';
@@ -22,7 +23,7 @@ class SingleTrack extends Component {
         settings: PropTypes.object.isRequired,
     }
 
-    componentWillMount() {
+    componentDidMount() {
         getTrack(parseInt(this.props.match.params.trackId, 10))
         .then(track => {
             getTrackPositions(track.id)

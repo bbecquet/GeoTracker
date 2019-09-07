@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { mapTileDefs, mapSettingsToProps } from '../models/settings';
 import Page from '../components/Page';
 import MapBackgroundChooser from '../components/MapBackgroundChooser';
