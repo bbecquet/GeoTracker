@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { getLength } from '../models/trackUtils';
 import Length from './Length';
 import moment from 'moment';
-import _ from 'lodash';
 import './TrackStats.css';
 
 class TrackStats extends Component {
@@ -15,7 +14,9 @@ class TrackStats extends Component {
 
     render() {
         const { positions, imperialSystem } = this.props;
-        const duration = positions.length === 0 ? 0 : _.last(positions).timestamp - _.first(positions).timestamp;
+        const duration = positions.length === 0
+            ? 0
+            : positions[positions.length - 1].timestamp - positions[0].timestamp;
 
         return (
             <div className="trackStats">

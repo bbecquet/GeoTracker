@@ -1,4 +1,3 @@
-import _ from 'lodash';
 
 const defaults = {
     lengthUnit: 'metric',
@@ -33,11 +32,13 @@ export function reducer(state = readSettings(), action) {
 }
 
 export function mapSettingsToProps(settings) {
-    return _.mapValues(settings, value => {
-        if (value === 'true') { return true; }
-        if (value === 'false') { return false; }
-        return value;
-    });
+    const result = {};
+    for (let [key, value] of Object.entries(settings)) {
+        result[key] = value === 'true'
+            ? true
+            : (value === 'false' ? false : value);
+    }
+    return result;
 }
 
 export const mapTileDefs = {
