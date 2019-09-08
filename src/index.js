@@ -24,7 +24,7 @@ if ('serviceWorker' in navigator) {
         // registration failed
         console.log('Registration failed with ' + error);
     });
-};
+}
 
 const store = createStore(combineReducers({
     settings: settingsReducer,

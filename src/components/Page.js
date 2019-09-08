@@ -1,44 +1,39 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import logo from '../imgs/logo.png';
 import './Page.css';
 
-const topBarAction = ({ icon, text, to, action }, key) => {
-    if (to) {
-        return <Link to={to} key={key}><img src={icon} alt="" />{text}</Link>;
+const TopBarAction = ({action: { icon, text, navTo, onClick }}) => {
+    if (navTo) {
+        return <Link to={navTo}><img src={icon} alt="" />{text}</Link>;
     }
-    return <button onClick={action} key={key}><img src={icon} alt="" />{text}</button>;
+    return <button onClick={onClick}><img src={icon} alt="" />{text}</button>;
 }
 
-class Page extends Component {
-    static propTypes = {
-        title: PropTypes.string.isRequired,
-        backPath: PropTypes.string,
-        actions: PropTypes.array,
-    }
+TopBarAction.propTypes = {
+    action: PropTypes.object.isRequired,
+}
 
-    static defaultProps = {
-        actions: [],
-    }
+const Page = ({ title, backPath, actions = [], children }) =>
+    <div>
+        <header className="pageHeader">
+            <div className="pageHeader-left">
+                {backPath ? <Link to={backPath}>❮</Link> : <img src={logo} alt="" />}
+            </div>
+            <h1>{title}</h1>
+            <div className="pageHeader-right">
+                {actions.map((action, i) => <TopBarAction action={action} key={i} />)}
+            </div>
+        </header>
+        <main>{children}</main>
+    </div>;
 
-    render() {
-        return <div>
-            <header className="pageHeader">
-                <div className="pageHeader-left">
-                    {this.props.backPath
-                        ? <Link to={this.props.backPath}>❮</Link>
-                        : <img src={logo} alt="" />
-                    }
-                </div>
-                <h1>{this.props.title}</h1>
-                <div className="pageHeader-right">
-                    {this.props.actions.map((action, i) => topBarAction(action, i))}
-                </div>
-            </header>
-            <main>{this.props.children}</main>
-        </div>;
-    }
+Page.propTypes = {
+    title: PropTypes.string.isRequired,
+    backPath: PropTypes.string,
+    actions: PropTypes.array,
+    children: PropTypes.node.isRequired,
 }
 
 export default Page;

@@ -18,6 +18,7 @@ class Tracking extends Component {
 
     static propTypes = {
         settings: PropTypes.object.isRequired,
+        match: PropTypes.object.isRequired,
     }
 
     componentDidMount() {
@@ -67,22 +68,22 @@ class Tracking extends Component {
 
     render() {
         const settings = this.props.settings;
-        const track = this.state.track;
+        const { track, lastPosition, validAccuracy } = this.state;
         const useImperialSystem = settings.lengthUnit === 'imperial';
 
         return (<Page
             title="Tracking…"
-            actions={track ? [{ icon: stopIcon, text: 'Stop', to: `/tracks/${track.id}`}] : []}
+            actions={track ? [{ icon: stopIcon, text: 'Stop', navTo: `/tracks/${track.id}`}] : []}
         >
             <GpsStatus
-                position={this.state.lastPosition}
-                validAccuracy={this.state.validAccuracy}
+                position={lastPosition}
+                validAccuracy={validAccuracy}
                 imperialSystem={useImperialSystem}
             />
             <div className="mapContainer">
                 <TrackMap
-                    newPosition={this.state.lastPosition}
-                    validAccuracy={this.state.validAccuracy}
+                    newPosition={lastPosition}
+                    validAccuracy={validAccuracy}
                     backgroundTileDef={mapTileDefs[settings.mapTiles]}
                     imperialSystem={useImperialSystem}
                 />

@@ -71,8 +71,8 @@ class TrackList extends Component {
             <Page
                 title="Your tracks"
                 actions={[
-                    { icon: aboutIcon, to: '/about' },
-                    { icon: settingsIcon, to: '/settings' },
+                    { icon: aboutIcon, navTo: '/about' },
+                    { icon: settingsIcon, navTo: '/settings' },
                 ]}
             >
                 <div className="padding">

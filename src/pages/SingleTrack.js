@@ -19,8 +19,9 @@ class SingleTrack extends Component {
     };
 
     static propTypes = {
-        match: PropTypes.object,
         settings: PropTypes.object.isRequired,
+        match: PropTypes.object.isRequired,
+        history: PropTypes.object.isRequired,
     }
 
     componentDidMount() {
@@ -53,8 +54,8 @@ class SingleTrack extends Component {
                 title="Track"
                 backPath="/tracks"
                 actions={[
-                    { icon: deleteIcon, action: this.deleteTrack },
-                    { icon: exportIcon, text: 'Export', action: this.exportTrack },
+                    { icon: deleteIcon, onClick: this.deleteTrack },
+                    { icon: exportIcon, text: 'Export', onClick: this.exportTrack },
                 ]}
             >
             {track ? <div>
