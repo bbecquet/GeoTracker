@@ -13,18 +13,18 @@ import { Provider } from 'react-redux';
 import { reducer as settingsReducer } from './models/settings';
 import { reducer as tracksReducer } from './models/trackUtils';
 
-// import swURL from "file?name=sw.js!babel!./sw";
+import swURL from "file-loader?name=sw.js!babel-loader!./sw";
 
-// if ('serviceWorker' in navigator) {
-//     navigator.serviceWorker.register(swURL)
-//     .then(function(reg) {
-//         // registration worked
-//         console.log('Registration succeeded. Scope is ' + reg.scope);
-//     }).catch(function(error) {
-//         // registration failed
-//         console.log('Registration failed with ' + error);
-//     });
-// }
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register(swURL)
+    .then(function(reg) {
+        // registration worked
+        console.log('Registration succeeded. Scope is ' + reg.scope);
+    }).catch(function(error) {
+        // registration failed
+        console.log('Registration failed with ' + error);
+    });
+}
 
 const store = createStore(combineReducers({
     settings: settingsReducer,
