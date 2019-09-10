@@ -32,7 +32,6 @@
     "object-assign": "4.1.0",
     "path-exists": "2.1.0",
     "promise": "7.1.1",
-    "react-dev-utils": "^1.0.5",
     "recursive-readdir": "2.1.0",
     "rimraf": "2.5.4",
     "strip-ansi": "3.0.1",
