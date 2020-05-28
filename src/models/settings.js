@@ -44,16 +44,16 @@ export function mapSettingsToProps(settings) {
 export const mapTileDefs = {
     osm: {
         name: 'OpenStreetMap',
-        url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+        url: 'https://{s}.tile.osm.org/{z}/{x}/{y}.png',
         options: {
-            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
         }
     },
     hotosm: {
         name: 'Humanitarian OpenStreetMap',
-        url: 'http://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+        url: 'https://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png',
         options: {
-            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors. Tiles courtesy of Humanitarian OpenStreetMap Team'
+            attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors. Tiles courtesy of Humanitarian OpenStreetMap Team'
         }
     }
 };
