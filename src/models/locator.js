@@ -30,6 +30,6 @@ export function getLocationName(position, onSuccess) {
     }
 
     const script = document.createElement('script');
-    script.src = `http://nominatim.openstreetmap.org/reverse?${query}`;
+    script.src = `https://nominatim.openstreetmap.org/reverse?${query}`;
     document.body.appendChild(script);
 }
