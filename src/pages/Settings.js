@@ -98,14 +98,17 @@ class Settings extends Component {
                         />
                         <p className="helpMsg">Positions with accuracy beyond this value won't be recorded.</p>
                     </div>
-                    <label>
-                        <input
-                            type="checkbox"
-                            checked={settings['gps.simulatePositions']}
-                            onChange={e => { this.handleChangeGps(e); }}
-                        />
-                        Use fake GPS positions
-                    </label>
+                    <div className="setting">
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked={settings['gps.simulatePositions']}
+                                onChange={e => { this.handleChangeGps(e); }}
+                            />
+                            Use fake GPS positions
+                        </label>
+                        <p className="helpMsg">For debugging purpose only.</p>
+                    </div>
                 </div>
             </fieldset>
             <fieldset>
