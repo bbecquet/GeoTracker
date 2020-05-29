@@ -79,20 +79,20 @@ class TrackMap extends Component {
         this.polyline = L.polyline(coords, {
             // TODO: style
         }).addTo(this.map);
-        if(coords.length) {
+        if (coords.length) {
             this.map.fitBounds(L.latLngBounds(coords));
         }
     }
 
-    componentWillReceiveProps(nextProps) {
+    shouldComponentUpdate(nextProps) {
         if (nextProps.newPosition && nextProps.validAccuracy &&
             (!this.props.newPosition || nextProps.newPosition.timestamp !== this.props.newPosition.timestamp)) {
             this.addNewPosition(nextProps.newPosition);
         }
-
         if (nextProps.backgroundTileDef !== this.props.backgroundTileDef) {
             this.setLayer(nextProps.backgroundTileDef);
         }
+        return false;
     }
 
     componentWillUnmount() {
@@ -100,8 +100,7 @@ class TrackMap extends Component {
     }
 
     render() {
-        // As it doesn't depend on any props or state,
-        // it won't get re-rendered
+        // Simple placeholder for a Leaflet map, won't get re-rendered
         return <div className="map" ref={m => this.mapElement = m} />;
     }
 }
