@@ -24,6 +24,12 @@ export function getLength(positions) {
         }, 0);
 }
 
+export function getDuration(positions) {
+    return positions.length === 0
+        ? 0
+        : positions[positions.length - 1].timestamp - positions[0].timestamp;
+}
+
 export function reducer(state = { status: 'LOADING' }, action) {
     switch (action.type) {
         case 'TRACKS_LOAD_LIST':

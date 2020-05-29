@@ -48,7 +48,6 @@
     "idb": "^1.2.1",
     "leaflet": "^1.6.0",
     "leaflet-rotatedmarker": "^0.2.0",
-    "moment": "^2.15.1",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",

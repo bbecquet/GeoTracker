@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import './TrackSummary.css';
 
 const TrackSummary = ({ track }) =>
     <div className="trackSummary">
-        <div>{moment(track.createdAt).format('LLL')}</div>
+        <div>{new Intl.DateTimeFormat(undefined,
+            {year: "numeric", month: "numeric", day: "numeric",
+            hour: "numeric", minute: "numeric", second: "numeric",
+            hour12: false}).format(track.createdAt)}</div>
         <span className="trackSummary-name">{track.name || 'No name'}</span>
     </div>
 
