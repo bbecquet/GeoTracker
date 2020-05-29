@@ -4,6 +4,5 @@
 }
 
 .trackSummary-name {
-    color: #888;
-    font-style: italic;
+    color: var(--dimTextColor);
 }

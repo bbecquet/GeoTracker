@@ -1,7 +1,7 @@
 .pageHeader {
-    background-color: #44b066;
-    color: white;
-    box-shadow: 0 0 5px #368b51;
+    background-color: var(--hightlightColor);
+    color: var(--white);
+    box-shadow: 0 0 5px var(--shadowColor);
     display: flex;
     align-items: center;
     width: 100%;
@@ -20,7 +20,7 @@
 .pageHeader button {
     background-color: transparent;
     border: none;
-    color: white;
+    color: var(--white);
     vertical-align: middle;
     height: 100%;
 }
