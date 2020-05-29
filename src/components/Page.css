@@ -47,7 +47,15 @@
     width: 100%;
 }
 
+.pageHeader-right {
+    height: 100%;
+    display: flex;
+}
+
 .pageHeader-right button,
 .pageHeader-right a {
-    padding: 0 6px;
+    padding: 0 9px;
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
