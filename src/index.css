@@ -100,13 +100,16 @@ legend {
 }
 
 .setting {
-    margin-bottom: 1em;
+    margin-bottom: 1.5em;
 }
 
-.helpMsg {
+.text-subtitle {
+    font-weight: bold;
+}
+
+.text-caption {
     font-size: 0.8em;
     color: var(--dimTextColor);
-    margin: 0.5em 0;
 }
 
 a {
@@ -117,10 +120,6 @@ a {
 a.link {
     text-decoration: underline;
     color: #368b51;
-}
-
-p {
-    margin: 0.5em 0;
 }
 
 input[type=range]{

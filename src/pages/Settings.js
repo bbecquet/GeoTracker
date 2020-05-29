@@ -7,6 +7,12 @@ import Length from '../components/Length';
 import { clearTrackDatabase } from '../models/trackStorage';
 import { connect } from 'react-redux';
 
+const TitleDesc = ({ title, desc }) =>
+    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5em' }}>
+        <div className="text-subtitle" style={{ marginRight: '1em', flexShrink: 0 }}>{title}</div>
+        {desc && <div className="text-caption">{desc}</div>}
+    </div>;
+
 class Settings extends Component {
     static propTypes = {
         settings: PropTypes.object.isRequired,
@@ -49,31 +55,32 @@ class Settings extends Component {
                 <legend>Display</legend>
                 <div className="padding">
                     <div className="setting">
-                        Length units:&nbsp;
-                        <label>
-                            <input
-                                name="lengthUnit"
-                                value="metric"
-                                type="radio"
-                                checked={!imperialSystem}
-                                onChange={e => { this.handleChangeUnit(e); }}
-                            />
-                            Metric
-                        </label>
-                        <label>
-                            <input
-                                name="lengthUnit"
-                                value="imperial"
-                                type="radio"
-                                checked={imperialSystem}
-                                onChange={e => { this.handleChangeUnit(e); }}
-                            />
-                            Imperial
-                        </label>
-                        <p className="helpMsg">For distances and map scale.</p>
+                        <TitleDesc title="Length units" desc="For distances and map scale" />
+                        <div>
+                            <label>
+                                <input
+                                    name="lengthUnit"
+                                    value="metric"
+                                    type="radio"
+                                    checked={!imperialSystem}
+                                    onChange={e => { this.handleChangeUnit(e); }}
+                                />
+                                Metric
+                            </label>
+                            <label>
+                                <input
+                                    name="lengthUnit"
+                                    value="imperial"
+                                    type="radio"
+                                    checked={imperialSystem}
+                                    onChange={e => { this.handleChangeUnit(e); }}
+                                />
+                                Imperial
+                            </label>
+                        </div>
                     </div>
                     <div className="setting">
-                        Map background style
+                        <TitleDesc title="Map background style" />
                         <MapBackgroundChooser
                             activeMapTiles={settings.mapTiles}
                             mapTiles={mapTileDefs}
@@ -86,7 +93,7 @@ class Settings extends Component {
                 <legend>GPS</legend>
                 <div className="padding">
                     <div className="setting">
-                        <p>Accuracy limit</p>
+                        <TitleDesc title="Accuracy limit" desc="Bad accuracy positions will be ignored" />
                         <input type="range"
                             min={10} max={500} step={10}
                             value={maxAccuracy}
@@ -96,9 +103,9 @@ class Settings extends Component {
                             meters={maxAccuracy}
                             imperialSystem={imperialSystem}
                         />
-                        <p className="helpMsg">Positions with accuracy beyond this value won't be recorded.</p>
                     </div>
                     <div className="setting">
+                        <TitleDesc title="Fake GPS" desc="For easy indoor debugging" />
                         <label>
                             <input
                                 type="checkbox"
@@ -107,17 +114,14 @@ class Settings extends Component {
                             />
                             Use fake GPS positions
                         </label>
-                        <p className="helpMsg">For debugging purpose only.</p>
                     </div>
                 </div>
             </fieldset>
             <fieldset>
                 <legend>Data</legend>
                 <div className="padding">
-                    <label>
-                        <button onClick={() => { this.handleResetDatabase(); }}>Reset database</button>
-                    </label>
-                    <p className="helpMsg">Will remove all tracks.</p>
+                    <TitleDesc title="Reset database" desc="Will remove all tracks" />
+                    <button onClick={() => { this.handleResetDatabase(); }}>Reset database</button>
                 </div>
             </fieldset>
         </Page>;
