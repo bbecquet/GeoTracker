@@ -46,14 +46,23 @@ export const mapTileDefs = {
         name: 'OpenStreetMap',
         url: 'https://{s}.tile.osm.org/{z}/{x}/{y}.png',
         options: {
-            attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
-        }
+            attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors',
+        },
     },
     hotosm: {
         name: 'Humanitarian OpenStreetMap',
         url: 'https://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png',
         options: {
-            attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors. Tiles courtesy of Humanitarian OpenStreetMap Team'
+            attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors. Tiles courtesy of Humanitarian OpenStreetMap Team',
+            maxZoom: 17,
+        },
+    },
+    topo: {
+        name: 'OpenTopoMap',
+        url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+        options: {
+            attribution: 'Map data &copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors. Style &copy; <a href="https://opentopomap.org">OpenTopoMap</a>.',
+            maxZoom: 17,
         }
-    }
+    },
 };
