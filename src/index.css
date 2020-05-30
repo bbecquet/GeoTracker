@@ -43,6 +43,18 @@ ul, li {
     padding: 0.5em;
 }
 
+.u-mr {
+    margin-right: 1em;
+}
+
+.u-right {
+    text-align: right;
+}
+
+.u-block {
+    display: block;
+}
+
 main {
     top: 48px;
     position: absolute;
@@ -56,10 +68,6 @@ main {
 input[type=checkbox],
 input[type=radio] {
     margin-right: 0.25em;
-}
-
-label {
-    margin-right: 1em;
 }
 
 button.mainAction {
@@ -108,12 +116,9 @@ legend::before {
 }
 
 .setting {
-    margin-bottom: 0.75em;
-    padding-bottom: 0.75em;
-}
-
-.setting:not(:last-child) {
-    border-bottom: 1px solid #EEE;
+    padding: 0.75em 0;
+    display: flex;
+    justify-content: space-between;
 }
 
 .text-subtitle {
@@ -133,6 +138,10 @@ a {
 a.link {
     text-decoration: underline;
     color: #368b51;
+}
+
+li:not(:last-child) {
+    border-bottom: 1px solid #EEE;
 }
 
 input[type=range]{

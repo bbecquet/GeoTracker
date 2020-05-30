@@ -17,14 +17,15 @@ function formatMetric(meters) {
     return `${Math.round(meters)}\u00a0m`;
 }
 
-const Length = ({ meters, imperialSystem }) =>
-    <span>
+const Length = ({ meters, imperialSystem, className }) =>
+    <span className={className}>
         {imperialSystem ? formatImperial(meters) : formatMetric(meters)}
     </span>;
 
 Length.propTypes = {
     meters: PropTypes.number.isRequired,
     imperialSystem: PropTypes.bool,
+    className: PropTypes.string,
 }
 
 export default Length;

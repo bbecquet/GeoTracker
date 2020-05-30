@@ -41,7 +41,7 @@ export const mapTileDefs = {
         },
     },
     hotosm: {
-        name: 'Humanitarian OpenStreetMap',
+        name: 'Humanitarian OSM',
         url: 'https://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png',
         options: {
             attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors. Tiles courtesy of Humanitarian OpenStreetMap Team',

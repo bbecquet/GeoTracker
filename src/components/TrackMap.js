@@ -9,7 +9,8 @@ import arrowIcon from '../imgs/arrow.svg';
 
 const positionToLatLng = p => [p.coords.latitude, p.coords.longitude];
 
-let map, bgLayer, positionMarker, polyline;
+let map, bgLayer, positionMarker, polyline, scale;
+
 const setLayer = backgroundTileDef => {
     if (bgLayer) {
         map.removeLayer(bgLayer);
@@ -56,6 +57,10 @@ const TrackMap = ({ backgroundTileDef, initialPositions, newPosition, validAccur
 
     const initMap = () => {
         const useImperialScale = imperialSystem;
+        scale = L.control.scale({
+            imperial: useImperialScale,
+            metric: !useImperialScale,
+        });
 
         map = L.map(mapElement.current, {
             // TODO: put map options in global settings?
@@ -66,10 +71,7 @@ const TrackMap = ({ backgroundTileDef, initialPositions, newPosition, validAccur
             boxZoom: false,
         })
             .addControl(L.control.zoom({ position: 'bottomright' }))
-            .addControl(L.control.scale({
-                imperial: useImperialScale,
-                metric: !useImperialScale,
-            }));
+            .addControl(scale);
 
         setLayer(backgroundTileDef);
     }
@@ -77,6 +79,15 @@ const TrackMap = ({ backgroundTileDef, initialPositions, newPosition, validAccur
     useEffect(() => {
         setLayer(backgroundTileDef);
     }, [backgroundTileDef]);
+
+    useEffect(() => {
+        scale.remove();
+        scale = L.control.scale({
+            imperial: imperialSystem,
+            metric: !imperialSystem,
+        });
+        map.addControl(scale);
+    }, [imperialSystem]);
 
     useEffect(() => {
         if (newPosition && validAccuracy) {
