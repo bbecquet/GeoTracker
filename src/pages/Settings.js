@@ -59,17 +59,7 @@ const Settings = () => {
             <legend>Display</legend>
             <ul className="padding">
                 <li>
-                    <Setting title="Use imperial system" desc="For distances and map scale">
-                        <input
-                            name="lengthUnit"
-                            type="checkbox"
-                            checked={imperialSystem}
-                            onChange={handleChangeUnit}
-                        />
-                    </Setting>
-                </li>
-                <li>
-                    <Setting title="Map background style">
+                    <Setting title="Map tiles" desc="Background style for map views">
                         <select onChange={changeMapTiles} value={settings.mapTiles}>
                             {Object.keys(mapTileDefs).map(mapTilesKey =>
                                 <option key={mapTilesKey} value={mapTilesKey}>
@@ -84,6 +74,16 @@ const Settings = () => {
                             imperialSystem={imperialSystem}
                         />
                     </div>
+                </li>
+                <li>
+                    <Setting title="Use imperial system" desc="For distances and map scale">
+                        <input
+                            name="lengthUnit"
+                            type="checkbox"
+                            checked={imperialSystem}
+                            onChange={handleChangeUnit}
+                        />
+                    </Setting>
                 </li>
             </ul>
         </fieldset>
