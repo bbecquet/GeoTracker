@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import L from 'leaflet';
 import 'leaflet-rotatedmarker';
@@ -7,35 +7,57 @@ import '../../node_modules/leaflet/dist/images/layers.png';
 import '../../node_modules/leaflet/dist/leaflet.css';
 import arrowIcon from '../imgs/arrow.svg';
 
-class TrackMap extends Component {
-    static propTypes = {
-        backgroundTileDef: PropTypes.object.isRequired,
-        initialPositions: PropTypes.array,
-        newPosition: PropTypes.object,
-        validAccuracy: PropTypes.bool,
-        imperialSystem: PropTypes.bool,
-    }
+const positionToLatLng = p => [p.coords.latitude, p.coords.longitude];
 
-    static defaultProps = {
-        initialPositions: [],
+let map, bgLayer, positionMarker, polyline;
+const setLayer = backgroundTileDef => {
+    if (bgLayer) {
+        map.removeLayer(bgLayer);
     }
+    bgLayer = L.tileLayer(backgroundTileDef.url, backgroundTileDef.options);
+    map.addLayer(bgLayer);
+}
 
-    positionToLatLng(p) {
-        return [p.coords.latitude, p.coords.longitude];
-    }
+const addNewPosition = newPosition => {
+    const newCoord = positionToLatLng(newPosition);
+    polyline.addLatLng(newCoord);
+    map.setView(newCoord);
+    positionMarker
+        .setLatLng(newCoord)
+        .setRotationAngle(newPosition.coords.heading)
+        .addTo(map);
+}
 
-    setLayer(backgroundTileDef) {
-        if (this.bgLayer) {
-            this.map.removeLayer(this.bgLayer);
+const TrackMap = ({ backgroundTileDef, initialPositions, newPosition, validAccuracy, imperialSystem }) => {
+    const mapElement = useRef(null);
+
+    useEffect(() => {
+        initMap();
+        positionMarker = L.marker(map.getCenter(), {
+            icon: L.icon({
+                iconUrl: arrowIcon,
+                iconSize: [24, 24],
+                iconAnchor: [12, 12],
+            }),
+            rotationAngle: 0,
+            rotationOrigin: 'center center',
+        });
+
+        const coords = initialPositions.map(positionToLatLng);
+        polyline = L.polyline(coords, {
+            // TODO: style
+        }).addTo(map);
+        if (coords.length) {
+            map.fitBounds(L.latLngBounds(coords));
         }
-        this.bgLayer = L.tileLayer(backgroundTileDef.url, backgroundTileDef.options);
-        this.map.addLayer(this.bgLayer);
-    }
 
-    initMap() {
-        const useImperialScale = this.props.imperialSystem;
+        return () => { map.remove(); }
+    }, []);
 
-        this.map = L.map(this.mapElement, {
+    const initMap = () => {
+        const useImperialScale = imperialSystem;
+
+        map = L.map(mapElement.current, {
             // TODO: put map options in global settings?
             center: [48.85, 2.35],
             zoom: 18,
@@ -49,60 +71,33 @@ class TrackMap extends Component {
                 metric: !useImperialScale,
             }));
 
-        this.setLayer(this.props.backgroundTileDef);
+        setLayer(backgroundTileDef);
     }
 
-    addNewPosition(newPosition) {
-        const newCoord = this.positionToLatLng(newPosition);
-        this.polyline.addLatLng(newCoord);
-        this.map.setView(newCoord);
-        this.positionMarker
-            .setLatLng(newCoord)
-            .setRotationAngle(newPosition.coords.heading)
-            .addTo(this.map);
-    }
+    useEffect(() => {
+        setLayer(backgroundTileDef);
+    }, [backgroundTileDef]);
 
-    componentDidMount() {
-        this.initMap();
-
-        this.positionMarker = L.marker(this.map.getCenter(), {
-            icon: L.icon({
-                iconUrl: arrowIcon,
-                iconSize: [24, 24],
-                iconAnchor: [12, 12],
-            }),
-            rotationAngle: 0,
-            rotationOrigin: 'center center',
-        });
-
-        const coords = this.props.initialPositions.map(this.positionToLatLng);
-        this.polyline = L.polyline(coords, {
-            // TODO: style
-        }).addTo(this.map);
-        if (coords.length) {
-            this.map.fitBounds(L.latLngBounds(coords));
+    useEffect(() => {
+        if (newPosition && validAccuracy) {
+            addNewPosition(newPosition);
         }
-    }
+    }, [newPosition, validAccuracy]);
 
-    shouldComponentUpdate(nextProps) {
-        if (nextProps.newPosition && nextProps.validAccuracy &&
-            (!this.props.newPosition || nextProps.newPosition.timestamp !== this.props.newPosition.timestamp)) {
-            this.addNewPosition(nextProps.newPosition);
-        }
-        if (nextProps.backgroundTileDef !== this.props.backgroundTileDef) {
-            this.setLayer(nextProps.backgroundTileDef);
-        }
-        return false;
-    }
+    // Simple placeholder for a Leaflet map, won't get re-rendered
+    return <div className="map" ref={mapElement} />;
+}
 
-    componentWillUnmount() {
-        this.map.remove();
-    }
+TrackMap.propTypes = {
+    backgroundTileDef: PropTypes.object.isRequired,
+    initialPositions: PropTypes.array,
+    newPosition: PropTypes.object,
+    validAccuracy: PropTypes.bool,
+    imperialSystem: PropTypes.bool,
+}
 
-    render() {
-        // Simple placeholder for a Leaflet map, won't get re-rendered
-        return <div className="map" ref={m => this.mapElement = m} />;
-    }
+TrackMap.defaultProps = {
+    initialPositions: [],
 }
 
 export default TrackMap;
