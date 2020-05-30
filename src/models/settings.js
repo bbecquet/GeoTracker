@@ -48,12 +48,21 @@ export const mapTileDefs = {
             maxZoom: 17,
         },
     },
+    tonerLite: {
+        name: 'Toner lite',
+        url: 'http://{s}.tile.stamen.com/toner-lite/{z}/{x}/{y}.png',
+        options: {
+            attribution: 'Map data &copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors. Tiles by <a href="http://stamen.com/">Stamen design</a>.',
+            subdomains: 'abcd',
+            maxZoom: 17,
+        },
+    },
     topo: {
         name: 'OpenTopoMap',
         url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
         options: {
             attribution: 'Map data &copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors. Style &copy; <a href="https://opentopomap.org">OpenTopoMap</a>.',
             maxZoom: 17,
-        }
+        },
     },
 };
