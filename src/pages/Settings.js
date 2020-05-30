@@ -120,8 +120,10 @@ class Settings extends Component {
             <fieldset>
                 <legend>Data</legend>
                 <div className="padding">
-                    <TitleDesc title="Reset database" desc="Will remove all tracks" />
-                    <button onClick={() => { this.handleResetDatabase(); }}>Reset database</button>
+                    <div className="setting">
+                        <TitleDesc title="Reset database" desc="Will remove all tracks" />
+                        <button onClick={() => { this.handleResetDatabase(); }}>Reset database</button>
+                    </div>
                 </div>
             </fieldset>
         </Page>;
