@@ -31,25 +31,12 @@ const Settings = () => {
         payload: { key, value },
     });
 
-    const handleChangeGps = e => {
-        changeSetting('gps.simulatePositions', e.target.checked);
-    }
-
-    const handleChangeUnit = e => {
-        changeSetting('lengthUnit', e.target.checked ? 'imperial' : 'metric');
-    }
-
-    const handleChangeAccuracy = e => {
-        changeSetting('maxAccuracy', parseInt(e.target.value, 10));
-    }
-
-    const changeMapTiles = e => {
-        changeSetting('mapTiles', e.target.value);
-    }
-
-    const changeTrackColor = e => {
-        changeSetting('trackColor', e.target.value);
-    }
+    const handleChangeGps = e => changeSetting('gps.simulatePositions', e.target.checked);
+    const handleChangeUnit = e => changeSetting('lengthUnit', e.target.checked ? 'imperial' : 'metric');
+    const handleChangeAccuracy = e => changeSetting('maxAccuracy', parseInt(e.target.value, 10));
+    const changeMapTiles = e => changeSetting('mapTiles', e.target.value);
+    const changeTrackColor = e => changeSetting('trackColor', e.target.value);
+    const changeTrackWeight = e => changeSetting('trackWeight', parseInt(e.target.value, 10));
 
     const handleResetDatabase = () => {
         if (!confirm('This will delete all your tracks. Are you sure?')) { return; }
@@ -58,6 +45,7 @@ const Settings = () => {
             .catch(event => { alert('Error: ' + event); });
     }
 
+    const trackWeight = parseInt(settings.trackWeight, 10);
     const maxAccuracy = parseInt(settings.maxAccuracy, 10);
     const imperialSystem = settings.lengthUnit === 'imperial';
 
@@ -80,7 +68,7 @@ const Settings = () => {
                     </Setting>
                 </li>
                 <li>
-                    <Setting title="Track color" desc="Color of track line">
+                    <Setting title="Track color" desc="Color of the track line">
                         <select onChange={changeTrackColor} value={settings.trackColor}>
                             {['blue', 'red', 'green', 'purple'].map(trackColor =>
                                 <option key={trackColor} value={trackColor}>
@@ -90,6 +78,18 @@ const Settings = () => {
                         </select>
                     </Setting>
                 </li>
+                {/* <li>
+                    <Setting title="Track weight" desc="Witdh of the track line">
+                        <div>
+                            <div className="u-block u-right">{trackWeight}</div>
+                            <input type="range"
+                                min={1} max={10} step={1}
+                                value={trackWeight}
+                                onChange={changeTrackWeight}
+                            />
+                        </div>
+                    </Setting>
+                </li> */}
                 <li>
                     <Setting title="Use imperial system" desc="For distances and map scale">
                         <input
