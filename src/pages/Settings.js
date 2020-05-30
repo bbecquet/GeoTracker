@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { mapTileDefs } from '../models/settings';
 import Page from '../components/Page';
 import TrackMap from '../components/TrackMap';
 import Length from '../components/Length';
-import { clearTrackDatabase } from '../models/trackStorage';
+import { clearTrackDatabase, getTrackList } from '../models/trackStorage';
 import { SettingsContext } from '../models/SettingsContext';
 
 const Setting = ({ title, desc, children }) =>
@@ -17,6 +17,11 @@ const Setting = ({ title, desc, children }) =>
 
 const Settings = () => {
     const [settings, dispatch] = useContext(SettingsContext);
+    const [nbTracks, setNbTracks] = useState(0);
+
+    useEffect(() => {
+        getTrackList().then(tracks => { setNbTracks(tracks.length); });
+    }, []);
 
     const changeSetting = (key, value) => dispatch({
         type: 'SETTING_CHANGE',
@@ -42,7 +47,7 @@ const Settings = () => {
     const handleResetDatabase = () => {
         if (!confirm('This will delete all your tracks. Are you sure?')) { return; }
         clearTrackDatabase()
-            .then(() => { alert('Database cleared'); })
+            .then(() => { setNbTracks(0); })
             .catch(event => { alert('Error: ' + event); });
     }
 
@@ -117,7 +122,9 @@ const Settings = () => {
             <ul className="padding">
                 <li>
                     <Setting title="Reset database" desc="Will remove all tracks">
-                        <button onClick={handleResetDatabase}>Reset database</button>
+                        <button onClick={handleResetDatabase} disabled={nbTracks === 0}>
+                            {nbTracks ? 'Reset database' : 'No recorded tracks'}
+                        </button>
                     </Setting>
                 </li>
             </ul>
