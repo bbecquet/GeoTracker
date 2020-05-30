@@ -8,7 +8,6 @@ import aboutIcon from '../imgs/information.svg';
 import './TrackList.css';
 import { connect } from 'react-redux';
 import { getTrackList, createTrack } from '../models/trackStorage';
-import { mapSettingsToProps } from '../models/settings';
 
 class TrackList extends Component {
     static propTypes = {
@@ -105,4 +104,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapSettingsToProps, mapDispatchToProps)(withRouter(TrackList));
+export default connect(x => x, mapDispatchToProps)(withRouter(TrackList));

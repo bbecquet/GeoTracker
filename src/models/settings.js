@@ -5,11 +5,12 @@ const defaults = {
     maxAccuracy: 50,
 }
 
-function readSettings() {
+export function readSettings() {
     const settings = { ...defaults };
     for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
-        settings[key] = localStorage.getItem(key);
+        const value = localStorage.getItem(key);
+        settings[key] = value === 'true' ? true : (value === 'false' ? false : value);
     }
     return settings;
 }
@@ -18,27 +19,17 @@ function saveSetting(key, value) {
     localStorage.setItem(key, value);
 }
 
-export function reducer(state = readSettings(), action) {
-    switch (action.type) {
+export function reducer(state, { type, payload }) {
+    switch (type) {
         case 'SETTING_CHANGE':
-            saveSetting(action.key, action.value);
+            saveSetting(payload.key, payload.value);
             return {
                 ...state,
-                [action.key]: action.value,
+                [payload.key]: payload.value,
             };
         default:
             return state;
     }
-}
-
-export function mapSettingsToProps(settings) {
-    const result = {};
-    for (let [key, value] of Object.entries(settings)) {
-        result[key] = value === 'true'
-            ? true
-            : (value === 'false' ? false : value);
-    }
-    return result;
 }
 
 export const mapTileDefs = {

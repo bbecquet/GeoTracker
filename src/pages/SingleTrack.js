@@ -1,78 +1,74 @@
-import React, { Component } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import TrackSummary from '../components/TrackSummary';
 import TrackStats from '../components/TrackStats';
 import TrackMap from '../components/TrackMap';
 import { exportTrackAsGpx } from '../models/trackUtils';
-import { mapTileDefs, mapSettingsToProps } from '../models/settings';
+import { mapTileDefs } from '../models/settings';
 import Page from '../components/Page';
 import deleteIcon from '../imgs/delete.svg';
 import exportIcon from '../imgs/file-export.svg';
 import { getTrack, getTrackPositions, deleteTrack } from '../models/trackStorage';
-import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { SettingsContext } from '../models/SettingsContext';
 
-class SingleTrack extends Component {
-    state = {
-        track: null,
-        positions: [],
-    };
+const SingleTrack = ({ match, history }) => {
+    const [settings] = useContext(SettingsContext);
+    const [track, setTrack] = useState(null);
+    const [positions, setPositions] = useState([]);
 
-    static propTypes = {
-        settings: PropTypes.object.isRequired,
-        match: PropTypes.object.isRequired,
-        history: PropTypes.object.isRequired,
-    }
-
-    componentDidMount() {
-        getTrack(parseInt(this.props.match.params.trackId, 10))
+    useEffect(() => {
+        if (track) { return; } 
+        getTrack(parseInt(match.params.trackId, 10))
         .then(track => {
             getTrackPositions(track.id)
             .then(positions => {
-                this.setState({ track, positions });
+                setTrack(track);
+                setPositions(positions);
             });
         });
-    }
+    });
 
-    deleteTrack = () => {
+    const onDelete = () => {
         if(!confirm('Are you sure you want to delete this track?')) { return; }
-        deleteTrack(parseInt(this.props.match.params.trackId, 10))
-        .then(() => { this.props.history.push('/tracks'); });
+        deleteTrack(parseInt(track.id, 10))
+        .then(() => { history.push('/tracks'); });
     }
 
-    exportTrack = () => {
-        exportTrackAsGpx(this.state.track, this.state.positions)
+    const onExport = () => {
+        exportTrackAsGpx(track, positions);
     }
 
-    render() {
-        const settings = this.props.settings;
-        const track = this.state.track;
-        const useImperialSystem = settings.lengthUnit === 'imperial';
+    const useImperialSystem = settings.lengthUnit === 'imperial';
 
-        return (
-            <Page
-                title="Track"
-                backPath="/tracks"
-                actions={[
-                    { icon: deleteIcon, onClick: this.deleteTrack },
-                    { icon: exportIcon, text: 'Export', onClick: this.exportTrack },
-                ]}
-            >
-            {track ? <div>
-                <div className="padding">
-                    <TrackSummary track={track} />
-                    <TrackStats {...this.state} imperialSystem={useImperialSystem} />
-                </div>
-                <div className="mapContainer">
-                    <TrackMap
-                        initialPositions={this.state.positions}
-                        backgroundTileDef={mapTileDefs[settings.mapTiles]}
-                        imperialSystem={useImperialSystem}
-                    />
-                </div>
-            </div> : <div className="padding">Loading…</div>}
-        </Page>);
-    }
+    return (
+        <Page
+            title="Track"
+            backPath="/tracks"
+            actions={[
+                { icon: deleteIcon, onClick: onDelete },
+                { icon: exportIcon, text: 'Export', onClick: onExport },
+            ]}
+        >
+        {track ? <div>
+            <div className="padding">
+                <TrackSummary track={track} />
+                <TrackStats positions={positions} imperialSystem={useImperialSystem} />
+            </div>
+            <div className="mapContainer">
+                <TrackMap
+                    initialPositions={positions}
+                    backgroundTileDef={mapTileDefs[settings.mapTiles]}
+                    imperialSystem={useImperialSystem}
+                />
+            </div>
+        </div> : <div className="padding">Loading…</div>}
+    </Page>);
 }
 
-export default connect(mapSettingsToProps)(withRouter(SingleTrack));
+SingleTrack.propTypes = {
+    match: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+}
+
+export default withRouter(SingleTrack);
