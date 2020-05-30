@@ -92,15 +92,28 @@ fieldset {
 }
 
 legend {
-    color: #888;
-    border-bottom: 1px solid var(--dimTextColor);
-    display: block;
-    width: 100%;
+    color: var(--dimTextColor);
+    position: relative;
     padding: 0.25em 0.5em;
 }
 
+legend::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    height: 1px;
+    width: calc(100vw - 100%);
+    background-color: var(--dimTextColor);
+    left: 100%;
+}
+
 .setting {
-    margin-bottom: 1.5em;
+    margin-bottom: 0.75em;
+    padding-bottom: 0.75em;
+}
+
+.setting:not(:last-child) {
+    border-bottom: 1px solid #EEE;
 }
 
 .text-subtitle {
