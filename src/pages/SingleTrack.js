@@ -4,7 +4,6 @@ import TrackSummary from '../components/TrackSummary';
 import TrackStats from '../components/TrackStats';
 import TrackMap from '../components/TrackMap';
 import { exportTrackAsGpx } from '../models/trackUtils';
-import { mapTileDefs } from '../models/settings';
 import Page from '../components/Page';
 import deleteIcon from '../imgs/delete.svg';
 import exportIcon from '../imgs/file-export.svg';
@@ -56,11 +55,7 @@ const SingleTrack = ({ match, history }) => {
                 <TrackStats positions={positions} imperialSystem={useImperialSystem} />
             </div>
             <div className="mapContainer">
-                <TrackMap
-                    initialPositions={positions}
-                    backgroundTileDef={mapTileDefs[settings.mapTiles]}
-                    imperialSystem={useImperialSystem}
-                />
+                <TrackMap initialPositions={positions} />
             </div>
         </div> : <div className="padding">Loading…</div>}
     </Page>);

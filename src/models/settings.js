@@ -2,6 +2,7 @@
 const defaults = {
     lengthUnit: 'metric',
     mapTiles: 'osm',
+    trackColor: 'blue',
     maxAccuracy: 50,
 }
 

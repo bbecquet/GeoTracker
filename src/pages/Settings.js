@@ -5,6 +5,9 @@ import TrackMap from '../components/TrackMap';
 import Length from '../components/Length';
 import { clearTrackDatabase, getTrackList } from '../models/trackStorage';
 import { SettingsContext } from '../models/SettingsContext';
+import fakeCoords from '../models/fakeGpsCoords.json';
+
+const fakeTrack = fakeCoords.map(([ longitude, latitude ]) => ({ coords: { latitude, longitude }}));
 
 const Setting = ({ title, desc, children }) =>
     <label className="setting">
@@ -44,6 +47,10 @@ const Settings = () => {
         changeSetting('mapTiles', e.target.value);
     }
 
+    const changeTrackColor = e => {
+        changeSetting('trackColor', e.target.value);
+    }
+
     const handleResetDatabase = () => {
         if (!confirm('This will delete all your tracks. Are you sure?')) { return; }
         clearTrackDatabase()
@@ -59,6 +66,9 @@ const Settings = () => {
             <legend>Display</legend>
             <ul className="padding">
                 <li>
+                    <div style={{ height: '200px', margin: '0.5em 0' }}>
+                        <TrackMap initialPositions={fakeTrack} />
+                    </div>
                     <Setting title="Map tiles" desc="Background style for map views">
                         <select onChange={changeMapTiles} value={settings.mapTiles}>
                             {Object.keys(mapTileDefs).map(mapTilesKey =>
@@ -68,12 +78,17 @@ const Settings = () => {
                             )}
                         </select>
                     </Setting>
-                    <div style={{ height: '200px', margin: '0.5em 0' }}>
-                        <TrackMap
-                            backgroundTileDef={mapTileDefs[settings.mapTiles]}
-                            imperialSystem={imperialSystem}
-                        />
-                    </div>
+                </li>
+                <li>
+                    <Setting title="Track color" desc="Color of track line">
+                        <select onChange={changeTrackColor} value={settings.trackColor}>
+                            {['blue', 'red', 'green', 'purple'].map(trackColor =>
+                                <option key={trackColor} value={trackColor}>
+                                    {trackColor}
+                                </option>
+                            )}
+                        </select>
+                    </Setting>
                 </li>
                 <li>
                     <Setting title="Use imperial system" desc="For distances and map scale">

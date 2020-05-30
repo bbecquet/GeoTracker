@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import L from 'leaflet';
 import 'leaflet-rotatedmarker';
@@ -6,6 +6,8 @@ import './TrackMap.css';
 import '../../node_modules/leaflet/dist/images/layers.png';
 import '../../node_modules/leaflet/dist/leaflet.css';
 import arrowIcon from '../imgs/arrow.svg';
+import { SettingsContext } from '../models/SettingsContext';
+import { mapTileDefs } from '../models/settings';
 
 const positionToLatLng = p => [p.coords.latitude, p.coords.longitude];
 
@@ -29,8 +31,12 @@ const addNewPosition = newPosition => {
         .addTo(map);
 }
 
-const TrackMap = ({ backgroundTileDef, initialPositions, newPosition, validAccuracy, imperialSystem }) => {
+const TrackMap = ({ initialPositions, newPosition, validAccuracy }) => {
     const mapElement = useRef(null);
+    const [settings] = useContext(SettingsContext);
+    const imperialSystem = settings.lengthUnit === 'imperial';
+    const backgroundTileDef = mapTileDefs[settings.mapTiles];
+    const trackColor = settings.trackColor;
 
     useEffect(() => {
         initMap();
@@ -45,9 +51,7 @@ const TrackMap = ({ backgroundTileDef, initialPositions, newPosition, validAccur
         });
 
         const coords = initialPositions.map(positionToLatLng);
-        polyline = L.polyline(coords, {
-            // TODO: style
-        }).addTo(map);
+        polyline = L.polyline(coords, { color: trackColor }).addTo(map);
         if (coords.length) {
             map.fitBounds(L.latLngBounds(coords));
         }
@@ -56,11 +60,7 @@ const TrackMap = ({ backgroundTileDef, initialPositions, newPosition, validAccur
     }, []);
 
     const initMap = () => {
-        const useImperialScale = imperialSystem;
-        scale = L.control.scale({
-            imperial: useImperialScale,
-            metric: !useImperialScale,
-        });
+        scale = L.control.scale({ imperial: imperialSystem, metric: !imperialSystem });
 
         map = L.map(mapElement.current, {
             // TODO: put map options in global settings?
@@ -82,10 +82,7 @@ const TrackMap = ({ backgroundTileDef, initialPositions, newPosition, validAccur
 
     useEffect(() => {
         scale.remove();
-        scale = L.control.scale({
-            imperial: imperialSystem,
-            metric: !imperialSystem,
-        });
+        scale = L.control.scale({ imperial: imperialSystem, metric: !imperialSystem });
         map.addControl(scale);
     }, [imperialSystem]);
 
@@ -95,16 +92,18 @@ const TrackMap = ({ backgroundTileDef, initialPositions, newPosition, validAccur
         }
     }, [newPosition, validAccuracy]);
 
+    useEffect(() => {
+        polyline.setStyle({ color: trackColor });
+    }, [trackColor]);
+
     // Simple placeholder for a Leaflet map, won't get re-rendered
     return <div className="map" ref={mapElement} />;
 }
 
 TrackMap.propTypes = {
-    backgroundTileDef: PropTypes.object.isRequired,
     initialPositions: PropTypes.array,
     newPosition: PropTypes.object,
     validAccuracy: PropTypes.bool,
-    imperialSystem: PropTypes.bool,
 }
 
 TrackMap.defaultProps = {

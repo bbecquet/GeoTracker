@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { mapTileDefs } from '../models/settings';
 import Tracker from '../models/tracker';
 import Page from '../components/Page';
 import TrackMap from '../components/TrackMap';
@@ -61,12 +60,7 @@ const Tracking = ({ match }) => {
             imperialSystem={useImperialSystem}
         />
         <div className="mapContainer">
-            <TrackMap
-                newPosition={lastPosition}
-                validAccuracy={validAccuracy}
-                backgroundTileDef={mapTileDefs[settings.mapTiles]}
-                imperialSystem={useImperialSystem}
-            />
+            <TrackMap newPosition={lastPosition} validAccuracy={validAccuracy} />
         </div>
     </Page>);
 }
