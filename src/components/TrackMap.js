@@ -37,7 +37,7 @@ const TrackMap = ({ initialPositions, newPosition, validAccuracy }) => {
     const imperialSystem = settings.lengthUnit === 'imperial';
     const backgroundTileDef = mapTileDefs[settings.mapTiles];
     const trackColor = settings.trackColor;
-    const trackWeight = parseInt(settings.trackWeight, 10);
+    // const trackWeight = parseInt(settings.trackWeight, 10);
 
     useEffect(() => {
         initMap();
@@ -96,8 +96,8 @@ const TrackMap = ({ initialPositions, newPosition, validAccuracy }) => {
     }, [initialPositions])
 
     useEffect(() => {
-        polyline.setStyle({ color: trackColor /*, weight: trackWeight*/ });
-    }, [trackColor, trackWeight]);
+        polyline.setStyle({ color: trackColor /*, weight: trackWeight */ });
+    }, [trackColor /*, trackWeight */]);
 
     // Simple placeholder for a Leaflet map, won't get re-rendered
     return <div className="map" ref={mapElement} />;
