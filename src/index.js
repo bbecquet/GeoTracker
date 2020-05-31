@@ -8,9 +8,6 @@ import SingleTrack from './pages/SingleTrack.js';
 import Tracking from './pages/Tracking.js';
 import Settings from './pages/Settings.js';
 import About from './pages/About.js';
-import { createStore, combineReducers } from 'redux';
-import { Provider } from 'react-redux';
-import { reducer as tracksReducer } from './models/trackUtils';
 import { SettingsContextProvider } from "./models/SettingsContext";
 
 import swURL from "file-loader?name=sw.js!babel-loader!./sw";
@@ -26,24 +23,18 @@ if ('serviceWorker' in navigator) {
     });
 }
 
-const store = createStore(combineReducers({
-    tracks: tracksReducer,
-}));
-
 ReactDOM.render(
     <SettingsContextProvider>
-        <Provider store={store}>
-            <Router>
-                <Switch>
-                    <Route path="/" exact component={App} />
-                    <Route path="/tracks" exact component={TrackList} />
-                    <Route path="/tracks/:trackId" exact component={SingleTrack} />
-                    <Route path="/tracks/:trackId/tracking" exact component={Tracking} />
-                    <Route path="/settings" component={Settings} />
-                    <Route path="/about" component={About} />
-                </Switch>
-            </Router>
-        </Provider>
+        <Router>
+            <Switch>
+                <Route path="/" exact component={App} />
+                <Route path="/tracks" exact component={TrackList} />
+                <Route path="/tracks/:trackId" exact component={SingleTrack} />
+                <Route path="/tracks/:trackId/tracking" exact component={Tracking} />
+                <Route path="/settings" component={Settings} />
+                <Route path="/about" component={About} />
+            </Switch>
+        </Router>
     </SettingsContextProvider>,
     document.getElementById('root')
 );

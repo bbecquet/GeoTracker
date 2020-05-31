@@ -6,14 +6,15 @@ import Page from '../components/Page.js';
 import settingsIcon from '../imgs/settings.svg';
 import aboutIcon from '../imgs/information.svg';
 import './TrackList.css';
-import { connect } from 'react-redux';
 import { getTrackList, createTrack } from '../models/trackStorage';
 
 class TrackList extends Component {
+    state = {
+        tracks: [],
+        status: 'LOADING',
+    };
+
     static propTypes = {
-        tracks: PropTypes.object.isRequired,
-        loadTracks: PropTypes.func.isRequired,
-        addTrack: PropTypes.func.isRequired,
         history: PropTypes.object.isRequired,
     }
 
@@ -25,21 +26,20 @@ class TrackList extends Component {
         return getTrackList()
         .then(tracks => {
             tracks.sort((t1, t2) => t2.createdAt - t1.createdAt);
-            this.props.loadTracks(tracks);
+            this.setState({ tracks, status: 'READY' });
         });
     }
 
     addTrack = () => {
         createTrack()
         .then(newTrack => {
-            this.props.addTrack(newTrack);
             this.props.history.push(`/tracks/${newTrack.id}/tracking`)
         });
     }
 
     getTrackCount() {
-        if(!this.props.tracks.trackList) { return 'Loading tracks…'; }
-        switch(this.props.tracks.trackList.length) {
+        if(!this.state.status === 'LOADING') { return 'Loading tracks…'; }
+        switch(this.state.tracks.length) {
             case 0:
                 return <div>
                     <p>No track yet.</p>
@@ -48,14 +48,14 @@ class TrackList extends Component {
             case 1:
                 return <p>1 track</p>;
             default:
-                return <p>{`${this.props.tracks.trackList.length} tracks`}</p>;
+                return <p>{`${this.state.tracks.length} tracks`}</p>;
         }
     }
 
     renderList() {
-        if(!this.props.tracks.trackList) { return null; }
+        if(!this.state.status === 'LOADING') { return null; }
         return <ul>
-            {this.props.tracks.trackList.map(track =>
+            {this.state.tracks.map(track =>
                 <li key={track.id}>
                     <Link to={`/tracks/${track.id}`}>
                         <TrackSummary track={track} />
@@ -91,17 +91,4 @@ class TrackList extends Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        loadTracks: tracks => dispatch({
-            type: 'TRACKS_LOAD_LIST',
-            payload: { tracks },
-        }),
-        addTrack: track => dispatch({
-            type: 'TRACKS_NEW',
-            payload: { track },
-        })
-    }
-}
-
-export default connect(x => x, mapDispatchToProps)(withRouter(TrackList));
+export default withRouter(TrackList);
