@@ -17,7 +17,7 @@ const SingleTrack = ({ match, history }) => {
     const [positions, setPositions] = useState([]);
 
     useEffect(() => {
-        if (track) { return; } 
+        if (track) { return; }
         getTrack(parseInt(match.params.trackId, 10))
         .then(track => {
             getTrackPositions(track.id)

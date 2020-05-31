@@ -10,8 +10,8 @@ import { getTrack, updateTrack, addPositionToTrack } from '../models/trackStorag
 import { SettingsContext } from '../models/SettingsContext';
 
 const Tracking = ({ match }) => {
+    const trackId = parseInt(match.params.trackId, 10);
     const [settings] = useContext(SettingsContext);
-    const [track, setTrack] = useState(null);
     const [lastPosition, setLastPosition] = useState(null);
     const [validAccuracy, setValidAccuracy] = useState(false);
     let tracker = null;
@@ -20,44 +20,43 @@ const Tracking = ({ match }) => {
     useEffect(() => {
         console.log('Lauching GPS…');
         tracker = new Tracker(settings['gps.simulatePositions']);
-        tracker.start(onNewPosition);            
-        getTrack(parseInt(match.params.trackId, 10)).then(setTrack);
+        tracker.start(onNewPosition);
 
         return () => {
-            tracker.stop();
-            console.log('GPS stopped.');
+            if (tracker) {
+                tracker.stop();
+                console.log('GPS stopped.');
+            }
         };
     }, []);
 
     const onNewPosition = newPosition => {
         const validAccuracy = newPosition.coords.accuracy <= parseInt(settings.maxAccuracy, 10);
 
-        if (validAccuracy && track && !track.name && !triedToLocate) {
-            triedToLocate = true;
-            getLocationName(newPosition, locationName => {
-                const updatedTrack = { track, name: locationName };
-                updateTrack(updatedTrack).then(() => { setTrack(updatedTrack) });
-            });
-        }
+        // if (validAccuracy && track && !track.name && !triedToLocate) {
+        //     triedToLocate = true;
+        //     getLocationName(newPosition, locationName => {
+        //         const updatedTrack = { track, name: locationName };
+        //         updateTrack(updatedTrack).then(() => { setTrack(updatedTrack) });
+        //     });
+        // }
 
-        if (validAccuracy && track) {
-            addPositionToTrack(track.id, newPosition);
+        if (validAccuracy) {
+            addPositionToTrack(trackId, newPosition);
         }
 
         setLastPosition(newPosition);
         setValidAccuracy(validAccuracy);
     }
 
-    const useImperialSystem = settings.lengthUnit === 'imperial';
-
     return (<Page
         title="Tracking…"
-        actions={track ? [{ icon: stopIcon, text: 'Stop', navTo: `/tracks/${track.id}`}] : []}
+        actions={[{ icon: stopIcon, text: 'Stop', navTo: `/tracks/${trackId}` }]}
     >
         <GpsStatus
             position={lastPosition}
             validAccuracy={validAccuracy}
-            imperialSystem={useImperialSystem}
+            imperialSystem={settings.lengthUnit === 'imperial'}
         />
         <div className="mapContainer">
             <TrackMap newPosition={lastPosition} validAccuracy={validAccuracy} />

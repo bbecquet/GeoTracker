@@ -47,7 +47,7 @@ export function addPositionToTrack(trackId, position) {
         ...position,
         trackId,
         // generate a numerical Id based on timestamp and trackId for range selection
-        id: Number(trackId) * (1e16) + position.timestamp,
+        id: Number(trackId) * 1e13 + position.timestamp,
     };
 
     return openDBPromise.then(db => {
