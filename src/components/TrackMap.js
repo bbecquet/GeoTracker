@@ -21,11 +21,23 @@ const setLayer = backgroundTileDef => {
     map.addLayer(bgLayer);
 }
 
+const getPositionMarker = () => {
+    return positionMarker = positionMarker || L.marker(map.getCenter(), {
+        icon: L.icon({
+            iconUrl: arrowIcon,
+            iconSize: [24, 24],
+            iconAnchor: [12, 12],
+        }),
+        rotationAngle: 0,
+        rotationOrigin: 'center center',
+    });
+}
+
 const addNewPosition = newPosition => {
     const newCoord = positionToLatLng(newPosition);
     polyline.addLatLng(newCoord);
     map.setView(newCoord);
-    positionMarker
+    getPositionMarker()
         .setLatLng(newCoord)
         .setRotationAngle(newPosition.coords.heading)
         .addTo(map);
@@ -40,23 +52,6 @@ const TrackMap = ({ initialPositions, newPosition, validAccuracy }) => {
     // const trackWeight = parseInt(settings.trackWeight, 10);
 
     useEffect(() => {
-        initMap();
-        positionMarker = L.marker(map.getCenter(), {
-            icon: L.icon({
-                iconUrl: arrowIcon,
-                iconSize: [24, 24],
-                iconAnchor: [12, 12],
-            }),
-            rotationAngle: 0,
-            rotationOrigin: 'center center',
-        });
-
-        return () => { map.remove(); }
-    }, []);
-
-    const initMap = () => {
-        scale = L.control.scale({ imperial: imperialSystem, metric: !imperialSystem });
-
         map = L.map(mapElement.current, {
             // TODO: put map options in global settings?
             center: [48.85, 2.35],
@@ -64,28 +59,20 @@ const TrackMap = ({ initialPositions, newPosition, validAccuracy }) => {
             attributionControl: false,
             zoomControl: false,
             boxZoom: false,
-        })
-            .addControl(L.control.zoom({ position: 'bottomright' }))
-            .addControl(scale);
+        }).addControl(L.control.zoom({ position: 'bottomright' }))
 
-        setLayer(backgroundTileDef);
-    }
+        return () => { map.remove(); }
+    }, []);
 
     useEffect(() => {
         setLayer(backgroundTileDef);
     }, [backgroundTileDef]);
 
     useEffect(() => {
-        scale.remove();
+        if (scale) { scale.remove(); }
         scale = L.control.scale({ imperial: imperialSystem, metric: !imperialSystem });
         map.addControl(scale);
     }, [imperialSystem]);
-
-    useEffect(() => {
-        if (newPosition && validAccuracy) {
-            addNewPosition(newPosition);
-        }
-    }, [newPosition, validAccuracy]);
 
     useEffect(() => {
         const coords = initialPositions.map(positionToLatLng);
@@ -98,6 +85,12 @@ const TrackMap = ({ initialPositions, newPosition, validAccuracy }) => {
     useEffect(() => {
         polyline.setStyle({ color: trackColor /*, weight: trackWeight */ });
     }, [trackColor /*, trackWeight */]);
+
+    useEffect(() => {
+        if (newPosition && validAccuracy) {
+            addNewPosition(newPosition);
+        }
+    }, [newPosition, validAccuracy]);
 
     // Simple placeholder for a Leaflet map, won't get re-rendered
     return <div className="map" ref={mapElement} />;
