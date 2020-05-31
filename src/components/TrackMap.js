@@ -51,12 +51,6 @@ const TrackMap = ({ initialPositions, newPosition, validAccuracy }) => {
             rotationOrigin: 'center center',
         });
 
-        const coords = initialPositions.map(positionToLatLng);
-        polyline = L.polyline(coords).addTo(map);
-        if (coords.length) {
-            map.fitBounds(L.latLngBounds(coords));
-        }
-
         return () => { map.remove(); }
     }, []);
 
@@ -92,6 +86,14 @@ const TrackMap = ({ initialPositions, newPosition, validAccuracy }) => {
             addNewPosition(newPosition);
         }
     }, [newPosition, validAccuracy]);
+
+    useEffect(() => {
+        const coords = initialPositions.map(positionToLatLng);
+        polyline = L.polyline(coords).addTo(map);
+        if (coords.length) {
+            map.fitBounds(L.latLngBounds(coords));
+        }
+    }, [initialPositions])
 
     useEffect(() => {
         polyline.setStyle({ color: trackColor /*, weight: trackWeight*/ });

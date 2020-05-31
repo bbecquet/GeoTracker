@@ -17,16 +17,13 @@ const SingleTrack = ({ match, history }) => {
     const [positions, setPositions] = useState([]);
 
     useEffect(() => {
-        if (track) { return; }
-        getTrack(parseInt(match.params.trackId, 10))
-        .then(track => {
-            getTrackPositions(track.id)
-            .then(positions => {
+        getTrack(parseInt(match.params.trackId, 10)).then(track => {
+            getTrackPositions(track.id).then(positions => {
                 setTrack(track);
                 setPositions(positions);
             });
         });
-    });
+    }, []);
 
     const onDelete = () => {
         if(!confirm('Are you sure you want to delete this track?')) { return; }
@@ -37,8 +34,6 @@ const SingleTrack = ({ match, history }) => {
     const onExport = () => {
         exportTrackAsGpx(track, positions);
     }
-
-    const useImperialSystem = settings.lengthUnit === 'imperial';
 
     return (
         <Page
@@ -52,7 +47,7 @@ const SingleTrack = ({ match, history }) => {
         {track ? <div>
             <div className="padding">
                 <TrackSummary track={track} />
-                <TrackStats positions={positions} imperialSystem={useImperialSystem} />
+                <TrackStats positions={positions} imperialSystem={settings.lengthUnit === 'imperial'} />
             </div>
             <div className="mapContainer">
                 <TrackMap initialPositions={positions} />
