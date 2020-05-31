@@ -35,7 +35,11 @@ ul, li {
 }
 
 .mapContainer {
-    height: 300px;
+    height: 50vh;
+    flex-grow: 1;
+}
+
+.graphContainer {
     flex-grow: 1;
 }
 

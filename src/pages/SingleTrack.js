@@ -10,6 +10,7 @@ import exportIcon from '../imgs/file-export.svg';
 import { getTrack, getTrackPositions, deleteTrack } from '../models/trackStorage';
 import { withRouter } from 'react-router-dom';
 import { SettingsContext } from '../models/SettingsContext';
+import TrackGraph from '../components/TrackGraph';
 
 const SingleTrack = ({ match, history }) => {
     const [settings] = useContext(SettingsContext);
@@ -44,7 +45,7 @@ const SingleTrack = ({ match, history }) => {
                 { icon: exportIcon, text: 'Export', onClick: onExport },
             ]}
         >
-        {track ? <div>
+        {track ? <>
             <div className="padding">
                 <TrackSummary track={track} />
                 <TrackStats positions={positions} imperialSystem={settings.lengthUnit === 'imperial'} />
@@ -52,7 +53,10 @@ const SingleTrack = ({ match, history }) => {
             <div className="mapContainer">
                 <TrackMap initialPositions={positions} />
             </div>
-        </div> : <div className="padding">Loading…</div>}
+            <div className="graphContainer">
+                <TrackGraph positions={positions} />
+            </div>
+        </> : <div className="padding">Loading…</div>}
     </Page>);
 }
 

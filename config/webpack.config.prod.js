@@ -156,5 +156,9 @@ module.exports = {
     fs: 'empty',
     net: 'empty',
     tls: 'empty'
+  },
+
+  externals: {
+    moment: 'moment'
   }
 };
