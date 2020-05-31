@@ -30,22 +30,17 @@ export function getDuration(positions) {
         : positions[positions.length - 1].timestamp - positions[0].timestamp;
 }
 
-export function reducer(state = { status: 'LOADING' }, action) {
-    switch (action.type) {
+export function reducer(state = { status: 'LOADING' }, { type, payload }) {
+    switch (type) {
         case 'TRACKS_LOAD_LIST':
             return {
                 status: 'READY',
-                trackList: action.tracks,
+                trackList: payload.tracks,
             };
         case 'TRACKS_NEW':
             return {
                 ...state,
-                trackList: state.trackList.concat(action.track),
-            };
-        case 'TRACKS_CLEAR':
-            return {
-                ...state,
-                trackList: [],
+                trackList: state.trackList.concat(payload.track),
             };
         default:
             return state;

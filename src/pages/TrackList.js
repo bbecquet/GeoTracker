@@ -95,11 +95,11 @@ function mapDispatchToProps(dispatch) {
     return {
         loadTracks: tracks => dispatch({
             type: 'TRACKS_LOAD_LIST',
-            tracks,
+            payload: { tracks },
         }),
         addTrack: track => dispatch({
             type: 'TRACKS_NEW',
-            track,
+            payload: { track },
         })
     }
 }
