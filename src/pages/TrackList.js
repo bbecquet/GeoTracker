@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import TrackSummary from '../components/TrackSummary.js';
@@ -8,38 +8,28 @@ import aboutIcon from '../imgs/information.svg';
 import './TrackList.css';
 import { getTrackList, createTrack } from '../models/trackStorage';
 
-class TrackList extends Component {
-    state = {
-        tracks: [],
-        status: 'LOADING',
-    };
+const TrackList = ({ history }) => {
+    const [tracks, setTracks] = useState([]);
+    const [status, setStatus] = useState('LOADING');
 
-    static propTypes = {
-        history: PropTypes.object.isRequired,
-    }
-
-    componentDidMount() {
-        this.loadTrackList();
-    }
-
-    loadTrackList() {
-        return getTrackList()
-        .then(tracks => {
+    useEffect(() => {
+        getTrackList().then(tracks => {
             tracks.sort((t1, t2) => t2.createdAt - t1.createdAt);
-            this.setState({ tracks, status: 'READY' });
+            setTracks(tracks);
+            setStatus('READY');
         });
-    }
+    }, []);
 
-    addTrack = () => {
+    const addTrack = () => {
         createTrack()
         .then(newTrack => {
-            this.props.history.push(`/tracks/${newTrack.id}/tracking`)
+            history.push(`/tracks/${newTrack.id}/tracking`)
         });
     }
 
-    getTrackCount() {
-        if(!this.state.status === 'LOADING') { return 'Loading tracks…'; }
-        switch(this.state.tracks.length) {
+    const getTrackCount = () => {
+        if (status === 'LOADING') { return 'Loading tracks…'; }
+        switch (tracks.length) {
             case 0:
                 return <div>
                     <p>No track yet.</p>
@@ -48,47 +38,37 @@ class TrackList extends Component {
             case 1:
                 return <p>1 track</p>;
             default:
-                return <p>{`${this.state.tracks.length} tracks`}</p>;
+                return <p>{`${tracks.length} tracks`}</p>;
         }
     }
 
-    renderList() {
-        if(!this.state.status === 'LOADING') { return null; }
-        return <ul>
-            {this.state.tracks.map(track =>
-                <li key={track.id}>
-                    <Link to={`/tracks/${track.id}`}>
-                        <TrackSummary track={track} />
-                    </Link>
-                </li>
-            )}
-        </ul>;
-    }
+    return (
+        <Page
+            title="Your tracks"
+            actions={[
+                { icon: aboutIcon, navTo: '/about' },
+                { icon: settingsIcon, navTo: '/settings' },
+            ]}
+        >
+            <div className="padding trackList">
+                {getTrackCount()}
+                {status !== 'LOADING' && <ul>
+                    {tracks.map(track =>
+                        <li key={track.id}>
+                            <Link to={`/tracks/${track.id}`}>
+                                <TrackSummary track={track} />
+                            </Link>
+                        </li>
+                    )}
+                </ul>}
+            </div>
+            <button className="mainAction" onClick={addTrack}>+</button>
+        </Page>
+    );
+}
 
-    render() {
-        return (
-            <Page
-                title="Your tracks"
-                actions={[
-                    { icon: aboutIcon, navTo: '/about' },
-                    { icon: settingsIcon, navTo: '/settings' },
-                ]}
-            >
-                <div className="padding">
-                    <div className="trackList">
-                        {this.getTrackCount()}
-                        {this.renderList()}
-                    </div>
-                </div>
-                <button
-                    className="mainAction"
-                    onClick={this.addTrack}
-                >
-                    +
-                </button>
-            </Page>
-        );
-    }
+TrackList.propTypes = {
+    history: PropTypes.object.isRequired,
 }
 
 export default withRouter(TrackList);
