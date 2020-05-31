@@ -14,8 +14,8 @@ const Tracking = ({ match }) => {
     const [settings] = useContext(SettingsContext);
     const [lastPosition, setLastPosition] = useState(null);
     const [validAccuracy, setValidAccuracy] = useState(false);
+    const [triedToLocate, setTriedToLocate] = useState(false);
     let tracker = null;
-    let triedToLocate = false;
 
     useEffect(() => {
         console.log('Lauching GPS…');
@@ -33,13 +33,14 @@ const Tracking = ({ match }) => {
     const onNewPosition = newPosition => {
         const validAccuracy = newPosition.coords.accuracy <= parseInt(settings.maxAccuracy, 10);
 
-        // if (validAccuracy && track && !track.name && !triedToLocate) {
-        //     triedToLocate = true;
-        //     getLocationName(newPosition, locationName => {
-        //         const updatedTrack = { track, name: locationName };
-        //         updateTrack(updatedTrack).then(() => { setTrack(updatedTrack) });
-        //     });
-        // }
+        if (validAccuracy && !triedToLocate) {
+            setTriedToLocate(true);
+            getLocationName(newPosition, name => {
+                getTrack(trackId)
+                    .then(track => ({ ...track, name }))
+                    .then(updateTrack);
+            });
+        }
 
         if (validAccuracy) {
             addPositionToTrack(trackId, newPosition);
