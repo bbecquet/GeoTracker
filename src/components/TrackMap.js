@@ -76,7 +76,7 @@ const TrackMap = ({ initialPositions, newPosition, validAccuracy }) => {
 
     useEffect(() => {
         const coords = initialPositions.map(positionToLatLng);
-        polyline = L.polyline(coords).addTo(map);
+        polyline = L.polyline(coords, { color: trackColor }).addTo(map);
         if (coords.length) {
             map.fitBounds(L.latLngBounds(coords));
         }
