@@ -9,14 +9,16 @@ import fakeCoords from '../models/fakeGpsCoords.json';
 
 const fakeTrack = fakeCoords.map(([ longitude, latitude ]) => ({ coords: { latitude, longitude }}));
 
-const Setting = ({ title, desc, children }) =>
-    <label className="setting">
+const Setting = ({ title, desc, asLabel, children }) => {
+    const Tag = asLabel ? 'label' : 'div';
+    return <Tag className="setting">
         <div className="u-mr">
             <div className="text-subtitle">{title}</div>
             {desc && <div className="text-caption">{desc}</div>}
         </div>
         {children}
-    </label>;
+    </Tag>;
+}
 
 const Settings = () => {
     const [settings, dispatch] = useContext(SettingsContext);
@@ -91,7 +93,7 @@ const Settings = () => {
                     </Setting>
                 </li> */}
                 <li>
-                    <Setting title="Use imperial system" desc="For distances and map scale">
+                    <Setting asLabel title="Use imperial system" desc="For distances and map scale">
                         <input
                             name="lengthUnit"
                             type="checkbox"
@@ -122,7 +124,7 @@ const Settings = () => {
                     </Setting>
                 </li>
                 <li>
-                    <Setting title="Use fake GPS positions" desc="For easy indoor debugging">
+                    <Setting asLabel title="Use fake GPS positions" desc="For easy indoor debugging">
                         <input
                             type="checkbox"
                             checked={settings['gps.simulatePositions']}

@@ -6,12 +6,15 @@
     --hightlightColor: #44b066;
     --dimTextColor: #888;
     --shadowColor: #333;
+    --uiFormColor: #DDD;
+    --separatorColor: #DDD;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
         --bgColor: black;
         --textColor: var(--white);
+        --separatorColor: #666;
     }
 }
 
@@ -27,6 +30,7 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
     background-color: var(--bgColor);
     color: var(--textColor);
+    line-height: 1.33;
 }
 
 ul, li {
@@ -44,7 +48,7 @@ ul, li {
 }
 
 .padding {
-    padding: 0.5em;
+    padding: 0.5em 1em;
 }
 
 .u-mr {
@@ -91,11 +95,12 @@ button.mainAction {
     text-align: center;
 }
 
-button {
-    padding: 0.5em;
-    background-color: #EEE;
+button, select {
+    background-color: var(--uiFormColor);
     border-radius: 3px;
     border: 1px solid #CCC;
+    padding: 0.5em;
+    font-style: inherit;
 }
 
 fieldset {
@@ -120,9 +125,10 @@ legend::before {
 }
 
 .setting {
-    padding: 0.75em 0;
+    padding: 1em 0;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .text-subtitle {
@@ -145,18 +151,38 @@ a.link {
 }
 
 li:not(:last-child) {
-    border-bottom: 1px solid #EEE;
+    border-bottom: 1px solid var(--separatorColor);
 }
 
 input[type=range]{
     max-width: 150px;
     vertical-align: middle;
+    -webkit-appearance: none;
+}
+
+/* la zone de déplacement */
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 5px;
+    background: var(--uiFormColor);
+    border: none;
+    border-radius: 3px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 16px;
+    width: 16px;
+    margin-top: -5px;
+    border-radius: 50%;
+    background: var(--hightlightColor);
 }
 
 input[type=range]::-moz-range-track {
     width: 100%;
     height: 5px;
-    background: #ddd;
+    background: var(--uiFormColor);
     border: none;
     border-radius: 3px;
 }
