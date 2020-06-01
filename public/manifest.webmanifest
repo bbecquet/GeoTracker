@@ -6,6 +6,7 @@
   "background_color": "#fff",
   "description": "A simple track recorder application.",
   "lang": "en-US",
+  "theme_color": "#44b066",
   "icons": [
     {
       "src": "favicon.png",
@@ -15,6 +16,16 @@
     {
       "src": "icon144.png",
       "sizes": "72x72 96x96 128x128 144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "icon192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon512.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ]
