@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import { useParams } from 'react-router-dom';
 import Tracker from '../models/tracker';
 import Page from '../components/Page';
 import TrackMap from '../components/TrackMap';
@@ -10,8 +10,8 @@ import { SettingsContext } from '../models/SettingsContext';
 
 let positions = [];
 
-const Tracking = ({ match }) => {
-    const trackId = parseInt(match.params.trackId, 10);
+const Tracking = () => {
+    const { trackId } = useParams();
     const [settings] = useContext(SettingsContext);
     const [lastPosition, setLastPosition] = useState(null);
 
@@ -21,7 +21,7 @@ const Tracking = ({ match }) => {
         if (isValidAccuracy(onNewPosition)) {
             // @TODO manage track position by upstream state/context 
             positions.push(onNewPosition);
-            addPositionToTrack(trackId, onNewPosition);
+            addPositionToTrack(parseInt(trackId, 10), onNewPosition);
         }
         setLastPosition(onNewPosition);
     };
@@ -53,10 +53,6 @@ const Tracking = ({ match }) => {
             <TrackMap positions={positions.slice()} />
         </div>
     </Page>);
-}
-
-Tracking.propTypes = {
-    match: PropTypes.object.isRequired,
 }
 
 export default Tracking;

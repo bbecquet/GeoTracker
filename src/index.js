@@ -27,12 +27,12 @@ ReactDOM.render(
     <SettingsContextProvider>
         <Router>
             <Switch>
-                <Route path="/" exact component={App} />
-                <Route path="/tracks" exact component={TrackList} />
-                <Route path="/tracks/:trackId" exact component={SingleTrack} />
-                <Route path="/tracks/:trackId/tracking" exact component={Tracking} />
-                <Route path="/settings" component={Settings} />
-                <Route path="/about" component={About} />
+                <Route path="/" exact><App /></Route>
+                <Route path="/tracks" exact><TrackList /></Route>
+                <Route path="/tracks/:trackId" exact><SingleTrack /></Route>
+                <Route path="/tracks/:trackId/tracking" exact><Tracking /></Route>
+                <Route path="/settings"><Settings /></Route>
+                <Route path="/about"><About /></Route>
             </Switch>
         </Router>
     </SettingsContextProvider>,

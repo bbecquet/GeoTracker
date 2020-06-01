@@ -8,17 +8,19 @@ import Page from '../components/Page';
 import deleteIcon from '../imgs/delete.svg';
 import exportIcon from '../imgs/file-export.svg';
 import { getTrack, getTrackPositions, deleteTrack } from '../models/trackStorage';
-import { withRouter } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { SettingsContext } from '../models/SettingsContext';
 import TrackGraph from '../components/TrackGraph';
 
-const SingleTrack = ({ match, history }) => {
+const SingleTrack = () => {
+    const history = useHistory();
+    const { trackId } = useParams();
     const [settings] = useContext(SettingsContext);
     const [track, setTrack] = useState(null);
     const [positions, setPositions] = useState([]);
 
     useEffect(() => {
-        getTrack(parseInt(match.params.trackId, 10)).then(track => {
+        getTrack(parseInt(trackId, 10)).then(track => {
             getTrackPositions(track.id).then(positions => {
                 setTrack(track);
                 setPositions(positions);
@@ -60,9 +62,4 @@ const SingleTrack = ({ match, history }) => {
     </Page>);
 }
 
-SingleTrack.propTypes = {
-    match: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired,
-}
-
-export default withRouter(SingleTrack);
+export default SingleTrack;

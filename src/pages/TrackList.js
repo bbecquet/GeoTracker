@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import TrackSummary from '../components/TrackSummary.js';
 import Page from '../components/Page.js';
 import settingsIcon from '../imgs/settings.svg';
@@ -8,7 +7,8 @@ import aboutIcon from '../imgs/information.svg';
 import './TrackList.css';
 import { getTrackList, createTrack } from '../models/trackStorage';
 
-const TrackList = ({ history }) => {
+const TrackList = () => {
+    const history = useHistory();
     const [tracks, setTracks] = useState([]);
     const [status, setStatus] = useState('LOADING');
 
@@ -67,8 +67,4 @@ const TrackList = ({ history }) => {
     );
 }
 
-TrackList.propTypes = {
-    history: PropTypes.object.isRequired,
-}
-
-export default withRouter(TrackList);
+export default TrackList;
