@@ -43,7 +43,7 @@ const addNewPosition = newPosition => {
         .addTo(map);
 }
 
-const TrackMap = ({ initialPositions, newPosition, validAccuracy }) => {
+const TrackMap = ({ positions }) => {
     const mapElement = useRef(null);
     const [settings] = useContext(SettingsContext);
     const imperialSystem = settings.lengthUnit === 'imperial';
@@ -60,6 +60,7 @@ const TrackMap = ({ initialPositions, newPosition, validAccuracy }) => {
             zoomControl: false,
             boxZoom: false,
         }).addControl(L.control.zoom({ position: 'bottomright' }))
+        polyline = L.polyline([], { color: trackColor }).addTo(map);
 
         return () => { map.remove(); }
     }, []);
@@ -75,35 +76,27 @@ const TrackMap = ({ initialPositions, newPosition, validAccuracy }) => {
     }, [imperialSystem]);
 
     useEffect(() => {
-        const coords = initialPositions.map(positionToLatLng);
-        polyline = L.polyline(coords, { color: trackColor }).addTo(map);
+        const coords = positions.map(positionToLatLng);
+        polyline.setLatLngs(coords);
         if (coords.length) {
             map.fitBounds(L.latLngBounds(coords));
         }
-    }, [initialPositions])
+    }, [positions])
 
     useEffect(() => {
         polyline.setStyle({ color: trackColor /*, weight: trackWeight */ });
     }, [trackColor /*, trackWeight */]);
-
-    useEffect(() => {
-        if (newPosition && validAccuracy) {
-            addNewPosition(newPosition);
-        }
-    }, [newPosition, validAccuracy]);
 
     // Simple placeholder for a Leaflet map, won't get re-rendered
     return <div className="map" ref={mapElement} />;
 }
 
 TrackMap.propTypes = {
-    initialPositions: PropTypes.array,
-    newPosition: PropTypes.object,
-    validAccuracy: PropTypes.bool,
+    positions: PropTypes.array,
 }
 
 TrackMap.defaultProps = {
-    initialPositions: [],
+    positions: [],
 }
 
 export default TrackMap;

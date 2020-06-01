@@ -51,7 +51,7 @@ const SingleTrack = ({ match, history }) => {
                 <TrackStats positions={positions} imperialSystem={settings.lengthUnit === 'imperial'} />
             </div>
             <div className="mapContainer">
-                <TrackMap initialPositions={positions} />
+                <TrackMap positions={positions} />
             </div>
             <div className="graphContainer">
                 <TrackGraph positions={positions} />
