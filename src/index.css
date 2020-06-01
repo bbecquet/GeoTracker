@@ -4,10 +4,11 @@
     --bgColor: var(--white);
     --textColor: black;
     --hightlightColor: #44b066;
+    --activeColor: #368b51;
     --dimTextColor: #888;
     --shadowColor: #333;
     --uiFormColor: #DDD;
-    --separatorColor: #DDD;
+    --separatorColor: #EEE;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -95,12 +96,17 @@ button.mainAction {
     text-align: center;
 }
 
+button.mainAction:hover,
+button.mainAction:active {
+    background-color: var(--activeColor);
+}
+
 button, select {
     background-color: var(--uiFormColor);
     border-radius: 3px;
     border: 1px solid #CCC;
     padding: 0.5em;
-    font-style: inherit;
+    font-size: inherit;
 }
 
 fieldset {
@@ -147,7 +153,7 @@ a {
 
 a.link {
     text-decoration: underline;
-    color: #368b51;
+    color: var(--activeColor);
 }
 
 li:not(:last-child) {

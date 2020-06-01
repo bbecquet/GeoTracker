@@ -15,6 +15,7 @@
     font-weight: normal;
     flex-grow: 1;
     text-shadow: 0 0 2px #368b51;
+    padding-left: 0.5em;
 }
 
 .pageHeader button {
@@ -58,4 +59,11 @@
     height: 100%;
     display: flex;
     align-items: center;
+}
+
+.pageHeader button:hover,
+.pageHeader button:active,
+.pageHeader a:hover,
+.pageHeader a:active {
+    background-color: var(--activeColor);
 }

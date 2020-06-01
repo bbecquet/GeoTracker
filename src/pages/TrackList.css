@@ -9,3 +9,10 @@
     top: 50%;
     margin-top: -1em;
 }
+.trackList a {
+    display: block;
+}
+.trackList a:hover,
+.trackList a:active {
+    background-color: var(--separatorColor);
+}
