@@ -16,7 +16,7 @@ function getName(address) {
         || null;
 }
 
-export function getLocationName(position, onSuccess) {
+export function getLocationName(position) {
     const coords = position.coords;
     const query = toUrlParams({
         lat: coords.latitude,
@@ -25,11 +25,17 @@ export function getLocationName(position, onSuccess) {
         json_callback: 'jsonpCallback',
     });
 
-    window.jsonpCallback = json => {
-        onSuccess(getName(json.address));
-    }
+    return new Promise((resolve, reject) => {
+        try {
+            window.jsonpCallback = json => {
+                resolve(getName(json.address));
+            }
 
-    const script = document.createElement('script');
-    script.src = `https://nominatim.openstreetmap.org/reverse?${query}`;
-    document.body.appendChild(script);
+            const script = document.createElement('script');
+            script.src = `https://nominatim.openstreetmap.org/reverse?${query}`;
+            document.body.appendChild(script);
+        } catch {
+            reject('Error georeferencing the track');
+        }
+    })
 }

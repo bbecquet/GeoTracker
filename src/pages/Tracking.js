@@ -1,17 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import Tracker from '../models/tracker';
 import Page from '../components/Page';
 import TrackMap from '../components/TrackMap';
 import GpsStatus from '../components/GpsStatus';
 import stopIcon from '../imgs/stop.svg';
-import { addPositionToTrack } from '../models/trackStorage';
+import { getTrack, updateTrack, addPositionToTrack } from '../models/trackStorage';
 import { SettingsContext } from '../models/SettingsContext';
+import { getLocationName } from '../models/locator';
 
 let positions = [];
 
 const Tracking = () => {
-    const { trackId } = useParams();
+    const history = useHistory();
+    const trackId = parseInt(useParams().trackId, 10);
     const [settings] = useContext(SettingsContext);
     const [lastPosition, setLastPosition] = useState(null);
 
@@ -21,7 +23,7 @@ const Tracking = () => {
         if (isValidAccuracy(onNewPosition)) {
             // @TODO manage track position by upstream state/context 
             positions.push(onNewPosition);
-            addPositionToTrack(parseInt(trackId, 10), onNewPosition);
+            addPositionToTrack(trackId, onNewPosition);
         }
         setLastPosition(onNewPosition);
     };
@@ -40,9 +42,22 @@ const Tracking = () => {
         };
     }, []);
 
+    const onClose = () => {
+        const goBack = () => history.replace(`/tracks/${trackId}`);
+        if (positions.length === 0) {
+            goBack();
+        }
+        getLocationName(positions[0]).then(name => {
+            getTrack(trackId)
+                .then(track => ({ ...track, id: trackId, name }))
+                .then(updateTrack)
+                .then(goBack)
+        }).catch(goBack);
+    }
+
     return (<Page
         title="Tracking…"
-        actions={[{ icon: stopIcon, text: 'Stop', navTo: `/tracks/${trackId}` }]}
+        actions={[{ icon: stopIcon, text: 'Stop', onClick: onClose }]}
     >
         <GpsStatus
             position={lastPosition}
