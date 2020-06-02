@@ -33,17 +33,7 @@ const getPositionMarker = () => {
     });
 }
 
-const addNewPosition = newPosition => {
-    const newCoord = positionToLatLng(newPosition);
-    polyline.addLatLng(newCoord);
-    map.setView(newCoord);
-    getPositionMarker()
-        .setLatLng(newCoord)
-        .setRotationAngle(newPosition.coords.heading)
-        .addTo(map);
-}
-
-const TrackMap = ({ positions }) => {
+const TrackMap = ({ positions, fit, follow }) => {
     const mapElement = useRef(null);
     const [settings] = useContext(SettingsContext);
     const imperialSystem = settings.lengthUnit === 'imperial';
@@ -78,10 +68,22 @@ const TrackMap = ({ positions }) => {
     useEffect(() => {
         const coords = positions.map(positionToLatLng);
         polyline.setLatLngs(coords);
-        if (coords.length) {
-            map.fitBounds(L.latLngBounds(coords));
+
+        const lastCoords = coords[coords.length - 1];
+        if (follow && lastCoords) {
+            map.setView(lastCoords);
+            getPositionMarker()
+                .setLatLng(lastCoords)
+                .setRotationAngle(positions[positions.length - 1].coords.heading)
+                .addTo(map);
         }
-    }, [positions])
+    }, [positions, follow])
+
+    useEffect(() => {
+        if (fit && positions.length > 0) {
+            map.fitBounds(L.latLngBounds(polyline.getLatLngs()));
+        }
+    }, [positions, fit]);
 
     useEffect(() => {
         polyline.setStyle({ color: trackColor /*, weight: trackWeight */ });
@@ -93,6 +95,8 @@ const TrackMap = ({ positions }) => {
 
 TrackMap.propTypes = {
     positions: PropTypes.array,
+    fit: PropTypes.bool,
+    follow: PropTypes.bool,
 }
 
 TrackMap.defaultProps = {

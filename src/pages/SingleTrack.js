@@ -53,7 +53,7 @@ const SingleTrack = () => {
                 <TrackStats positions={positions} imperialSystem={settings.lengthUnit === 'imperial'} />
             </div>
             <div className="mapContainer">
-                <TrackMap positions={positions} />
+                <TrackMap positions={positions} fit />
             </div>
             <div className="graphContainer">
                 <TrackGraph positions={positions} />

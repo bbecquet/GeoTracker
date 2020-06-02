@@ -50,7 +50,7 @@ const Tracking = () => {
             imperialSystem={settings.lengthUnit === 'imperial'}
         />
         <div className="mapContainer">
-            <TrackMap positions={positions.slice()} />
+            <TrackMap positions={positions.slice()} follow />
         </div>
     </Page>);
 }

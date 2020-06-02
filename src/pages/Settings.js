@@ -57,7 +57,7 @@ const Settings = () => {
             <ul className="padding">
                 <li>
                     <div style={{ height: '200px', margin: '0.5em 0' }}>
-                        <TrackMap positions={fakeTrack} />
+                        <TrackMap positions={fakeTrack} fit />
                     </div>
                     <Setting title="Map tiles" desc="Background style for map views">
                         <select onChange={changeMapTiles} value={settings.mapTiles}>
