@@ -1,11 +1,11 @@
-import idb from 'idb';
+import { openDB } from 'idb';
 
 /**
 Implements an indexedDB-based repository for persistent storage
 of tracks accross sessions.
 Provides methods to list/add/delete tracks and positions.
 */
-const openDBPromise = idb.open('geotracker', 1, createDB);
+const openDBPromise = openDB('geotracker', 1, createDB);
 
 function createDB(upgradeDB) {
     console.log('Creating track store...');
