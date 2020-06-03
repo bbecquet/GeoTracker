@@ -5,13 +5,13 @@ Implements an indexedDB-based repository for persistent storage
 of tracks accross sessions.
 Provides methods to list/add/delete tracks and positions.
 */
-const openDBPromise = openDB('geotracker', 1, createDB);
+const openDBPromise = openDB('geotracker', 1, { upgrade: upgradeDB });
 
-function createDB(upgradeDB) {
+function upgradeDB(db) {
     console.log('Creating track store...');
-    upgradeDB.createObjectStore('tracks', { keyPath: 'id', autoIncrement: true });
+    db.createObjectStore('tracks', { keyPath: 'id', autoIncrement: true });
     console.log('Creating position store...');
-    const positionStore = upgradeDB.createObjectStore('positions', { keyPath: 'id' });
+    const positionStore = db.createObjectStore('positions', { keyPath: 'id' });
     console.log('Creating position index...');
     positionStore.createIndex('positionIdx', 'trackId', { unique: false });
     console.log('Database ready.');
