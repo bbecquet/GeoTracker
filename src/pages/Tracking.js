@@ -46,6 +46,7 @@ const Tracking = () => {
         const goBack = () => history.replace(`/tracks/${trackId}`);
         if (positions.length === 0) {
             goBack();
+            return;
         }
         getLocationName(positions[0]).then(name => {
             getTrack(trackId)
