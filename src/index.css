@@ -210,3 +210,45 @@ input[type=range]:-moz-focusring{
 input[type=range]:focus::-moz-range-track {
     background: #ccc;
 }
+
+
+
+input[type=checkbox] {
+    height: 24px;
+    width: 24px;
+    visibility: hidden;
+    cursor: pointer;
+    position: relative;
+}
+
+input[type=checkbox]:before {
+    content: '';
+    width: 24px;
+    height: 24px;
+    right: 0;
+    top: 0px;
+    position: absolute;
+    border: 1px solid var(--uiFormColor);
+    background-color: transparent;
+    border-radius: 50%;
+    visibility: visible;
+    transition: 0.2s background-color;
+}
+
+input[type=checkbox]:checked:after {
+    content: '✓';
+    font-weight: bold;
+    font-size: 24px;
+    padding-top: 2px;
+    color: white;
+    position: absolute;
+    visibility: visible;
+    line-height: 24px;
+    width: 100%;
+    text-align: center;
+}
+
+input[type=checkbox]:checked:before {
+    border-color: var(--hightlightColor);
+    background-color: var(--hightlightColor);
+}
