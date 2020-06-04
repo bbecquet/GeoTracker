@@ -82,8 +82,11 @@ const TrackMap = ({ positions, fit, followPosition }) => {
     }, [positions, followPosition])
 
     useEffect(() => {
-        if (fit && positions.length > 0) {
-            map.fitBounds(L.latLngBounds(polyline.getLatLngs()));
+        if (fit) {
+            getPositionMarker().remove();
+            if (positions.length > 0) {
+                map.fitBounds(L.latLngBounds(polyline.getLatLngs()));
+            }
         }
     }, [positions, fit]);
 
