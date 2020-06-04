@@ -111,7 +111,7 @@ button, select {
 
 fieldset {
     border: none;
-    margin: 0.5em 0 1em;
+    margin-bottom: 1.5em;
 }
 
 legend {

@@ -4,6 +4,7 @@ import Tracker from '../models/tracker';
 import Page from '../components/Page';
 import TrackMap from '../components/TrackMap';
 import GpsStatus from '../components/GpsStatus';
+import Setting from '../components/Setting';
 import stopIcon from '../imgs/stop.svg';
 import { getTrack, updateTrack, addPositionToTrack } from '../models/trackStorage';
 import { SettingsContext } from '../models/SettingsContext';
@@ -16,6 +17,7 @@ const Tracking = () => {
     const trackId = parseInt(useParams().trackId, 10);
     const [settings] = useContext(SettingsContext);
     const [lastPosition, setLastPosition] = useState(null);
+    const [mapFollow, setMapFollow] = useState(true);
 
     const isValidAccuracy = position => position && position.coords.accuracy <= parseInt(settings.maxAccuracy, 10);
 
@@ -66,7 +68,16 @@ const Tracking = () => {
             imperialSystem={settings.lengthUnit === 'imperial'}
         />
         <div className="mapContainer">
-            <TrackMap positions={positions.slice()} follow />
+            <TrackMap followPosition={mapFollow} positions={positions.slice()} />
+        </div>
+        <div className="padding">
+            <Setting asLabel title="Center on position">
+                <input
+                    type="checkbox"
+                    checked={mapFollow}
+                    onChange={e => setMapFollow(e.target.checked)}
+                />
+            </Setting>
         </div>
     </Page>);
 }

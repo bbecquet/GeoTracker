@@ -3,22 +3,12 @@ import { mapTileDefs } from '../models/settings';
 import Page from '../components/Page';
 import TrackMap from '../components/TrackMap';
 import Length from '../components/Length';
+import Setting from '../components/Setting';
 import { clearTrackDatabase, getTrackList } from '../models/trackStorage';
 import { SettingsContext } from '../models/SettingsContext';
 import fakeCoords from '../models/fakeGpsCoords.json';
 
 const fakeTrack = fakeCoords.map(([ longitude, latitude ]) => ({ coords: { latitude, longitude }}));
-
-const Setting = ({ title, desc, asLabel, children }) => {
-    const Tag = asLabel ? 'label' : 'div';
-    return <Tag className="setting">
-        <div className="u-mr">
-            <div className="text-subtitle">{title}</div>
-            {desc && <div className="text-caption">{desc}</div>}
-        </div>
-        {children}
-    </Tag>;
-}
 
 const Settings = () => {
     const [settings, dispatch] = useContext(SettingsContext);

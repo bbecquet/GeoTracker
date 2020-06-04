@@ -33,7 +33,7 @@ const getPositionMarker = () => {
     });
 }
 
-const TrackMap = ({ positions, fit, follow }) => {
+const TrackMap = ({ positions, fit, followPosition }) => {
     const mapElement = useRef(null);
     const [settings] = useContext(SettingsContext);
     const imperialSystem = settings.lengthUnit === 'imperial';
@@ -70,14 +70,16 @@ const TrackMap = ({ positions, fit, follow }) => {
         polyline.setLatLngs(coords);
 
         const lastCoords = coords[coords.length - 1];
-        if (follow && lastCoords) {
-            map.setView(lastCoords);
+        if (lastCoords) {
             getPositionMarker()
                 .setLatLng(lastCoords)
                 .setRotationAngle(positions[positions.length - 1].coords.heading)
                 .addTo(map);
         }
-    }, [positions, follow])
+        if (lastCoords && followPosition) {
+            map.setView(lastCoords);
+        }
+    }, [positions, followPosition])
 
     useEffect(() => {
         if (fit && positions.length > 0) {
