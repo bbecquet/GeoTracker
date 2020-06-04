@@ -44,12 +44,12 @@ const Settings = () => {
     return <Page title="Settings" backPath="/tracks">
         <fieldset>
             <legend>Display</legend>
-            <ul className="padding">
+            <ul className="padding-h-m">
                 <li>
                     <div style={{ height: '200px', margin: '0.5em 0' }}>
                         <TrackMap positions={fakeTrack} fit />
                     </div>
-                    <Setting title="Map tiles" desc="Background style for map views">
+                    <Setting title="Map tiles" desc="Background style for map views" className="padding-v-m">
                         <select onChange={changeMapTiles} value={settings.mapTiles}>
                             {Object.keys(mapTileDefs).map(mapTilesKey =>
                                 <option key={mapTilesKey} value={mapTilesKey}>
@@ -60,7 +60,7 @@ const Settings = () => {
                     </Setting>
                 </li>
                 <li>
-                    <Setting title="Track color" desc="Color of the track line">
+                    <Setting title="Track color" desc="Color of the track line" className="padding-v-m">
                         <select onChange={changeTrackColor} value={settings.trackColor}>
                             {['blue', 'red', 'green', 'purple'].map(trackColor =>
                                 <option key={trackColor} value={trackColor}>
@@ -83,7 +83,7 @@ const Settings = () => {
                     </Setting>
                 </li> */}
                 <li>
-                    <Setting asLabel title="Use imperial system" desc="For distances and map scale">
+                    <Setting asLabel title="Use imperial system" desc="For distances and map scale" className="padding-v-m">
                         <input
                             name="lengthUnit"
                             type="checkbox"
@@ -96,9 +96,9 @@ const Settings = () => {
         </fieldset>
         <fieldset>
             <legend>GPS</legend>
-            <ul className="padding">
+            <ul className="padding-h-m">
                 <li>
-                    <Setting title="Accuracy limit" desc="Bad accuracy positions will be ignored">
+                    <Setting title="Accuracy limit" desc="Bad accuracy positions will be ignored" className="padding-v-m">
                         <div>
                             <Length
                                 className="u-block u-right" 
@@ -114,7 +114,7 @@ const Settings = () => {
                     </Setting>
                 </li>
                 <li>
-                    <Setting asLabel title="Use fake GPS positions" desc="For easy indoor debugging">
+                    <Setting asLabel title="Use fake GPS positions" desc="For easy indoor debugging" className="padding-v-m">
                         <input
                             type="checkbox"
                             checked={settings['gps.simulatePositions']}
@@ -126,9 +126,9 @@ const Settings = () => {
         </fieldset>
         <fieldset>
             <legend>Data</legend>
-            <ul className="padding">
+            <ul className="padding-h-m">
                 <li>
-                    <Setting title="Reset database" desc="Will remove all tracks">
+                    <Setting title="Reset database" desc="Will remove all tracks" className="padding-v-m">
                         <button onClick={handleResetDatabase} disabled={nbTracks === 0}>
                             {nbTracks ? 'Reset database' : 'No recorded tracks'}
                         </button>

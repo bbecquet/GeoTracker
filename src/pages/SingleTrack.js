@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import TrackSummary from '../components/TrackSummary';
 import TrackStats from '../components/TrackStats';
 import TrackMap from '../components/TrackMap';
@@ -49,7 +48,7 @@ const SingleTrack = () => {
         >
         {track ? <>
             <div className="padding">
-                <TrackSummary track={track} />
+                <TrackSummary track={track} className="padding-v-s" />
                 <TrackStats positions={positions} imperialSystem={settings.lengthUnit === 'imperial'} />
             </div>
             <div className="mapContainer">

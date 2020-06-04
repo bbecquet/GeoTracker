@@ -31,14 +31,14 @@ const TrackList = () => {
         if (status === 'LOADING') { return 'Loading tracks…'; }
         switch (tracks.length) {
             case 0:
-                return <div>
+                return <>
                     <p>No track yet.</p>
                     <p>Make sure your GPS is enabled and press "+" to start a new track.</p>
-                </div>;
+                </>;
             case 1:
-                return <p>1 track</p>;
+                return '1 track';
             default:
-                return <p>{`${tracks.length} tracks`}</p>;
+                return `${tracks.length} tracks`;
         }
     }
 
@@ -51,10 +51,10 @@ const TrackList = () => {
             ]}
         >
             <div className="padding trackList">
-                {getTrackCount()}
+                <div className="padding-v-s">{getTrackCount()}</div>
                 {status !== 'LOADING' && <ul>
                     {tracks.map(track =>
-                        <li key={track.id}>
+                        <li key={track.id} className="padding-v-s">
                             <Link to={`/tracks/${track.id}`}>
                                 <TrackSummary track={track} />
                             </Link>

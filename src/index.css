@@ -52,6 +52,27 @@ ul, li {
     padding: 0.5em 1em;
 }
 
+.padding-v-m {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.padding-h-m {
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.padding-v-s {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+
+.padding-h-s {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+
 .u-mr {
     margin-right: 1em;
 }
@@ -111,13 +132,13 @@ button, select {
 
 fieldset {
     border: none;
-    margin-bottom: 1.5em;
+    margin: 1em 0 1em;
 }
 
 legend {
     color: var(--dimTextColor);
     position: relative;
-    padding: 0.25em 0.5em;
+    padding: 0.25em 0.5em 0.25em 1em;
 }
 
 legend::before {
@@ -131,7 +152,6 @@ legend::before {
 }
 
 .setting {
-    padding: 1em 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
