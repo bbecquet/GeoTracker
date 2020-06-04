@@ -98,7 +98,7 @@ const TrackMap = ({ positions, fit, followPosition }) => {
 TrackMap.propTypes = {
     positions: PropTypes.array,
     fit: PropTypes.bool,
-    follow: PropTypes.bool,
+    followPosition: PropTypes.bool,
 }
 
 TrackMap.defaultProps = {
