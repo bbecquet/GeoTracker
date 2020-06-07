@@ -5,6 +5,7 @@ const defaults = {
     trackColor: 'blue',
     trackWeight: 3,
     maxAccuracy: 50,
+    theme: 'auto',
 }
 
 export function readSettings() {

@@ -24,12 +24,13 @@ const Settings = () => {
         payload: { key, value },
     });
 
+    const handleChangeTheme = e => changeSetting('theme', e.target.value);
     const handleChangeGps = e => changeSetting('gps.simulatePositions', e.target.checked);
     const handleChangeUnit = e => changeSetting('lengthUnit', e.target.checked ? 'imperial' : 'metric');
     const handleChangeAccuracy = e => changeSetting('maxAccuracy', parseInt(e.target.value, 10));
     const changeMapTiles = e => changeSetting('mapTiles', e.target.value);
     const changeTrackColor = e => changeSetting('trackColor', e.target.value);
-    const changeTrackWeight = e => changeSetting('trackWeight', parseInt(e.target.value, 10));
+    // const changeTrackWeight = e => changeSetting('trackWeight', parseInt(e.target.value, 10));
 
     const handleResetDatabase = () => {
         if (!confirm('This will delete all your tracks. Are you sure?')) { return; }
@@ -38,7 +39,7 @@ const Settings = () => {
             .catch(event => { alert('Error: ' + event); });
     }
 
-    const trackWeight = parseInt(settings.trackWeight, 10);
+    // const trackWeight = parseInt(settings.trackWeight, 10);
     const maxAccuracy = parseInt(settings.maxAccuracy, 10);
     const imperialSystem = settings.lengthUnit === 'imperial';
 
@@ -46,6 +47,19 @@ const Settings = () => {
         <fieldset>
             <legend>Display</legend>
             <ul className="padding-h-m">
+                <li>
+                    <Setting title="Theme" desc="Light or dark color scheme" className="padding-v-m">
+                        <select onChange={handleChangeTheme} value={settings.theme}>
+                            {[
+                                { label: 'Device settings', value: 'auto' },
+                                { label: '☀️ Light', value: 'light' },
+                                { label: '🌙 Dark', value: 'dark' }
+                            ].map(({ value, label }) =>
+                                <option key={value} value={value}>{label}</option>
+                            )}
+                        </select>
+                    </Setting>
+                </li>
                 <li>
                     <div style={{ height: '200px', margin: '0.5em 0' }}>
                         <TrackMap positions={fakeTrack} fit />

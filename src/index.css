@@ -1,5 +1,5 @@
 
-:root {
+body {
     --white: white;
     --bgColor: var(--white);
     --textColor: black;
@@ -11,8 +11,14 @@
     --separatorColor: #EEE;
 }
 
+body.color-scheme-dark {
+    --bgColor: black;
+    --textColor: var(--white);
+    --separatorColor: #666;
+}
+
 @media (prefers-color-scheme: dark) {
-    :root {
+    body:not(.color-scheme-light) {
         --bgColor: black;
         --textColor: var(--white);
         --separatorColor: #666;
