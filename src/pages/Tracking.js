@@ -5,6 +5,7 @@ import Page from "../components/Page";
 import TrackMap from "../components/TrackMap";
 import GpsStatus from "../components/GpsStatus";
 import Setting from "../components/Setting";
+import Checkbox from "../components/CheckBox";
 import stopIcon from "../imgs/stop.svg";
 import {
   getTrack,
@@ -80,7 +81,7 @@ const Tracking = () => {
       </div>
       <div className="padding">
         <Setting asLabel title="Center on position">
-          <input
+          <Checkbox
             type="checkbox"
             checked={mapFollow}
             onChange={e => setMapFollow(e.target.checked)}

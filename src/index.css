@@ -1,4 +1,3 @@
-
 body {
   --white: white;
   --bgColor: var(--white);
@@ -7,8 +6,8 @@ body {
   --activeColor: #368b51;
   --dimTextColor: #888;
   --shadowColor: #333;
-  --uiFormColor: #DDD;
-  --separatorColor: #EEE;
+  --uiFormColor: #ddd;
+  --separatorColor: #eee;
 }
 
 body.color-scheme-dark {
@@ -34,13 +33,15 @@ body.color-scheme-dark {
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Helvetica Neue", Arial, sans-serif;
   background-color: var(--bgColor);
   color: var(--textColor);
   line-height: 1.33;
 }
 
-ul, li {
+ul,
+li {
   list-style: none;
   padding: 0;
 }
@@ -78,7 +79,6 @@ ul, li {
   padding-right: 0.5em;
 }
 
-
 .u-mr {
   margin-right: 1em;
 }
@@ -101,8 +101,8 @@ main {
   flex-direction: column;
 }
 
-input[type=checkbox],
-input[type=radio] {
+input[type="checkbox"],
+input[type="radio"] {
   margin-right: 0.25em;
 }
 
@@ -115,12 +115,10 @@ button.mainAction {
   height: 60px;
   border: none;
   border-radius: 50%;
-  font-size: 30px;
-  line-height: 30px;
   background-color: var(--hightlightColor);
-  color: white;
-  font-weight: bold;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 button.mainAction:hover,
@@ -128,10 +126,11 @@ button.mainAction:active {
   background-color: var(--activeColor);
 }
 
-button, select {
+button,
+select {
   background-color: var(--uiFormColor);
   border-radius: 3px;
-  border: 1px solid #CCC;
+  border: 1px solid #ccc;
   padding: 0.5em;
   font-size: inherit;
 }
@@ -148,7 +147,7 @@ legend {
 }
 
 legend::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   height: 1px;
@@ -186,14 +185,14 @@ li:not(:last-child) {
   border-bottom: 1px solid var(--separatorColor);
 }
 
-input[type=range]{
+input[type="range"] {
   max-width: 150px;
   vertical-align: middle;
   -webkit-appearance: none;
 }
 
 /* la zone de déplacement */
-input[type=range]::-webkit-slider-runnable-track {
+input[type="range"]::-webkit-slider-runnable-track {
   width: 100%;
   height: 5px;
   background: var(--uiFormColor);
@@ -201,7 +200,7 @@ input[type=range]::-webkit-slider-runnable-track {
   border-radius: 3px;
 }
 
-input[type=range]::-webkit-slider-thumb {
+input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   border: none;
   height: 16px;
@@ -211,7 +210,7 @@ input[type=range]::-webkit-slider-thumb {
   background: var(--hightlightColor);
 }
 
-input[type=range]::-moz-range-track {
+input[type="range"]::-moz-range-track {
   width: 100%;
   height: 5px;
   background: var(--uiFormColor);
@@ -219,7 +218,7 @@ input[type=range]::-moz-range-track {
   border-radius: 3px;
 }
 
-input[type=range]::-moz-range-thumb {
+input[type="range"]::-moz-range-thumb {
   border: none;
   height: 16px;
   width: 16px;
@@ -228,11 +227,11 @@ input[type=range]::-moz-range-thumb {
 }
 
 /*hide the outline behind the border*/
-input[type=range]:-moz-focusring{
+input[type="range"]:-moz-focusring {
   outline: 1px solid white;
   outline-offset: -1px;
 }
 
-input[type=range]:focus::-moz-range-track {
+input[type="range"]:focus::-moz-range-track {
   background: #ccc;
 }

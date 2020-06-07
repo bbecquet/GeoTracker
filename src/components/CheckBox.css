@@ -11,16 +11,16 @@
 
 .checkbox .checkbox-check {
   position: relative;
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
 }
 
 .checkbox .checkbox-check:before {
   content: "";
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   right: 0;
-  top: 0px;
+  top: 0;
   position: absolute;
   border: 1px solid var(--uiFormColor);
   background-color: transparent;
@@ -29,15 +29,12 @@
 }
 
 .checkbox input:checked + .checkbox-check:after {
-  content: "✓";
-  font-weight: bold;
-  font-size: 24px;
-  padding-top: 2px;
-  color: white;
+  content: "";
   position: absolute;
-  line-height: 24px;
   width: 100%;
-  text-align: center;
+  height: 100%;
+  background: url(../imgs/check.svg);
+  background-size: cover;
 }
 
 .checkbox input:checked + .checkbox-check:before {

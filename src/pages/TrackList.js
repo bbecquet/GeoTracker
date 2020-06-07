@@ -4,6 +4,7 @@ import TrackSummary from "../components/TrackSummary.js";
 import Page from "../components/Page.js";
 import settingsIcon from "../imgs/settings.svg";
 import aboutIcon from "../imgs/information.svg";
+import plusIcon from "../imgs/plus.svg";
 import "./TrackList.css";
 import { getTrackList, createTrack } from "../models/trackStorage";
 
@@ -69,8 +70,8 @@ const TrackList = () => {
           </ul>
         )}
       </div>
-      <button className="mainAction" onClick={addTrack}>
-        +
+      <button className="mainAction" onClick={addTrack} title="Start new track">
+        <img src={plusIcon} alt="" />
       </button>
     </Page>
   );

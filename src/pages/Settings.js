@@ -70,7 +70,7 @@ const Settings = () => {
             >
               <select onChange={handleChangeTheme} value={settings.theme}>
                 {[
-                  { label: "Device settings", value: "auto" },
+                  { label: "Device setting", value: "auto" },
                   { label: "☀️ Light", value: "light" },
                   { label: "🌙 Dark", value: "dark" },
                 ].map(({ value, label }) => (
