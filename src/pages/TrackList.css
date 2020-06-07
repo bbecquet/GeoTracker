@@ -1,18 +1,18 @@
 .trackList li {
-    position: relative;
+  position: relative;
 }
 .trackList li:after {
-    content: '❯';
-    height: 1em;
-    position: absolute;
-    right: 0.5em;
-    top: 50%;
-    margin-top: -1em;
+  content: '❯';
+  height: 1em;
+  position: absolute;
+  right: 0.5em;
+  top: 50%;
+  margin-top: -1em;
 }
 .trackList a {
-    display: block;
+  display: block;
 }
 .trackList a:hover,
 .trackList a:active {
-    background-color: var(--separatorColor);
+  background-color: var(--separatorColor);
 }

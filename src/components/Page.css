@@ -1,69 +1,69 @@
 .pageHeader {
-    background-color: var(--hightlightColor);
-    color: var(--white);
-    box-shadow: 0 0 5px var(--shadowColor);
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 48px;
-    position: fixed;
-    z-index: 1000;
+  background-color: var(--hightlightColor);
+  color: var(--white);
+  box-shadow: 0 0 5px var(--shadowColor);
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 48px;
+  position: fixed;
+  z-index: 1000;
 }
 
 .pageHeader h1 {
-    font-size: 1.8em;
-    font-weight: normal;
-    flex-grow: 1;
-    text-shadow: 0 0 2px var(--activeColor);
-    padding-left: 0.5em;
+  font-size: 1.8em;
+  font-weight: normal;
+  flex-grow: 1;
+  text-shadow: 0 0 2px var(--activeColor);
+  padding-left: 0.5em;
 }
 
 .pageHeader button {
-    background-color: transparent;
-    border: none;
-    color: var(--white);
-    vertical-align: middle;
-    height: 100%;
+  background-color: transparent;
+  border: none;
+  color: var(--white);
+  vertical-align: middle;
+  height: 100%;
 }
 
 .pageHeader img {
-    vertical-align: middle;
+  vertical-align: middle;
 }
 
 .pageHeader-left {
-    flex-grow: 0;
-    flex-shrink: 0;
-    flex-basis: 48px;
-    text-align: center;
-    height: 100%;
-    line-height: 48px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 48px;
+  text-align: center;
+  height: 100%;
+  line-height: 48px;
 }
 
 .pageHeader-left img {
-    width: 32px;
+  width: 32px;
 }
 
 .pageHeader-left a {
-    display: block;
-    width: 100%;
+  display: block;
+  width: 100%;
 }
 
 .pageHeader-right {
-    height: 100%;
-    display: flex;
+  height: 100%;
+  display: flex;
 }
 
 .pageHeader-right button,
 .pageHeader-right a {
-    padding: 0 12px;
-    height: 100%;
-    display: flex;
-    align-items: center;
+  padding: 0 12px;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .pageHeader button:hover,
 .pageHeader button:active,
 .pageHeader a:hover,
 .pageHeader a:active {
-    background-color: var(--activeColor);
+  background-color: var(--activeColor);
 }

@@ -16,7 +16,7 @@
 }
 
 .checkbox .checkbox-check:before {
-  content: '';
+  content: "";
   width: 24px;
   height: 24px;
   right: 0;
@@ -29,7 +29,7 @@
 }
 
 .checkbox input:checked + .checkbox-check:after {
-  content: '✓';
+  content: "✓";
   font-weight: bold;
   font-size: 24px;
   padding-top: 2px;
