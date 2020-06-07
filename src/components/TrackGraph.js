@@ -34,6 +34,13 @@ const TrackGraph = ({ positions }) => {
           xAxes: [
             {
               type: 'time',
+              time: {
+                minUnit: 'second',
+                displayFormats: {
+                  second: 'HH:mm:ss',
+                  minute: 'HH:mm',
+                },
+              },
             },
           ],
           yAxes: [
