@@ -4,6 +4,7 @@ import Page from '../components/Page';
 import TrackMap from '../components/TrackMap';
 import Length from '../components/Length';
 import Setting from '../components/Setting';
+import CheckBox from '../components/CheckBox';
 import { clearTrackDatabase, getTrackList } from '../models/trackStorage';
 import { SettingsContext } from '../models/SettingsContext';
 import fakeCoords from '../models/fakeGpsCoords.json';
@@ -84,7 +85,7 @@ const Settings = () => {
                 </li> */}
                 <li>
                     <Setting asLabel title="Use imperial system" desc="For distances and map scale" className="padding-v-m">
-                        <input
+                        <CheckBox
                             name="lengthUnit"
                             type="checkbox"
                             checked={imperialSystem}
@@ -115,7 +116,7 @@ const Settings = () => {
                 </li>
                 <li>
                     <Setting asLabel title="Use fake GPS positions" desc="For easy indoor debugging" className="padding-v-m">
-                        <input
+                        <CheckBox
                             type="checkbox"
                             checked={settings['gps.simulatePositions']}
                             onChange={handleChangeGps}
