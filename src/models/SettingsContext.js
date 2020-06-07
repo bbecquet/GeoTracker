@@ -1,6 +1,6 @@
-import React, { createContext, useReducer } from "react";
-import { readSettings, reducer as settingsReducer } from "./settings";
-import PropTypes from "prop-types";
+import React, { createContext, useReducer } from 'react';
+import { readSettings, reducer as settingsReducer } from './settings';
+import PropTypes from 'prop-types';
 
 export const SettingsContext = createContext();
 

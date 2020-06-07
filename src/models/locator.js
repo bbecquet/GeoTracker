@@ -1,7 +1,7 @@
 function toUrlParams(obj) {
   return Object.keys(obj)
     .map(key => `${key}=${encodeURIComponent(obj[key])}`)
-    .join("&");
+    .join('&');
 }
 
 function getName(address) {
@@ -23,8 +23,8 @@ export function getLocationName(position) {
   const query = toUrlParams({
     lat: coords.latitude,
     lon: coords.longitude,
-    format: "json",
-    json_callback: "jsonpCallback",
+    format: 'json',
+    json_callback: 'jsonpCallback',
   });
 
   return new Promise((resolve, reject) => {
@@ -33,11 +33,11 @@ export function getLocationName(position) {
         resolve(getName(json.address));
       };
 
-      const script = document.createElement("script");
+      const script = document.createElement('script');
       script.src = `https://nominatim.openstreetmap.org/reverse?${query}`;
       document.body.appendChild(script);
     } catch {
-      reject("Error georeferencing the track");
+      reject('Error georeferencing the track');
     }
   });
 }

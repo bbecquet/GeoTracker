@@ -1,5 +1,5 @@
 // Coordinates used to simulate GPS positions in fake mode
-import fakeCoords from "./fakeGpsCoords.json";
+import fakeCoords from './fakeGpsCoords.json';
 const fakeFrequency = 1000;
 
 class Tracker {
@@ -11,7 +11,7 @@ class Tracker {
   }
 
   _genOnePosition(onUpdate) {
-    console.log("Generating fake position");
+    console.log('Generating fake position');
     this.fakeIndex =
       this.fakeIndex < fakeCoords.length - 1 ? this.fakeIndex + 10 : 0;
     const fakeLngLat = fakeCoords[this.fakeIndex];
@@ -56,7 +56,7 @@ class Tracker {
   }
 
   start(onUpdate, onError) {
-    console.log("Start tracking position...");
+    console.log('Start tracking position...');
     if (this.fake) {
       this._fakeStart(onUpdate);
     } else {
@@ -76,7 +76,7 @@ class Tracker {
   }
 
   stop() {
-    console.log("Stop tracking position.");
+    console.log('Stop tracking position.');
     if (this.fake) {
       this._fakeStop();
     } else {

@@ -1,11 +1,11 @@
-import React from "react";
-import Page from "../components/Page";
-import logo from "../imgs/logo.png";
+import React from 'react';
+import Page from '../components/Page';
+import logo from '../imgs/logo.png';
 
 const About = () => (
   <Page title="About" backPath="/tracks">
     <div className="padding">
-      <div style={{ textAlign: "center", margin: "10px 0 20px" }}>
+      <div style={{ textAlign: 'center', margin: '10px 0 20px' }}>
         <h1>GeoTracker</h1>
         <img src={logo} alt="" />
         <p>
@@ -15,7 +15,7 @@ const About = () => (
           .
         </p>
         <p>
-          © 2020{" "}
+          © 2020{' '}
           <a className="link" href="https://bbecquet.net">
             Benjamin Becquet
           </a>
@@ -24,7 +24,7 @@ const About = () => (
       </div>
       <h2>Attributions</h2>
       <p>
-        Map views powered by{" "}
+        Map views powered by{' '}
         <a className="link" href="https://leafletjs.com">
           Leaflet
         </a>

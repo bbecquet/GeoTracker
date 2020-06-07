@@ -1,6 +1,6 @@
-import createGpx from "gps-to-gpx";
-import { saveAs } from "file-saver";
-import L from "leaflet";
+import createGpx from 'gps-to-gpx';
+import { saveAs } from 'file-saver';
+import L from 'leaflet';
 
 export function exportTrackAsGpx(track, positions) {
   const wayPoints = positions.map(p => {
@@ -12,8 +12,8 @@ export function exportTrackAsGpx(track, positions) {
   const gpx = createGpx(wayPoints, {
     activityName: track.name,
   });
-  const blob = new Blob([gpx], { type: "application/xml;charset=utf-8" });
-  saveAs(blob, "test.gpx");
+  const blob = new Blob([gpx], { type: 'application/xml;charset=utf-8' });
+  saveAs(blob, 'test.gpx');
 }
 
 export function getLength(positions) {

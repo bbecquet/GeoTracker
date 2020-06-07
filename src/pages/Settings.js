@@ -1,13 +1,13 @@
-import React, { useContext, useState, useEffect } from "react";
-import { mapTileDefs } from "../models/settings";
-import Page from "../components/Page";
-import TrackMap from "../components/TrackMap";
-import Length from "../components/Length";
-import Setting from "../components/Setting";
-import CheckBox from "../components/CheckBox";
-import { clearTrackDatabase, getTrackList } from "../models/trackStorage";
-import { SettingsContext } from "../models/SettingsContext";
-import fakeCoords from "../models/fakeGpsCoords.json";
+import React, { useContext, useState, useEffect } from 'react';
+import { mapTileDefs } from '../models/settings';
+import Page from '../components/Page';
+import TrackMap from '../components/TrackMap';
+import Length from '../components/Length';
+import Setting from '../components/Setting';
+import CheckBox from '../components/CheckBox';
+import { clearTrackDatabase, getTrackList } from '../models/trackStorage';
+import { SettingsContext } from '../models/SettingsContext';
+import fakeCoords from '../models/fakeGpsCoords.json';
 
 const fakeTrack = fakeCoords.map(([longitude, latitude]) => ({
   coords: { latitude, longitude },
@@ -25,23 +25,23 @@ const Settings = () => {
 
   const changeSetting = (key, value) =>
     dispatch({
-      type: "SETTING_CHANGE",
+      type: 'SETTING_CHANGE',
       payload: { key, value },
     });
 
-  const handleChangeTheme = e => changeSetting("theme", e.target.value);
+  const handleChangeTheme = e => changeSetting('theme', e.target.value);
   const handleChangeGps = e =>
-    changeSetting("gps.simulatePositions", e.target.checked);
+    changeSetting('gps.simulatePositions', e.target.checked);
   const handleChangeUnit = e =>
-    changeSetting("lengthUnit", e.target.checked ? "imperial" : "metric");
+    changeSetting('lengthUnit', e.target.checked ? 'imperial' : 'metric');
   const handleChangeAccuracy = e =>
-    changeSetting("maxAccuracy", parseInt(e.target.value, 10));
-  const changeMapTiles = e => changeSetting("mapTiles", e.target.value);
-  const changeTrackColor = e => changeSetting("trackColor", e.target.value);
+    changeSetting('maxAccuracy', parseInt(e.target.value, 10));
+  const changeMapTiles = e => changeSetting('mapTiles', e.target.value);
+  const changeTrackColor = e => changeSetting('trackColor', e.target.value);
   // const changeTrackWeight = e => changeSetting('trackWeight', parseInt(e.target.value, 10));
 
   const handleResetDatabase = () => {
-    if (!confirm("This will delete all your tracks. Are you sure?")) {
+    if (!confirm('This will delete all your tracks. Are you sure?')) {
       return;
     }
     clearTrackDatabase()
@@ -49,13 +49,13 @@ const Settings = () => {
         setNbTracks(0);
       })
       .catch(event => {
-        alert("Error: " + event);
+        alert('Error: ' + event);
       });
   };
 
   // const trackWeight = parseInt(settings.trackWeight, 10);
   const maxAccuracy = parseInt(settings.maxAccuracy, 10);
-  const imperialSystem = settings.lengthUnit === "imperial";
+  const imperialSystem = settings.lengthUnit === 'imperial';
 
   return (
     <Page title="Settings" backPath="/tracks">
@@ -70,9 +70,9 @@ const Settings = () => {
             >
               <select onChange={handleChangeTheme} value={settings.theme}>
                 {[
-                  { label: "Device setting", value: "auto" },
-                  { label: "☀️ Light", value: "light" },
-                  { label: "🌙 Dark", value: "dark" },
+                  { label: 'Device setting', value: 'auto' },
+                  { label: '☀️ Light', value: 'light' },
+                  { label: '🌙 Dark', value: 'dark' },
                 ].map(({ value, label }) => (
                   <option key={value} value={value}>
                     {label}
@@ -82,7 +82,7 @@ const Settings = () => {
             </Setting>
           </li>
           <li>
-            <div style={{ height: "200px", margin: "0.5em 0" }}>
+            <div style={{ height: '200px', margin: '0.5em 0' }}>
               <TrackMap positions={fakeTrack} fit />
             </div>
             <Setting
@@ -106,7 +106,7 @@ const Settings = () => {
               className="padding-v-m"
             >
               <select onChange={changeTrackColor} value={settings.trackColor}>
-                {["blue", "red", "green", "purple"].map(trackColor => (
+                {['blue', 'red', 'green', 'purple'].map(trackColor => (
                   <option key={trackColor} value={trackColor}>
                     {trackColor}
                   </option>
@@ -178,7 +178,7 @@ const Settings = () => {
             >
               <CheckBox
                 type="checkbox"
-                checked={settings["gps.simulatePositions"]}
+                checked={settings['gps.simulatePositions']}
                 onChange={handleChangeGps}
               />
             </Setting>
@@ -195,7 +195,7 @@ const Settings = () => {
               className="padding-v-m"
             >
               <button onClick={handleResetDatabase} disabled={nbTracks === 0}>
-                {nbTracks ? "Reset database" : "No recorded tracks"}
+                {nbTracks ? 'Reset database' : 'No recorded tracks'}
               </button>
             </Setting>
           </li>

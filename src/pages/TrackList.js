@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
-import TrackSummary from "../components/TrackSummary.js";
-import Page from "../components/Page.js";
-import settingsIcon from "../imgs/settings.svg";
-import aboutIcon from "../imgs/information.svg";
-import plusIcon from "../imgs/plus.svg";
-import "./TrackList.css";
-import { getTrackList, createTrack } from "../models/trackStorage";
+import React, { useState, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import TrackSummary from '../components/TrackSummary.js';
+import Page from '../components/Page.js';
+import settingsIcon from '../imgs/settings.svg';
+import aboutIcon from '../imgs/information.svg';
+import plusIcon from '../imgs/plus.svg';
+import './TrackList.css';
+import { getTrackList, createTrack } from '../models/trackStorage';
 
 const TrackList = () => {
   const history = useHistory();
   const [tracks, setTracks] = useState([]);
-  const [status, setStatus] = useState("LOADING");
+  const [status, setStatus] = useState('LOADING');
 
   useEffect(() => {
     getTrackList().then(tracks => {
       tracks.sort((t1, t2) => t2.createdAt - t1.createdAt);
       setTracks(tracks);
-      setStatus("READY");
+      setStatus('READY');
     });
   }, []);
 
@@ -28,8 +28,8 @@ const TrackList = () => {
   };
 
   const getTrackCount = () => {
-    if (status === "LOADING") {
-      return "Loading tracks…";
+    if (status === 'LOADING') {
+      return 'Loading tracks…';
     }
     switch (tracks.length) {
       case 0:
@@ -42,7 +42,7 @@ const TrackList = () => {
           </>
         );
       case 1:
-        return "1 track";
+        return '1 track';
       default:
         return `${tracks.length} tracks`;
     }
@@ -52,13 +52,13 @@ const TrackList = () => {
     <Page
       title="Your tracks"
       actions={[
-        { icon: aboutIcon, navTo: "/about" },
-        { icon: settingsIcon, navTo: "/settings" },
+        { icon: aboutIcon, navTo: '/about' },
+        { icon: settingsIcon, navTo: '/settings' },
       ]}
     >
       <div className="padding trackList">
         <div className="padding-v-s">{getTrackCount()}</div>
-        {status !== "LOADING" && (
+        {status !== 'LOADING' && (
           <ul>
             {tracks.map(track => (
               <li key={track.id} className="padding-v-s">

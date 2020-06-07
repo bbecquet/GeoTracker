@@ -1,8 +1,8 @@
-import React, { useRef, useEffect, useContext } from "react";
-import PropTypes from "prop-types";
-import Chart from "chart.js";
-import "chartjs-adapter-luxon"; // replace momentjs by luxon in ChartJS
-import { SettingsContext } from "../models/SettingsContext";
+import React, { useRef, useEffect, useContext } from 'react';
+import PropTypes from 'prop-types';
+import Chart from 'chart.js';
+import 'chartjs-adapter-luxon'; // replace momentjs by luxon in ChartJS
+import { SettingsContext } from '../models/SettingsContext';
 
 function toGraphData(positions) {
   return positions.map(pos => ({
@@ -17,11 +17,11 @@ const TrackGraph = ({ positions }) => {
 
   useEffect(() => {
     new Chart(graphRef.current, {
-      type: "line",
+      type: 'line',
       data: {
         datasets: [
           {
-            label: "Altitude",
+            label: 'Altitude',
             data: toGraphData(positions),
             fill: false,
             borderColor: settings.trackColor,
@@ -33,14 +33,14 @@ const TrackGraph = ({ positions }) => {
         scales: {
           xAxes: [
             {
-              type: "time",
+              type: 'time',
             },
           ],
           yAxes: [
             {
               scaleLabel: {
                 display: true,
-                labelString: "Meters",
+                labelString: 'Meters',
               },
             },
           ],

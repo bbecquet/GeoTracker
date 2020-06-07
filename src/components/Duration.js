@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const zero2Pad = x => {
   const s = x.toString();
-  return s.length >= 2 ? s : "0" + s;
+  return s.length >= 2 ? s : '0' + s;
 };
 
 function formatDuration(duration) {

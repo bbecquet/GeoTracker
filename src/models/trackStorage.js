@@ -1,20 +1,20 @@
-import { openDB } from "idb";
+import { openDB } from 'idb';
 
 /**
 Implements an indexedDB-based repository for persistent storage
 of tracks accross sessions.
 Provides methods to list/add/delete tracks and positions.
 */
-const openDBPromise = openDB("geotracker", 1, { upgrade: upgradeDB });
+const openDBPromise = openDB('geotracker', 1, { upgrade: upgradeDB });
 
 function upgradeDB(db) {
-  console.log("Creating track store...");
-  db.createObjectStore("tracks", { keyPath: "id", autoIncrement: true });
-  console.log("Creating position store...");
-  const positionStore = db.createObjectStore("positions", { keyPath: "id" });
-  console.log("Creating position index...");
-  positionStore.createIndex("positionIdx", "trackId", { unique: false });
-  console.log("Database ready.");
+  console.log('Creating track store...');
+  db.createObjectStore('tracks', { keyPath: 'id', autoIncrement: true });
+  console.log('Creating position store...');
+  const positionStore = db.createObjectStore('positions', { keyPath: 'id' });
+  console.log('Creating position index...');
+  positionStore.createIndex('positionIdx', 'trackId', { unique: false });
+  console.log('Database ready.');
 }
 
 export function createTrack() {
@@ -25,8 +25,8 @@ export function createTrack() {
 
   return openDBPromise.then(db => {
     return db
-      .transaction("tracks", "readwrite")
-      .objectStore("tracks")
+      .transaction('tracks', 'readwrite')
+      .objectStore('tracks')
       .add(newTrack)
       .then(newTrackId => {
         newTrack.id = newTrackId;
@@ -38,8 +38,8 @@ export function createTrack() {
 export function updateTrack(updatedTrack) {
   return openDBPromise.then(db => {
     return db
-      .transaction("tracks", "readwrite")
-      .objectStore("tracks")
+      .transaction('tracks', 'readwrite')
+      .objectStore('tracks')
       .put(updatedTrack);
   });
 }
@@ -54,8 +54,8 @@ export function addPositionToTrack(trackId, position) {
 
   return openDBPromise.then(db => {
     return db
-      .transaction("positions", "readwrite")
-      .objectStore("positions")
+      .transaction('positions', 'readwrite')
+      .objectStore('positions')
       .add(newPosition);
   });
 }
@@ -70,15 +70,15 @@ export function deleteTrack(trackId) {
 
   return openDBPromise.then(db => {
     return db
-      .transaction("positions", "readwrite")
-      .objectStore("positions")
+      .transaction('positions', 'readwrite')
+      .objectStore('positions')
       .delete(positionsRange)
       .then(() => {
         // use another transaction whereas it should be done in the same, because of microtask bug.
         // see: https://github.com/jakearchibald/idb/blob/master/README.md#transaction-lifetime
         return db
-          .transaction("tracks", "readwrite")
-          .objectStore("tracks")
+          .transaction('tracks', 'readwrite')
+          .objectStore('tracks')
           .delete(Number(trackId));
       });
   });
@@ -86,15 +86,15 @@ export function deleteTrack(trackId) {
 
 export function getTrackList() {
   return openDBPromise.then(db => {
-    return db.transaction("tracks", "readonly").objectStore("tracks").getAll();
+    return db.transaction('tracks', 'readonly').objectStore('tracks').getAll();
   });
 }
 
 export function getTrack(trackId) {
   return openDBPromise.then(db => {
     return db
-      .transaction("tracks", "readonly")
-      .objectStore("tracks")
+      .transaction('tracks', 'readonly')
+      .objectStore('tracks')
       .get(trackId);
   });
 }
@@ -102,9 +102,9 @@ export function getTrack(trackId) {
 export function getTrackPositions(trackId) {
   return openDBPromise.then(db => {
     return db
-      .transaction("positions", "readonly")
-      .objectStore("positions")
-      .index("positionIdx")
+      .transaction('positions', 'readonly')
+      .objectStore('positions')
+      .index('positionIdx')
       .getAll(IDBKeyRange.only(Number(trackId)))
       .then(positions => {
         return positions.sort((a, b) => a.timestamp - b.timestamp);
@@ -119,15 +119,15 @@ export function clearTrackDatabase() {
     // db.close();
     // return idb.delete('geotracker');
     return db
-      .transaction("positions", "readwrite")
-      .objectStore("positions")
+      .transaction('positions', 'readwrite')
+      .objectStore('positions')
       .clear()
       .then(() => {
         // use another transaction whereas it should be done in the same, because of microtask bug.
         // see: https://github.com/jakearchibald/idb/blob/master/README.md#transaction-lifetime
         return db
-          .transaction("tracks", "readwrite")
-          .objectStore("tracks")
+          .transaction('tracks', 'readwrite')
+          .objectStore('tracks')
           .clear();
       });
   });

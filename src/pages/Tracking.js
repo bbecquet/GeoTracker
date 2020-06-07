@@ -1,19 +1,19 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
-import Tracker from "../models/tracker";
-import Page from "../components/Page";
-import TrackMap from "../components/TrackMap";
-import GpsStatus from "../components/GpsStatus";
-import Setting from "../components/Setting";
-import Checkbox from "../components/CheckBox";
-import stopIcon from "../imgs/stop.svg";
+import React, { useContext, useEffect, useState } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
+import Tracker from '../models/tracker';
+import Page from '../components/Page';
+import TrackMap from '../components/TrackMap';
+import GpsStatus from '../components/GpsStatus';
+import Setting from '../components/Setting';
+import Checkbox from '../components/CheckBox';
+import stopIcon from '../imgs/stop.svg';
 import {
   getTrack,
   updateTrack,
   addPositionToTrack,
-} from "../models/trackStorage";
-import { SettingsContext } from "../models/SettingsContext";
-import { getLocationName } from "../models/locator";
+} from '../models/trackStorage';
+import { SettingsContext } from '../models/SettingsContext';
+import { getLocationName } from '../models/locator';
 
 let positions = [];
 
@@ -38,14 +38,14 @@ const Tracking = () => {
 
   useEffect(() => {
     positions = [];
-    console.log("Lauching GPS…");
-    const tracker = new Tracker(settings["gps.simulatePositions"]);
+    console.log('Lauching GPS…');
+    const tracker = new Tracker(settings['gps.simulatePositions']);
     tracker.start(onNewPosition);
 
     return () => {
       if (tracker) {
         tracker.stop();
-        console.log("GPS stopped.");
+        console.log('GPS stopped.');
       }
     };
   }, []);
@@ -69,12 +69,12 @@ const Tracking = () => {
   return (
     <Page
       title="Tracking…"
-      actions={[{ icon: stopIcon, text: "Stop", onClick: onClose }]}
+      actions={[{ icon: stopIcon, text: 'Stop', onClick: onClose }]}
     >
       <GpsStatus
         position={lastPosition}
         validAccuracy={isValidAccuracy(lastPosition)}
-        imperialSystem={settings.lengthUnit === "imperial"}
+        imperialSystem={settings.lengthUnit === 'imperial'}
       />
       <div className="mapContainer">
         <TrackMap followPosition={mapFollow} positions={positions.slice()} />
