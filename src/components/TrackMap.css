@@ -17,6 +17,7 @@
   border-radius: 3px;
   margin: 0 5px;
   display: none;
+  color: black;
 }
 
 .attribution.active .attribution-content {
