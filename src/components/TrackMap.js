@@ -44,10 +44,11 @@ const TrackMap = ({ positions, fit, followPosition }) => {
   // const trackWeight = parseInt(settings.trackWeight, 10);
 
   useEffect(() => {
+    console.log(backgroundTileDef);
     map = L.map(mapElement.current, {
       // TODO: put map options in global settings?
       center: [48.85, 2.35],
-      zoom: 18,
+      zoom: backgroundTileDef.options.maxZoom || 18,
       attributionControl: false,
       zoomControl: false,
       boxZoom: false,
