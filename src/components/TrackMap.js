@@ -11,7 +11,26 @@ import { mapTileDefs } from '../models/settings';
 
 const positionToLatLng = p => [p.coords.latitude, p.coords.longitude];
 
-let map, bgLayer, positionMarker, polyline, scale;
+const AttrCtrl = L.Control.extend({
+  options: {
+    position: 'topright',
+  },
+  onAdd: function () {
+    const ctrl = L.DomUtil.create('div', 'attribution');
+    const btn = L.DomUtil.create('button', 'attribution-button');
+    btn.title = 'Attribution information';
+    btn.onclick = () => {
+      ctrl.classList.toggle('active');
+    };
+    const attr = L.DomUtil.create('div', 'attribution-content');
+    attr.innerHTML = this.options.content;
+    ctrl.appendChild(attr);
+    ctrl.appendChild(btn);
+    return ctrl;
+  },
+});
+
+let map, bgLayer, positionMarker, polyline, scale, attr;
 
 const setLayer = backgroundTileDef => {
   if (bgLayer) {
@@ -61,6 +80,12 @@ const TrackMap = ({ positions, fit, followPosition }) => {
 
   useEffect(() => {
     setLayer(backgroundTileDef);
+    if (attr) {
+      attr.remove();
+    }
+    attr = new AttrCtrl({
+      content: backgroundTileDef.options.attribution,
+    }).addTo(map);
   }, [backgroundTileDef]);
 
   useEffect(() => {
@@ -104,7 +129,7 @@ const TrackMap = ({ positions, fit, followPosition }) => {
   }, [trackColor /*, trackWeight */]);
 
   // Simple placeholder for a Leaflet map, won't get re-rendered
-  return <div className="map" ref={mapElement} />;
+  return <div className="trackMap" ref={mapElement} />;
 };
 
 TrackMap.propTypes = {

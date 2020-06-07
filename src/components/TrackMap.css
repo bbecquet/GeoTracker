@@ -1,7 +1,45 @@
-.map {
+.trackMap {
   height: 100%;
 }
 
 .leaflet-marker-icon {
   transition: all 0.2s;
+}
+
+.attribution {
+  display: flex;
+  align-items: flex-start;
+}
+
+.attribution-content {
+  padding: 2px 5px;
+  background: white;
+  border-radius: 3px;
+  margin: 0 5px;
+  display: none;
+}
+
+.attribution.active .attribution-content {
+  display: block;
+}
+
+.attribution-button {
+  flex-shrink: 0;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  background: #777 url(../imgs/information.svg) no-repeat center center;
+  background-size: contain;
+}
+
+.trackMap .leaflet-right .leaflet-control {
+  margin-right: 5px;
+}
+
+.trackMap .leaflet-top .leaflet-control {
+  margin-top: 5px;
+}
+
+.trackMap .leaflet-bottom .leaflet-control {
+  margin-bottom: 5px;
 }
